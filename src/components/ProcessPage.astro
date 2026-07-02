@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from './PageHero.astro';
+import ProcessStep from './ProcessStep.astro';
+import CTASection from './CTASection.astro';
+import { useTranslations, path, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const p = t.process;
+---
+
+<BaseLayout lang={lang} title={p.title} description={p.description}>
+  <PageHero eyebrow={p.eyebrow} h1={p.h1} intro={p.intro} />
+
+  <section class="section">
+    <div class="container container-narrow">
+      <div class="process-steps">
+        {p.steps.map((step, i) => (
+          <ProcessStep
+            number={i + 1}
+            total={p.steps.length}
+            label={step.label}
+            title={step.title}
+            text={step.text}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    text={p.cta.text}
+    buttonLabel={p.cta.button}
+    buttonHref={path('contact', lang)}
+    note={t.common.trust}
+  />
+</BaseLayout>
+
+<style>
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

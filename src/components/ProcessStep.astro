@@ -1,0 +1,136 @@
+---
+interface Props {
+  number: number;
+  label: string;
+  title: string;
+  text: string;
+  total?: number;
+}
+const { number, label, title, text, total = 6 } = Astro.props;
+const num = String(number).padStart(2, '0');
+---
+
+<article class="process-step" data-reveal style={`--blitz-i: ${number - 1}; --blitz-total: ${total}`}>
+  <div class="step-index">
+    <span class="step-num">{num}</span>
+    <span class="step-line" aria-hidden="true"></span>
+  </div>
+  <div class="step-body">
+    <span class="step-label">{label}</span>
+    <h3 class="step-title">{title}</h3>
+    <p class="step-text">{text}</p>
+  </div>
+</article>
+
+<style>
+  .process-step {
+    /* „Blitz", der von Schritt 1 nach 6 wandert: ein Durchlauf pro Periode,
+       jeder Schritt startet um ein Zeitfenster (Periode / Anzahl) versetzt. */
+    --blitz-period: 5.4s;
+    --blitz-delay: calc(var(--blitz-i, 0) * var(--blitz-period) / var(--blitz-total, 6));
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+  }
+  .step-index {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-num {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-bg-card);
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--color-gold);
+    flex-shrink: 0;
+    /* leuchtet kurz auf, wenn der Blitz diesen Schritt erreicht */
+    animation: blitz-num var(--blitz-period) linear var(--blitz-delay) infinite;
+  }
+  .step-line {
+    position: relative;
+    flex: 1;
+    width: 1px;
+    margin-top: 0.5rem;
+    background: linear-gradient(var(--color-border-strong), transparent);
+    overflow: visible;
+  }
+  /* der wandernde Funke, der die Verbindungslinie hinabschießt */
+  .step-line::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -25%;
+    width: 3px;
+    height: 30%;
+    transform: translateX(-50%);
+    border-radius: 3px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-gold-soft) 28%,
+      #fff8ec 50%,
+      var(--color-gold-soft) 72%,
+      transparent
+    );
+    box-shadow: 0 0 9px 1px var(--color-gold-glow);
+    opacity: 0;
+    pointer-events: none;
+    animation: blitz-line var(--blitz-period) linear var(--blitz-delay) infinite;
+  }
+  .process-step:last-child .step-line { display: none; }
+
+  /* Zahl-Aufblitzen (kurzer Gold-Flash, dann zurück in den Ruhezustand) */
+  @keyframes blitz-num {
+    0%, 9%, 100% {
+      background: var(--color-bg-card);
+      color: var(--color-gold);
+      box-shadow: 0 0 0 0 rgba(212, 175, 90, 0);
+      transform: scale(1);
+    }
+    1.5% {
+      background: var(--color-gold);
+      color: var(--color-on-gold);
+      box-shadow: 0 0 18px 2px var(--color-gold-glow);
+      transform: scale(1.1);
+    }
+  }
+  /* Funke wandert die Linie hinab; nur im eigenen Zeitfenster sichtbar */
+  @keyframes blitz-line {
+    0% { top: -25%; opacity: 0; }
+    1% { opacity: 1; }
+    15% { top: 100%; opacity: 1; }
+    16%, 100% { top: -25%; opacity: 0; }
+  }
+  /* Bei reduzierter Bewegung: kein Blitz, neutraler Ruhezustand */
+  @media (prefers-reduced-motion: reduce) {
+    .step-num { animation: none; }
+    .step-line::before { display: none; }
+  }
+
+  .step-body { padding-bottom: 2.75rem; }
+  .step-label {
+    font-family: var(--font-head);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+  .step-title {
+    font-size: var(--fs-h3);
+    margin: 0.4rem 0 0.6rem;
+  }
+  .step-text { max-width: 62ch; }
+
+  @media (max-width: 520px) {
+    .process-step { gap: 1rem; }
+    .step-num { width: 48px; height: 48px; font-size: 1rem; }
+  }
+</style>

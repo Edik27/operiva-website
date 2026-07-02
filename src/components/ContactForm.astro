@@ -1,0 +1,413 @@
+---
+import { useTranslations, path, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const f = t.contact.form;
+const success = t.contact.success;
+const privacyHref = path('privacy', lang);
+
+// ⚠️ PLATZHALTER: Vor Go-Live die echte Formspree-Form-ID eintragen (siehe README).
+// Format: https://formspree.io/f/xxxxxxxx
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
+---
+
+<div class="contact-form-wrap">
+  <form
+    class="contact-form"
+    action={FORMSPREE_ENDPOINT}
+    method="POST"
+    novalidate
+    data-contact-form
+    data-lang={lang}
+  >
+    <!-- Betreff für die eingehende E-Mail bei Formspree -->
+    <input type="hidden" name="_subject" value="Neue Projektanfrage über operiva.com" />
+    <!-- Honeypot gegen Spam-Bots (für Menschen unsichtbar) -->
+    <input
+      type="text"
+      name="_gotcha"
+      tabindex="-1"
+      autocomplete="off"
+      class="hp-field"
+      aria-hidden="true"
+    />
+
+    <div class="field">
+      <label for="cf-name">{f.name} <span class="req" aria-hidden="true">*</span></label>
+      <input type="text" id="cf-name" name="name" autocomplete="name" required aria-required="true" />
+      <p class="field-error" data-error hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-email">{f.email} <span class="req" aria-hidden="true">*</span></label>
+      <input type="email" id="cf-email" name="email" autocomplete="email" required aria-required="true" />
+      <p class="field-error" data-error hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-company">{f.company} <span class="opt">({f.companyOptional})</span></label>
+      <input type="text" id="cf-company" name="company" autocomplete="organization" />
+    </div>
+
+    <div class="field">
+      <label for="cf-topic">{f.topic} <span class="req" aria-hidden="true">*</span></label>
+      <div class="select-wrap">
+        <select id="cf-topic" name="topic" required aria-required="true">
+          <option value="" disabled selected>{f.topicPlaceholder}</option>
+          <option value={f.topicWebsite}>{f.topicWebsite}</option>
+          <option value={f.topicAutomation}>{f.topicAutomation}</option>
+          <option value={f.topicBoth}>{f.topicBoth}</option>
+          <option value={f.topicOther}>{f.topicOther}</option>
+        </select>
+        <span class="select-arrow" aria-hidden="true">▾</span>
+      </div>
+      <p class="field-error" data-error hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-message">{f.message} <span class="req" aria-hidden="true">*</span></label>
+      <textarea id="cf-message" name="message" rows="6" required aria-required="true"></textarea>
+      <p class="field-error" data-error hidden></p>
+    </div>
+
+    <div class="field field-check">
+      <label class="check">
+        <input type="checkbox" id="cf-privacy" name="privacy" required aria-required="true" />
+        <span class="check-box" aria-hidden="true"></span>
+        <span class="check-label">
+          {f.privacyBefore}<a href={privacyHref}>{f.privacyLink}</a>{f.privacyAfter}
+          <span class="req" aria-hidden="true">*</span>
+        </span>
+      </label>
+      <p class="field-error" data-error hidden></p>
+    </div>
+
+    <p class="form-generic-error" data-form-error hidden></p>
+
+    <button type="submit" class="btn btn-primary form-submit" data-submit>
+      <span data-submit-label>{f.submit}</span>
+    </button>
+  </form>
+
+  <div class="form-success" data-success hidden role="status">
+    <span class="success-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12.5 10 17.5 19 6.5" />
+      </svg>
+    </span>
+    <h2 class="success-title">{success.title}</h2>
+    <p class="success-text">{success.text}</p>
+  </div>
+</div>
+
+<style>
+  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  /* Honeypot: aus dem Fluss, für Screenreader/Nutzer unsichtbar */
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 0.5rem; }
+  label {
+    font-family: var(--font-head);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+  .req { color: var(--color-gold); }
+  .opt { color: var(--color-text-faint); font-weight: 400; }
+
+  input[type='text'],
+  input[type='email'],
+  textarea,
+  select {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    appearance: none;
+  }
+  textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px var(--color-gold-dim);
+  }
+  input::placeholder,
+  textarea::placeholder { color: var(--color-text-faint); }
+
+  .select-wrap { position: relative; }
+  .select-arrow {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-gold);
+    pointer-events: none;
+    font-size: 0.9rem;
+  }
+  select:invalid { color: var(--color-text-faint); }
+
+  .field-error {
+    font-size: 0.82rem;
+    color: #e88;
+  }
+  .field.has-error input,
+  .field.has-error textarea,
+  .field.has-error select { border-color: #c66; }
+
+  /* Custom Checkbox */
+  .check {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.7rem;
+    align-items: start;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 400;
+  }
+  .check input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 6px;
+    background: var(--color-bg-card);
+    display: grid;
+    place-items: center;
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+    margin-top: 1px;
+  }
+  .check-box::after {
+    content: '';
+    width: 11px;
+    height: 6px;
+    border-left: 2px solid var(--color-on-gold);
+    border-bottom: 2px solid var(--color-on-gold);
+    transform: rotate(-45deg) scale(0);
+    transition: transform 0.2s var(--ease);
+  }
+  .check input:checked + .check-box {
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+  }
+  .check input:checked + .check-box::after { transform: rotate(-45deg) scale(1); }
+  .check input:focus-visible + .check-box {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+  .check-label { color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.5; }
+  .check-label a { color: var(--color-gold); text-decoration: underline; text-underline-offset: 2px; }
+
+  .form-generic-error {
+    font-size: 0.9rem;
+    color: #e88;
+    border: 1px solid #c66;
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    background: rgba(200, 90, 90, 0.08);
+  }
+
+  .form-submit { align-self: flex-start; margin-top: 0.5rem; }
+  .form-submit[disabled] { opacity: 0.65; cursor: default; }
+
+  /* Erfolgs-Panel */
+  .form-success {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.4rem;
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--color-bg-elevated), var(--color-bg-card));
+  }
+  .success-mark {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--color-gold-dim);
+    color: var(--color-gold);
+    margin-bottom: 0.75rem;
+  }
+  .success-mark svg { width: 26px; height: 26px; }
+  .success-title { font-size: var(--fs-h2); }
+  .success-text { max-width: 46ch; }
+
+  @media (max-width: 480px) {
+    .form-submit { align-self: stretch; width: 100%; }
+  }
+</style>
+
+<script>
+  // Kontaktformular: clientseitige Validierung + AJAX-Versand an Formspree.
+  // Kein externes Skript, kein Tracking. Ohne JS bleibt der native POST als Fallback.
+  type Dict = Record<string, string>;
+
+  const forms = document.querySelectorAll<HTMLFormElement>('[data-contact-form]');
+
+  // Übersetzungen aus data-lang ableiten (Fehlermeldungen)
+  const MESSAGES: Record<string, Dict> = {
+    de: {
+      required: 'Bitte füllen Sie dieses Feld aus.',
+      email: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+      privacy: 'Bitte stimmen Sie der Datenschutzerklärung zu.',
+      generic:
+        'Beim Senden ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt per E-Mail.',
+      sending: 'Wird gesendet …',
+    },
+    en: {
+      required: 'Please fill in this field.',
+      email: 'Please enter a valid email address.',
+      privacy: 'Please agree to the privacy policy.',
+      generic:
+        'Something went wrong while sending. Please try again or email us directly.',
+      sending: 'Sending …',
+    },
+  };
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  forms.forEach((form) => {
+    const lang = form.dataset.lang === 'en' ? 'en' : 'de';
+    const m = MESSAGES[lang];
+    const wrap = form.closest('.contact-form-wrap');
+    const successBox = wrap?.querySelector<HTMLElement>('[data-success]');
+    const submitBtn = form.querySelector<HTMLButtonElement>('[data-submit]');
+    const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]');
+    const formError = form.querySelector<HTMLElement>('[data-form-error]');
+    const defaultLabel = submitLabel?.textContent ?? '';
+
+    const setFieldError = (field: HTMLElement, msg: string | null) => {
+      const wrapEl = field.closest('.field');
+      const errEl = wrapEl?.querySelector<HTMLElement>('[data-error]');
+      if (!wrapEl || !errEl) return;
+      if (msg) {
+        wrapEl.classList.add('has-error');
+        errEl.textContent = msg;
+        errEl.hidden = false;
+        field.setAttribute('aria-invalid', 'true');
+      } else {
+        wrapEl.classList.remove('has-error');
+        errEl.textContent = '';
+        errEl.hidden = true;
+        field.removeAttribute('aria-invalid');
+      }
+    };
+
+    const validate = (): boolean => {
+      let ok = true;
+      let firstInvalid: HTMLElement | null = null;
+
+      const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
+        'input[name], textarea[name], select[name]'
+      );
+
+      fields.forEach((el) => {
+        if (el.name.startsWith('_')) return;
+
+        if (el.type === 'checkbox') {
+          const cb = el as HTMLInputElement;
+          if (cb.required && !cb.checked) {
+            setFieldError(cb, m.privacy);
+            ok = false;
+            firstInvalid = firstInvalid || cb;
+          } else {
+            setFieldError(cb, null);
+          }
+          return;
+        }
+
+        const value = el.value.trim();
+        if (el.required && !value) {
+          setFieldError(el, m.required);
+          ok = false;
+          firstInvalid = firstInvalid || el;
+        } else if (el.type === 'email' && value && !EMAIL_RE.test(value)) {
+          setFieldError(el, m.email);
+          ok = false;
+          firstInvalid = firstInvalid || el;
+        } else {
+          setFieldError(el, null);
+        }
+      });
+
+      if (firstInvalid) (firstInvalid as HTMLElement).focus();
+      return ok;
+    };
+
+    // Live-Fehler zurücknehmen, sobald der Nutzer korrigiert
+    form.addEventListener('input', (e) => {
+      const el = e.target as HTMLElement;
+      if (el && (el as HTMLInputElement).name && !(el as HTMLInputElement).name.startsWith('_')) {
+        const wrapEl = el.closest('.field');
+        if (wrapEl?.classList.contains('has-error')) setFieldError(el, null);
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (formError) formError.hidden = true;
+      if (!validate()) return;
+
+      const endpointOk = form.action && !form.action.includes('YOUR_FORMSPREE_ID');
+
+      if (submitBtn) submitBtn.disabled = true;
+      if (submitLabel) submitLabel.textContent = m.sending;
+
+      const showError = () => {
+        if (formError) {
+          formError.textContent = m.generic;
+          formError.hidden = false;
+        }
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitLabel) submitLabel.textContent = defaultLabel;
+      };
+
+      const showSuccess = () => {
+        if (successBox) {
+          form.hidden = true;
+          successBox.hidden = false;
+          successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      };
+
+      // Solange keine echte Formspree-ID hinterlegt ist: nicht senden, Fehler zeigen.
+      if (!endpointOk) {
+        showError();
+        return;
+      }
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok) showSuccess();
+        else showError();
+      } catch {
+        showError();
+      }
+    });
+  });
+</script>

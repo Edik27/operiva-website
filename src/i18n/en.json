@@ -1,0 +1,322 @@
+{
+  "meta": {
+    "lang": "en",
+    "locale": "en",
+    "siteName": "Operiva"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "process": "How we work",
+    "about": "About",
+    "contact": "Contact",
+    "references": "References",
+    "menuLabel": "Menu",
+    "closeLabel": "Close menu",
+    "langLabel": "Language",
+    "cta": "Request a project"
+  },
+  "common": {
+    "trust": "Free & no obligation · Reply within 1–2 business days · No tracking",
+    "mobileCta": "Request a project"
+  },
+  "footer": {
+    "tagline": "A&D — Animations & Designs",
+    "blurb": "Websites & automation, all from one team.",
+    "navTitle": "Navigation",
+    "legalTitle": "Legal",
+    "langTitle": "Language",
+    "imprint": "Imprint",
+    "privacy": "Privacy",
+    "rights": "All rights reserved."
+  },
+  "home": {
+    "title": "Operiva – Websites & Automation, All From One Team",
+    "description": "Professional websites and smart automation for businesses. Custom-designed, quickly delivered, fairly priced. Request your project today.",
+    "hero": {
+      "claim": "A&D — Animations & Designs",
+      "h1": "Websites & Automation, All From One Team",
+      "sub": "We build you a website that sells — and processes that work for you in the background. Quickly delivered, fairly priced.",
+      "ctaPrimary": "Request a project",
+      "ctaSecondary": "View services"
+    },
+    "teaser": {
+      "eyebrow": "Services",
+      "websitesTitle": "Websites",
+      "websitesText": "Modern, fast websites that impress on every device. Custom-designed, SEO-ready, built to launch.",
+      "automationTitle": "Automation",
+      "automationText": "Repetitive tasks run on autopilot: enquiries, appointments, emails, data hand-offs. You save time, we set it up."
+    },
+    "process": {
+      "eyebrow": "How we work",
+      "text": "From first idea to finished site in six clear steps. No guesswork, no jargon — you always know where your project stands.",
+      "steps": ["Briefing", "Content", "Copy", "Design", "Review", "Go-Live"],
+      "link": "How we work"
+    },
+    "why": {
+      "eyebrow": "Why Operiva",
+      "items": [
+        {
+          "title": "Two crafts, one point of contact",
+          "text": "Website and automation work hand in hand. No juggling between multiple providers."
+        },
+        {
+          "title": "Fast to launch",
+          "text": "Clear processes instead of endless loops. Your site goes live quickly."
+        },
+        {
+          "title": "Fairly priced",
+          "text": "Transparent pricing, tailored to small and medium-sized businesses."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "What does a website or automation cost?",
+          "a": "It depends on the scope — a lean landing page is a different story than a multi-page website with connected workflows. Instead of off-the-shelf packages, we quote fairly and transparently, tailored to what you actually need. The first assessment is free and without obligation."
+        },
+        {
+          "q": "How long does it take until the site is live?",
+          "a": "Most websites go live within a few weeks — depending on the scope and how quickly content and approvals come from you. Thanks to our six clear phases, you always know where your project stands."
+        },
+        {
+          "q": "Do I even need automation?",
+          "a": "Not necessarily — and we won't talk you into it. But if you keep doing the same manual steps (sorting enquiries, confirming appointments, moving data around), automation quickly saves noticeable time. We take an honest look at whether and where it pays off for you."
+        },
+        {
+          "q": "Do you handle domain and hosting too?",
+          "a": "Yes. On request we take care of domain registration, hosting setup and search engine registration — and explain what's behind it. You don't have to deal with anything technical."
+        },
+        {
+          "q": "I already have a website. Can you work with it?",
+          "a": "Usually, yes. Whether it's a revamp, a relaunch or adding automation — we look at where you stand today and recommend the most sensible path instead of rebuilding everything by default."
+        },
+        {
+          "q": "Are there ongoing costs?",
+          "a": "Domain and hosting come with small recurring costs — that's true for any website. Beyond that, it's your call: many clients maintain their site themselves, others book us for upkeep and further development. We tell you upfront what to expect."
+        },
+        {
+          "q": "What about data protection?",
+          "a": "We build data-minimal by design: local fonts instead of Google Fonts, no tracking, no unnecessary cookies. That's not just GDPR-friendly — it's also faster and more respectful of your visitors."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to make your mark?",
+      "text": "Tell us about your project — the first assessment is free.",
+      "button": "Request a project"
+    }
+  },
+  "services": {
+    "title": "Services – Websites & Automation | Operiva",
+    "description": "Custom websites and tailored automation. From landing page to automated workflow — all from one team.",
+    "eyebrow": "Services",
+    "h1": "What we do for you",
+    "intro": "Two services that belong together. We bring your business online — and make sure everything runs by itself in the background.",
+    "websites": {
+      "h2": "Websites that work",
+      "text": "Your website is your digital storefront — and often the first impression. We design it custom, fast, and built to turn visitors into customers.",
+      "items": [
+        { "title": "Custom design", "text": "no page builder, no off-the-shelf template. Your presence, your brand." },
+        { "title": "Fast & technically clean", "text": "optimised load times, clean code, top Google scores." },
+        { "title": "Every device", "text": "looks just as good on phone, tablet and desktop." },
+        { "title": "SEO-ready", "text": "so customers find you, not just your competitors." },
+        { "title": "Ready to launch", "text": "including contact form, imprint and legal basics." }
+      ]
+    },
+    "automation": {
+      "h2": "Automation that saves time",
+      "text": "Doing the same steps over and over? It doesn't have to be that way. We automate recurring processes so you can focus on your business.",
+      "items": [
+        { "title": "Enquiries & forms", "text": "submissions land automatically where they belong." },
+        { "title": "Appointments & reminders", "text": "bookings, confirmations, follow-ups with no manual effort." },
+        { "title": "Email workflows", "text": "automatic replies, forwarding, notifications." },
+        { "title": "Data hand-offs", "text": "connect tools, let data flow, avoid double work." },
+        { "title": "Tailored thinking", "text": "we look at your processes and automate what's worth it." }
+      ]
+    },
+    "cta": {
+      "text": "Not sure what you need? We'll advise you honestly — even if it turns out to be less than expected.",
+      "button": "Enquire for free"
+    }
+  },
+  "process": {
+    "title": "How We Work – Your Website in 6 Steps | Operiva",
+    "description": "Our process in six clear phases: from briefing to go-live. Transparent, predictable and jargon-free.",
+    "eyebrow": "How we work",
+    "h1": "How your project unfolds",
+    "intro": "Commissioning a website shouldn't feel like a leap into the unknown. That's why we work in six clear phases — you always know what's happening and what comes next.",
+    "steps": [
+      { "label": "Phase 1", "title": "Briefing & requirements", "text": "We get to know your business: what you offer, who you want to reach and what the website should achieve. The result is a clear picture." },
+      { "label": "Phase 2", "title": "Content & assets", "text": "Logo, images, existing copy — we gather everything you have. Whatever's missing, we design or write for you." },
+      { "label": "Phase 3", "title": "Copy & structure", "text": "We build the site structure and write all the copy: clear, persuasive and optimised for Google. You approve it." },
+      { "label": "Phase 4", "title": "Design & build", "text": "Structure and copy become a real website. Custom-designed, responsive, technically clean — page by page." },
+      { "label": "Phase 5", "title": "Review & polish", "text": "You review everything at your own pace. We implement your change requests until it's right." },
+      { "label": "Phase 6", "title": "Go-Live", "text": "Domain, hosting, search engine registration — we get your site safely online and explain everything you need to know." }
+    ],
+    "cta": {
+      "text": "Sounds good? Then let's start with Phase 1.",
+      "button": "Request a project"
+    }
+  },
+  "about": {
+    "title": "About – The Idea Behind Operiva | Operiva",
+    "description": "Operiva combines web design and automation. Learn how we work and what we stand for.",
+    "eyebrow": "About",
+    "h1": "About Operiva",
+    "paragraphs": [
+      "Operiva grew from a simple conviction: a good website is just the beginning. The real leverage lies in what happens next — when enquiries are handled automatically, appointments coordinate themselves and processes run in the background.",
+      "We combine the two: thoughtful web design and intelligent automation. For you, that means one point of contact instead of many, clear processes instead of endless back-and-forth, and solutions that genuinely fit your business.",
+      "“A&D — Animations & Designs” reflects our standard: carefully crafted, technically precise, with an eye for detail. Whether you're a trades business, a practice or a growing company — we work as equals and explain rather than confuse."
+    ],
+    "valuesTitle": "What we stand for",
+    "values": [
+      { "title": "Honest", "text": "We recommend what you need. Nothing more." },
+      { "title": "Clear", "text": "No jargon. You understand what we do." },
+      { "title": "Reliable", "text": "What we promise, we deliver." }
+    ],
+    "cta": {
+      "text": "Let's talk about your project.",
+      "button": "Get in touch"
+    }
+  },
+  "contact": {
+    "title": "Contact – Request a Project | Operiva",
+    "description": "Tell us about your project. We'll get back to you quickly with an honest first assessment — free and without obligation.",
+    "eyebrow": "Contact",
+    "h1": "Let's get started",
+    "intro": "Tell us briefly what it's about. We'll get back to you promptly with an honest first assessment — free and without obligation.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "company": "Company",
+      "companyOptional": "optional",
+      "topic": "What's it about?",
+      "topicPlaceholder": "Please select …",
+      "topicWebsite": "Website",
+      "topicAutomation": "Automation",
+      "topicBoth": "Both",
+      "topicOther": "Other",
+      "message": "Your message",
+      "privacyBefore": "I have read and agree to the ",
+      "privacyLink": "privacy policy",
+      "privacyAfter": ".",
+      "submit": "Send enquiry",
+      "sending": "Sending …",
+      "required": "Required",
+      "errorRequired": "Please fill in this field.",
+      "errorEmail": "Please enter a valid email address.",
+      "errorPrivacy": "Please agree to the privacy policy.",
+      "errorGeneric": "Something went wrong while sending. Please try again or email us directly."
+    },
+    "success": {
+      "title": "Thank you!",
+      "text": "Your message has arrived. We usually reply within one to two business days."
+    },
+    "alt": {
+      "label": "Prefer direct?",
+      "text": "Email us:",
+      "email": "[EMAIL PLACEHOLDER]"
+    }
+  },
+  "references": {
+    "title": "References | Operiva",
+    "description": "Selected projects by Operiva.",
+    "eyebrow": "References",
+    "h1": "Selected projects",
+    "intro": "This page is prepared and will be filled with the first published projects.",
+    "placeholder": "Coming soon."
+  },
+  "imprint": {
+    "title": "Imprint | Operiva",
+    "description": "Imprint of the Operiva web agency.",
+    "h1": "Imprint",
+    "provider": "Information pursuant to § 5 DDG (German Digital Services Act):",
+    "addressLines": ["[Full name / company name]", "[Street & number]", "[Postal code, city]", "[Country]"],
+    "contactTitle": "Contact",
+    "phone": "Phone:",
+    "phoneValue": "[optional]",
+    "email": "Email:",
+    "emailValue": "[email placeholder]",
+    "responsibleTitle": "Responsible for content pursuant to § 18 (2) MStV:",
+    "responsibleValue": "[Name, address]",
+    "vatNote": "[if applicable: VAT ID pursuant to § 27a UStG: …]",
+    "smallBusinessNote": "[if applicable: small business pursuant to § 19 UStG — no VAT shown]",
+    "warning": "These details must be completed in full before go-live. Missing imprint information can trigger legal warnings (Abmahnung)."
+  },
+  "privacy": {
+    "title": "Privacy Policy | Operiva",
+    "description": "Privacy policy of the Operiva web agency pursuant to the GDPR.",
+    "eyebrow": "Legal",
+    "h1": "Privacy Policy",
+    "intro": "We take the protection of your personal data seriously and treat it confidentially and in accordance with statutory regulations. This policy explains which data we process when you visit this website, for what purpose and on what legal basis.",
+    "updated": "Last updated: [enter date before go-live]",
+    "warning": "This privacy policy contains placeholders (e.g. hosting provider, contact details). It must be completed with the actual information and legally reviewed before go-live.",
+    "sections": [
+      {
+        "title": "1. Controller",
+        "paragraphs": [
+          "The controller responsible for processing personal data on this website is the provider named in the imprint. Please refer to our imprint for the full contact details."
+        ]
+      },
+      {
+        "title": "2. Hosting",
+        "paragraphs": [
+          "This website is hosted by an external service provider ([hosting provider, address]). Any data collected in this context is processed on the provider's servers. The basis is our legitimate interest in providing our website securely and reliably (Art. 6(1)(f) GDPR). A data processing agreement (Art. 28 GDPR) is in place with the provider."
+        ]
+      },
+      {
+        "title": "3. Server log files",
+        "paragraphs": [
+          "When you access this website, the hosting provider automatically collects information in so-called server log files that your browser transmits: browser type and version, operating system used, referrer URL, hostname of the accessing device, time of the server request and the IP address.",
+          "This data is not merged with other data sources. Processing is based on Art. 6(1)(f) GDPR for the technical provision and security of the website. The log files are deleted after a short period."
+        ]
+      },
+      {
+        "title": "4. Contact form",
+        "paragraphs": [
+          "When you send us an enquiry via the contact form, your details (name, email address, company where applicable, subject and message) are stored in order to process the enquiry and in case of follow-up questions.",
+          "The form is sent via the Formspree service (Formspree, Inc., USA). The data you enter is transmitted to Formspree and processed there. This constitutes a transfer to a third country (USA); it is based on appropriate safeguards (EU standard contractual clauses).",
+          "The legal basis is your consent (Art. 6(1)(a) GDPR) as well as our legitimate interest in answering your enquiry or the initiation of a contract (Art. 6(1)(b) and (f) GDPR). You may withdraw your consent at any time with effect for the future."
+        ]
+      },
+      {
+        "title": "5. Fonts (self-hosted)",
+        "paragraphs": [
+          "This website uses only locally embedded fonts. There is no connection to third-party servers (e.g. Google Fonts); your IP address is not transmitted to third parties."
+        ]
+      },
+      {
+        "title": "6. Cookies & tracking",
+        "paragraphs": [
+          "This website does not use tracking or analytics cookies and does not embed any third-party advertising or analytics services. No user tracking takes place."
+        ]
+      },
+      {
+        "title": "7. Your rights",
+        "paragraphs": [
+          "Within the framework of the applicable statutory provisions, you have the following rights at any time:"
+        ],
+        "items": [
+          "Access to the data stored about you (Art. 15 GDPR)",
+          "Rectification of inaccurate data (Art. 16 GDPR)",
+          "Erasure of your data (Art. 17 GDPR)",
+          "Restriction of processing (Art. 18 GDPR)",
+          "Data portability (Art. 20 GDPR)",
+          "Objection to processing (Art. 21 GDPR)",
+          "Withdrawal of consent with effect for the future",
+          "Lodging a complaint with a data protection supervisory authority (Art. 77 GDPR)"
+        ]
+      },
+      {
+        "title": "8. Currency of this policy",
+        "paragraphs": [
+          "This privacy policy will be updated as soon as the legal situation or the services used on this website change."
+        ]
+      }
+    ]
+  }
+}

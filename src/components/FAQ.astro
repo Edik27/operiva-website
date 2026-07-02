@@ -1,0 +1,103 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  items: { q: string; a: string }[];
+}
+const { eyebrow, title, items } = Astro.props;
+---
+
+<section class="section faq">
+  <div class="container container-narrow">
+    <p class="eyebrow" data-reveal>{eyebrow}</p>
+    <h2 class="faq-title" data-reveal>{title}</h2>
+    <div class="faq-list">
+      {items.map((item, i) => (
+        <details class="faq-item" data-reveal style={`--reveal-delay: ${i * 50}ms`}>
+          <summary class="faq-q">
+            <span>{item.q}</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-a">
+            <p>{item.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-title {
+    font-size: var(--fs-h2);
+    margin-bottom: 2rem;
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .faq-item {
+    border-top: 1px solid var(--color-border);
+  }
+  .faq-item:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.35rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: clamp(1.02rem, 2vw, 1.18rem);
+    color: var(--color-text);
+    transition: color 0.2s var(--ease);
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q:hover { color: var(--color-gold); }
+
+  /* Plus/Minus-Icon */
+  .faq-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+  .faq-icon::before,
+  .faq-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 13px;
+    height: 2px;
+    background: var(--color-gold);
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  .faq-icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .faq-item[open] .faq-icon::after { transform: translate(-50%, -50%) rotate(0); opacity: 0; }
+
+  .faq-a {
+    overflow: hidden;
+    padding-bottom: 1.35rem;
+    max-width: 68ch;
+  }
+  .faq-a p { color: var(--color-text-muted); }
+
+  /* Sanftes Aufklappen (Details unterstützen keine height-Transition,
+     daher dezentes Fade/Slide beim Öffnen) */
+  .faq-item[open] .faq-a {
+    animation: faq-open 0.35s var(--ease);
+  }
+  @keyframes faq-open {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item[open] .faq-a { animation: none; }
+  }
+</style>

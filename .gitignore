@@ -1,0 +1,31 @@
+# Build output
+dist/
+.output/
+
+# Dependencies
+node_modules/
+
+# Astro
+.astro/
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
+
+# Eigene Arbeits-/Notizdateien (nicht deployen)
+operiva-texte.md
+scratchpad/
+scratchpad_dev.log
+*-notes.md
+*-backup.png
+TODO-intern.md

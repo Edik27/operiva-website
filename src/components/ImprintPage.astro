@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from './PageHero.astro';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const im = t.imprint;
+---
+
+<BaseLayout lang={lang} title={im.title} description={im.description}>
+  <PageHero eyebrow={t.footer.legalTitle} h1={im.h1} />
+
+  <section class="section legal">
+    <div class="container container-narrow">
+      <div class="legal-warning" role="note" data-reveal>
+        <span class="warn-icon" aria-hidden="true">!</span>
+        <p>{im.warning}</p>
+      </div>
+
+      <div class="legal-body" data-reveal>
+        <p class="legal-lead">{im.provider}</p>
+        <address class="legal-address">
+          {im.addressLines.map((line, i) => (
+            <>{line}{i < im.addressLines.length - 1 && <br />}</>
+          ))}
+        </address>
+
+        <h2 class="legal-h2">{im.contactTitle}</h2>
+        <p>
+          {im.phone} {im.phoneValue}<br />
+          {im.email} {im.emailValue}
+        </p>
+
+        <p class="legal-note">{im.vatNote}</p>
+        <p class="legal-note">{im.smallBusinessNote}</p>
+
+        <h2 class="legal-h2">{im.responsibleTitle}</h2>
+        <address class="legal-address">
+          {im.responsibleValue}
+        </address>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-warning {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: start;
+    padding: 1rem 1.25rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--color-gold);
+    border-radius: var(--radius-sm);
+    background: var(--color-gold-dim);
+  }
+  .warn-icon {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    color: var(--color-on-gold);
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .legal-warning p { color: var(--color-text); font-size: 0.92rem; }
+
+  .legal-body p { margin-bottom: 1.1rem; }
+  .legal-lead { font-weight: 600; color: var(--color-text); }
+  .legal-address {
+    font-style: normal;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .legal-h2 {
+    font-size: var(--fs-h3);
+    margin: 2rem 0 0.75rem;
+  }
+  .legal-note { font-size: 0.9rem; color: var(--color-text-faint); }
+</style>

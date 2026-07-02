@@ -1,0 +1,111 @@
+---
+import { alternatePath, type Lang } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  faq?: { q: string; a: string }[];
+}
+
+const { title, description, lang, faq } = Astro.props;
+
+const site = Astro.site ?? new URL('https://www.operiva.com');
+const pathname = Astro.url.pathname;
+const logoUrl = new URL('/logo.png', site).href;
+
+// --- Structured Data (JSON-LD) ---
+// Organization + WebSite auf jeder Seite; FAQPage nur, wenn faq-Prop übergeben wird.
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': new URL('/#organization', site).href,
+  name: 'Operiva',
+  url: site.href,
+  logo: logoUrl,
+  image: logoUrl,
+  slogan: 'A&D — Animations & Designs',
+  description:
+    lang === 'de'
+      ? 'Professionelle Websites und smarte Automationen für Unternehmen.'
+      : 'Professional websites and smart automation for businesses.',
+  knowsAbout: ['Webdesign', 'Webentwicklung', 'Automatisierung', 'n8n', 'SEO'],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': new URL('/#website', site).href,
+  url: site.href,
+  name: 'Operiva',
+  inLanguage: lang === 'de' ? 'de-DE' : 'en',
+  publisher: { '@id': new URL('/#organization', site).href },
+};
+
+const faqSchema =
+  faq && faq.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faq.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      }
+    : null;
+
+// Kanonische URL dieser Seite
+const canonical = new URL(pathname, site).href;
+
+// hreflang-Alternates: DE, EN und x-default (zeigt auf DE)
+const dePath = alternatePath(pathname, 'de');
+const enPath = alternatePath(pathname, 'en');
+const deUrl = new URL(dePath, site).href;
+const enUrl = new URL(enPath, site).href;
+
+// Open-Graph-Vorschaubild (aus dem Logo abgeleitet). PLATZHALTER bis og-image vorliegt.
+const ogImage = new URL('/og-image.png', site).href;
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- Sprach-Alternates -->
+<link rel="alternate" hreflang="de" href={deUrl} />
+<link rel="alternate" hreflang="en" href={enUrl} />
+<link rel="alternate" hreflang="x-default" href={deUrl} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Operiva" />
+<meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+
+<!-- Twitter/X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Favicon (aus logo.png ableiten — siehe README) -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="theme-color" content="#0d0d0d" />
+
+<!-- Font-Preload: kritische Schnitte vorladen (kein Text-Flackern, besserer LCP) -->
+<link rel="preload" href="/fonts/space-grotesk-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}

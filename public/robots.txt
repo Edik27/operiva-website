@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# ⚠️ PLATZHALTER: Domain vor Go-Live prüfen (muss zur echten Produktions-URL passen).
+Sitemap: https://www.operiva.com/sitemap-index.xml

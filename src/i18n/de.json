@@ -1,0 +1,322 @@
+{
+  "meta": {
+    "lang": "de",
+    "locale": "de-DE",
+    "siteName": "Operiva"
+  },
+  "nav": {
+    "home": "Start",
+    "services": "Leistungen",
+    "process": "So arbeiten wir",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "references": "Referenzen",
+    "menuLabel": "Menü",
+    "closeLabel": "Menü schließen",
+    "langLabel": "Sprache",
+    "cta": "Projekt anfragen"
+  },
+  "common": {
+    "trust": "Kostenlos & unverbindlich · Antwort in 1–2 Werktagen · Kein Tracking",
+    "mobileCta": "Projekt anfragen"
+  },
+  "footer": {
+    "tagline": "A&D — Animations & Designs",
+    "blurb": "Websites & Automationen aus einer Hand.",
+    "navTitle": "Navigation",
+    "legalTitle": "Rechtliches",
+    "langTitle": "Sprache",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "home": {
+    "title": "Operiva – Websites & Automationen aus einer Hand",
+    "description": "Professionelle Websites und smarte Automationen für Unternehmen. Individuell gestaltet, schnell umgesetzt, fair kalkuliert. Jetzt Projekt anfragen.",
+    "hero": {
+      "claim": "A&D — Animations & Designs",
+      "h1": "Websites & Automationen aus einer Hand",
+      "sub": "Wir bauen Ihnen eine Website, die verkauft — und Prozesse, die im Hintergrund für Sie arbeiten. Schnell umgesetzt, fair kalkuliert.",
+      "ctaPrimary": "Projekt anfragen",
+      "ctaSecondary": "Leistungen ansehen"
+    },
+    "teaser": {
+      "eyebrow": "Leistungen",
+      "websitesTitle": "Websites",
+      "websitesText": "Moderne, schnelle Websites, die auf jedem Gerät überzeugen. Individuell gestaltet, suchmaschinenoptimiert, startklar.",
+      "automationTitle": "Automationen",
+      "automationText": "Wiederkehrende Aufgaben laufen automatisch: Anfragen, Termine, E-Mails, Datenübergaben. Sie sparen Zeit, wir richten es ein."
+    },
+    "process": {
+      "eyebrow": "So arbeiten wir",
+      "text": "Von der ersten Idee bis zur fertigen Seite in sechs klaren Schritten. Kein Rätselraten, kein Fachchinesisch — Sie wissen immer, wo Ihr Projekt steht.",
+      "steps": ["Briefing", "Inhalte", "Texte", "Design", "Review", "Go-Live"],
+      "link": "So arbeiten wir"
+    },
+    "why": {
+      "eyebrow": "Warum Operiva",
+      "items": [
+        {
+          "title": "Zwei Gewerke, ein Ansprechpartner",
+          "text": "Website und Automatisierung greifen ineinander. Kein Abstimmen zwischen mehreren Dienstleistern."
+        },
+        {
+          "title": "Schnell startklar",
+          "text": "Klare Prozesse statt endloser Schleifen. Ihre Seite geht zügig online."
+        },
+        {
+          "title": "Fair kalkuliert",
+          "text": "Transparente Preise, zugeschnitten auf kleine und mittlere Unternehmen."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Häufige Fragen",
+      "items": [
+        {
+          "q": "Was kostet eine Website oder Automation?",
+          "a": "Das hängt vom Umfang ab — eine schlanke Landingpage ist etwas anderes als eine mehrseitige Website mit angebundenen Abläufen. Statt Paketen von der Stange kalkulieren wir fair und transparent, zugeschnitten auf das, was Sie wirklich brauchen. Die erste Einschätzung ist kostenlos und unverbindlich."
+        },
+        {
+          "q": "Wie lange dauert es bis zur fertigen Seite?",
+          "a": "Die meisten Websites gehen innerhalb weniger Wochen online — abhängig vom Umfang und davon, wie schnell Inhalte und Freigaben von Ihnen kommen. Durch unsere sechs klaren Phasen wissen Sie jederzeit, wo Ihr Projekt steht."
+        },
+        {
+          "q": "Brauche ich überhaupt Automationen?",
+          "a": "Nicht zwingend — und wir reden sie Ihnen auch nicht ein. Wenn Sie aber immer wieder dieselben Handgriffe machen (Anfragen sortieren, Termine bestätigen, Daten übertragen), sparen Automationen schnell spürbar Zeit. Wir schauen ehrlich, ob und wo es sich für Sie lohnt."
+        },
+        {
+          "q": "Kümmern Sie sich auch um Domain und Hosting?",
+          "a": "Ja. Auf Wunsch übernehmen wir Domain-Registrierung, die Einrichtung des Hostings und die Suchmaschinen-Anmeldung — und erklären Ihnen, was dahintersteckt. Um das Technische müssen Sie sich nicht kümmern."
+        },
+        {
+          "q": "Ich habe schon eine Website. Können Sie damit arbeiten?",
+          "a": "Meistens ja. Ob Überarbeitung, Relaunch oder Ergänzung um Automationen — wir schauen uns Ihren Ist-Stand an und empfehlen den sinnvollsten Weg, statt pauschal alles neu zu bauen."
+        },
+        {
+          "q": "Fallen laufende Kosten an?",
+          "a": "Domain und Hosting verursachen kleine laufende Kosten — das ist bei jeder Website so. Darüber hinaus entscheiden Sie: Viele Kunden betreuen ihre Seite selbst, andere buchen uns für Pflege und Weiterentwicklung. Womit Sie rechnen müssen, sagen wir Ihnen vorab klar."
+        },
+        {
+          "q": "Wie steht es um den Datenschutz?",
+          "a": "Wir bauen datensparsam: lokale Schriften statt Google-Fonts, kein Tracking, keine unnötigen Cookies. Das ist nicht nur DSGVO-freundlich, sondern auch schneller und respektvoller gegenüber Ihren Besuchern."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Bereit für Ihren Auftritt?",
+      "text": "Erzählen Sie uns von Ihrem Projekt — die erste Einschätzung ist kostenlos.",
+      "button": "Projekt anfragen"
+    }
+  },
+  "services": {
+    "title": "Leistungen – Websites & Automationen | Operiva",
+    "description": "Individuelle Websites und maßgeschneiderte Automationen. Von der Landingpage bis zum automatisierten Workflow — alles aus einer Hand.",
+    "eyebrow": "Leistungen",
+    "h1": "Was wir für Sie tun",
+    "intro": "Zwei Leistungen, die zusammengehören. Wir bringen Ihr Unternehmen online — und sorgen dafür, dass im Hintergrund alles von selbst läuft.",
+    "websites": {
+      "h2": "Websites, die arbeiten",
+      "text": "Ihre Website ist Ihr digitales Aushängeschild — und oft der erste Eindruck. Wir gestalten sie individuell, schnell und so, dass aus Besuchern Kunden werden.",
+      "items": [
+        { "title": "Individuelles Design", "text": "kein Baukasten, kein Template von der Stange. Ihr Auftritt, Ihre Marke." },
+        { "title": "Schnell & technisch sauber", "text": "optimierte Ladezeiten, sauberer Code, Top-Bewertungen bei Google." },
+        { "title": "Für jedes Gerät", "text": "sieht auf Handy, Tablet und Desktop gleich gut aus." },
+        { "title": "Suchmaschinenoptimiert", "text": "damit Kunden Sie finden, nicht nur die Konkurrenz." },
+        { "title": "Startklar", "text": "inklusive Kontaktformular, Impressum und rechtlicher Basis." }
+      ]
+    },
+    "automation": {
+      "h2": "Automationen, die Zeit sparen",
+      "text": "Immer die gleichen Handgriffe? Das muss nicht sein. Wir automatisieren wiederkehrende Abläufe, damit Sie sich auf Ihr Geschäft konzentrieren können.",
+      "items": [
+        { "title": "Anfragen & Formulare", "text": "Eingänge landen automatisch dort, wo sie hingehören." },
+        { "title": "Termine & Erinnerungen", "text": "Buchungen, Bestätigungen, Follow-ups ohne manuellen Aufwand." },
+        { "title": "E-Mail-Workflows", "text": "automatische Antworten, Weiterleitungen, Benachrichtigungen." },
+        { "title": "Datenübergaben", "text": "Tools verbinden, Daten fließen lassen, doppelte Arbeit vermeiden." },
+        { "title": "Individuell gedacht", "text": "wir schauen uns Ihre Abläufe an und automatisieren, was sich lohnt." }
+      ]
+    },
+    "cta": {
+      "text": "Nicht sicher, was Sie brauchen? Wir beraten Sie ehrlich — auch wenn es am Ende weniger ist als gedacht.",
+      "button": "Kostenlos anfragen"
+    }
+  },
+  "process": {
+    "title": "So arbeiten wir – In 6 Schritten zur Website | Operiva",
+    "description": "Unser Prozess in sechs klaren Phasen: von Briefing bis Go-Live. Transparent, planbar und ohne Fachchinesisch.",
+    "eyebrow": "So arbeiten wir",
+    "h1": "So läuft Ihr Projekt ab",
+    "intro": "Eine Website beauftragen soll sich nicht wie ein Sprung ins Ungewisse anfühlen. Deshalb arbeiten wir in sechs klaren Phasen — Sie wissen jederzeit, was passiert und was als Nächstes kommt.",
+    "steps": [
+      { "label": "Phase 1", "title": "Briefing & Anforderungen", "text": "Wir lernen Ihr Unternehmen kennen: Was Sie anbieten, wen Sie erreichen wollen und was die Website leisten soll. Am Ende steht ein klares Bild." },
+      { "label": "Phase 2", "title": "Inhalte & Assets", "text": "Logo, Bilder, bestehende Texte — wir sammeln alles Vorhandene. Was fehlt, gestalten oder schreiben wir für Sie." },
+      { "label": "Phase 3", "title": "Texte & Struktur", "text": "Wir bauen die Seitenstruktur und schreiben alle Texte: verständlich, überzeugend und für Google optimiert. Sie geben frei." },
+      { "label": "Phase 4", "title": "Design & Umsetzung", "text": "Aus Struktur und Texten wird eine echte Website. Individuell gestaltet, responsiv, technisch sauber — Seite für Seite." },
+      { "label": "Phase 5", "title": "Review & Feinschliff", "text": "Sie schauen alles in Ruhe an. Ihre Änderungswünsche setzen wir um, bis es passt." },
+      { "label": "Phase 6", "title": "Go-Live", "text": "Domain, Hosting, Suchmaschinen-Anmeldung — wir bringen Ihre Seite sicher online und erklären Ihnen alles Wichtige." }
+    ],
+    "cta": {
+      "text": "Klingt gut? Dann starten wir mit Phase 1.",
+      "button": "Projekt anfragen"
+    }
+  },
+  "about": {
+    "title": "Über uns – Die Idee hinter Operiva | Operiva",
+    "description": "Operiva verbindet Webdesign und Automatisierung. Lernen Sie kennen, wie wir arbeiten und wofür wir stehen.",
+    "eyebrow": "Über uns",
+    "h1": "Über Operiva",
+    "paragraphs": [
+      "Operiva ist aus einer einfachen Überzeugung entstanden: Eine gute Website ist erst der Anfang. Der wahre Hebel liegt darin, was danach passiert — wenn Anfragen automatisch bearbeitet, Termine von selbst koordiniert und Abläufe im Hintergrund erledigt werden.",
+      "Wir verbinden beides: durchdachtes Webdesign und intelligente Automatisierung. Das bedeutet für Sie einen Ansprechpartner statt vieler, klare Prozesse statt endloser Abstimmung und Lösungen, die wirklich zu Ihrem Unternehmen passen.",
+      "„A&D — Animations & Designs“ steht für unseren Anspruch: sorgfältig gestaltet, technisch präzise, mit einem Blick fürs Detail. Ob Handwerksbetrieb, Praxis oder wachsendes Unternehmen — wir arbeiten auf Augenhöhe und erklären, statt zu verwirren."
+    ],
+    "valuesTitle": "Wofür wir stehen",
+    "values": [
+      { "title": "Ehrlich", "text": "Wir empfehlen, was Sie brauchen. Nicht mehr." },
+      { "title": "Klar", "text": "Kein Fachchinesisch. Sie verstehen, was wir tun." },
+      { "title": "Verlässlich", "text": "Was wir zusagen, halten wir." }
+    ],
+    "cta": {
+      "text": "Lassen Sie uns über Ihr Projekt sprechen.",
+      "button": "Kontakt aufnehmen"
+    }
+  },
+  "contact": {
+    "title": "Kontakt – Projekt anfragen | Operiva",
+    "description": "Erzählen Sie uns von Ihrem Projekt. Wir melden uns schnell mit einer ehrlichen Ersteinschätzung — kostenlos und unverbindlich.",
+    "eyebrow": "Kontakt",
+    "h1": "Lassen Sie uns starten",
+    "intro": "Erzählen Sie uns kurz, worum es geht. Wir melden uns zeitnah mit einer ehrlichen Ersteinschätzung — kostenlos und unverbindlich.",
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "company": "Unternehmen",
+      "companyOptional": "optional",
+      "topic": "Worum geht es?",
+      "topicPlaceholder": "Bitte auswählen …",
+      "topicWebsite": "Website",
+      "topicAutomation": "Automatisierung",
+      "topicBoth": "Beides",
+      "topicOther": "Sonstiges",
+      "message": "Ihre Nachricht",
+      "privacyBefore": "Ich habe die ",
+      "privacyLink": "Datenschutzerklärung",
+      "privacyAfter": " gelesen und stimme zu.",
+      "submit": "Anfrage senden",
+      "sending": "Wird gesendet …",
+      "required": "Pflichtfeld",
+      "errorRequired": "Bitte füllen Sie dieses Feld aus.",
+      "errorEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "errorPrivacy": "Bitte stimmen Sie der Datenschutzerklärung zu.",
+      "errorGeneric": "Beim Senden ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt per E-Mail."
+    },
+    "success": {
+      "title": "Danke!",
+      "text": "Ihre Nachricht ist angekommen. Wir melden uns in der Regel innerhalb von ein bis zwei Werktagen."
+    },
+    "alt": {
+      "label": "Lieber direkt?",
+      "text": "Schreiben Sie an:",
+      "email": "[E-MAIL-PLATZHALTER]"
+    }
+  },
+  "references": {
+    "title": "Referenzen | Operiva",
+    "description": "Ausgewählte Projekte von Operiva.",
+    "eyebrow": "Referenzen",
+    "h1": "Ausgewählte Projekte",
+    "intro": "Diese Seite ist vorbereitet und wird mit den ersten veröffentlichten Projekten gefüllt.",
+    "placeholder": "Bald verfügbar."
+  },
+  "imprint": {
+    "title": "Impressum | Operiva",
+    "description": "Impressum der Operiva Web-Agentur.",
+    "h1": "Impressum",
+    "provider": "Angaben gemäß § 5 DDG:",
+    "addressLines": ["[Vollständiger Name / Firmenname]", "[Straße & Hausnummer]", "[PLZ Ort]", "[Land]"],
+    "contactTitle": "Kontakt",
+    "phone": "Telefon:",
+    "phoneValue": "[optional]",
+    "email": "E-Mail:",
+    "emailValue": "[E-Mail-Platzhalter]",
+    "responsibleTitle": "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:",
+    "responsibleValue": "[Name, Adresse]",
+    "vatNote": "[falls zutreffend: Umsatzsteuer-ID gemäß § 27a UStG: …]",
+    "smallBusinessNote": "[falls zutreffend: Kleinunternehmer gemäß § 19 UStG — kein Ausweis der Umsatzsteuer]",
+    "warning": "Diese Angaben müssen vor Go-Live vollständig ausgefüllt werden. Fehlende Impressumsangaben sind abmahnfähig."
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung | Operiva",
+    "description": "Datenschutzerklärung der Operiva Web-Agentur gemäß DSGVO.",
+    "eyebrow": "Rechtliches",
+    "h1": "Datenschutzerklärung",
+    "intro": "Wir nehmen den Schutz Ihrer personenbezogenen Daten ernst und behandeln sie vertraulich sowie entsprechend der gesetzlichen Vorschriften. Diese Erklärung informiert Sie darüber, welche Daten wir beim Besuch dieser Website verarbeiten, zu welchem Zweck und auf welcher Rechtsgrundlage.",
+    "updated": "Stand: [Datum vor Go-Live eintragen]",
+    "warning": "Diese Datenschutzerklärung enthält Platzhalter (z. B. Hosting-Anbieter, Kontaktdaten). Sie muss vor Go-Live mit den tatsächlichen Angaben vervollständigt und rechtlich geprüft werden.",
+    "sections": [
+      {
+        "title": "1. Verantwortlicher",
+        "paragraphs": [
+          "Verantwortlich für die Verarbeitung personenbezogener Daten auf dieser Website ist der im Impressum genannte Anbieter. Die vollständigen Kontaktdaten entnehmen Sie bitte unserem Impressum."
+        ]
+      },
+      {
+        "title": "2. Hosting",
+        "paragraphs": [
+          "Diese Website wird bei einem externen Dienstleister gehostet ([Hosting-Anbieter, Anschrift]). Die dabei anfallenden Daten werden auf den Servern des Anbieters verarbeitet. Grundlage ist unser berechtigtes Interesse an einer sicheren und zuverlässigen Bereitstellung unserer Website (Art. 6 Abs. 1 lit. f DSGVO). Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung (Art. 28 DSGVO)."
+        ]
+      },
+      {
+        "title": "3. Server-Logfiles",
+        "paragraphs": [
+          "Beim Aufruf dieser Website erhebt der Hosting-Anbieter automatisch Informationen in sogenannten Server-Logfiles, die Ihr Browser übermittelt: Browsertyp und -version, verwendetes Betriebssystem, Referrer-URL, Hostname des zugreifenden Rechners, Uhrzeit der Serveranfrage und die IP-Adresse.",
+          "Diese Daten werden nicht mit anderen Datenquellen zusammengeführt. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO zur technischen Bereitstellung und Sicherheit der Website. Die Logfiles werden nach kurzer Zeit gelöscht."
+        ]
+      },
+      {
+        "title": "4. Kontaktformular",
+        "paragraphs": [
+          "Wenn Sie uns über das Kontaktformular eine Anfrage senden, werden Ihre Angaben (Name, E-Mail-Adresse, ggf. Unternehmen, Betreff und Nachricht) zum Zweck der Bearbeitung der Anfrage und für den Fall von Anschlussfragen gespeichert.",
+          "Der Versand erfolgt über den Dienst Formspree (Formspree, Inc., USA). Dabei werden die von Ihnen eingegebenen Daten an Formspree übermittelt und dort verarbeitet. Es handelt sich um eine Übermittlung in ein Drittland (USA); sie wird auf geeignete Garantien (EU-Standardvertragsklauseln) gestützt.",
+          "Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sowie unser berechtigtes Interesse an der Beantwortung Ihrer Anfrage bzw. die Anbahnung eines Vertrags (Art. 6 Abs. 1 lit. b und f DSGVO). Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen."
+        ]
+      },
+      {
+        "title": "5. Schriftarten (lokal gehostet)",
+        "paragraphs": [
+          "Diese Website verwendet ausschließlich lokal eingebundene Schriftarten. Es besteht dabei keine Verbindung zu Servern Dritter (z. B. Google Fonts); Ihre IP-Adresse wird nicht an Dritte übertragen."
+        ]
+      },
+      {
+        "title": "6. Cookies & Tracking",
+        "paragraphs": [
+          "Diese Website setzt keine Tracking- oder Analyse-Cookies ein und bindet keine Werbe- oder Analysedienste Dritter ein. Ein Nutzer-Tracking findet nicht statt."
+        ]
+      },
+      {
+        "title": "7. Ihre Rechte",
+        "paragraphs": [
+          "Ihnen stehen im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit folgende Rechte zu:"
+        ],
+        "items": [
+          "Auskunft über die zu Ihrer Person gespeicherten Daten (Art. 15 DSGVO)",
+          "Berichtigung unrichtiger Daten (Art. 16 DSGVO)",
+          "Löschung Ihrer Daten (Art. 17 DSGVO)",
+          "Einschränkung der Verarbeitung (Art. 18 DSGVO)",
+          "Datenübertragbarkeit (Art. 20 DSGVO)",
+          "Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)",
+          "Widerruf einer erteilten Einwilligung mit Wirkung für die Zukunft",
+          "Beschwerde bei einer Datenschutz-Aufsichtsbehörde (Art. 77 DSGVO)"
+        ]
+      },
+      {
+        "title": "8. Aktualität dieser Erklärung",
+        "paragraphs": [
+          "Diese Datenschutzerklärung wird angepasst, sobald sich die Rechtslage oder die auf dieser Website eingesetzten Dienste ändern."
+        ]
+      }
+    ]
+  }
+}

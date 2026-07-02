@@ -1,0 +1,77 @@
+---
+import { useTranslations, path, pageIdFromPath, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Auf der Kontaktseite selbst ausblenden (dort ist das Formular ja schon da).
+const currentPage = pageIdFromPath(Astro.url.pathname);
+const hide = currentPage === 'contact';
+---
+
+{!hide && (
+  <a class="mobile-cta-bar" href={path('contact', lang)} data-mobile-cta>
+    {t.common.mobileCta}
+    <span aria-hidden="true" class="mobile-cta-arrow">→</span>
+  </a>
+)}
+
+<style>
+  .mobile-cta-bar {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 90;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.95rem 1.25rem;
+    font-family: var(--font-head);
+    font-weight: 500;
+    color: var(--color-on-gold);
+    background: var(--color-gold);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.7);
+    /* startet unsichtbar, wird per JS beim Scrollen eingeblendet */
+    opacity: 0;
+    transform: translateY(120%);
+    transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+    pointer-events: none;
+  }
+  .mobile-cta-bar.is-shown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .mobile-cta-arrow { transition: transform 0.25s var(--ease); }
+
+  /* Nur auf kleinen Screens (dort ist der Header-CTA ausgeblendet) */
+  @media (max-width: 900px) {
+    .mobile-cta-bar { display: inline-flex; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-cta-bar {
+      transition: opacity 0.001ms;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Sticky-CTA erst nach etwas Scrollen zeigen (nicht sofort über dem Hero).
+  const bar = document.querySelector('[data-mobile-cta]');
+  if (bar) {
+    const onScroll = () => {
+      if (window.scrollY > 500) bar.classList.add('is-shown');
+      else bar.classList.remove('is-shown');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>
