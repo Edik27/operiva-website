@@ -228,6 +228,8 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
   .form-submit[disabled] { opacity: 0.65; cursor: default; }
 
   /* Erfolgs-Panel */
+  /* hidden-Attribut muss das display:flex überstimmen, sonst immer sichtbar */
+  .form-success[hidden] { display: none; }
   .form-success {
     display: flex;
     flex-direction: column;

@@ -3,12 +3,25 @@ interface Props {
   eyebrow?: string;
   h1: string;
   intro?: string;
+  watermark?: boolean;
 }
-const { eyebrow, h1, intro } = Astro.props;
+const { eyebrow, h1, intro, watermark = false } = Astro.props;
 ---
 
-<section class="page-hero">
+<section class:list={['page-hero', { 'has-watermark': watermark }]} data-glow>
   <div class="page-hero-glow" aria-hidden="true"></div>
+  {watermark && (
+    <img
+      class="page-hero-watermark"
+      src="/logo.png"
+      alt=""
+      aria-hidden="true"
+      width="560"
+      height="560"
+      loading="lazy"
+      decoding="async"
+    />
+  )}
   <div class="container page-hero-inner">
     {eyebrow && <p class="eyebrow" data-reveal>{eyebrow}</p>}
     <h1 class="page-hero-title" data-reveal style="--reveal-delay: 60ms">{h1}</h1>
@@ -40,6 +53,30 @@ const { eyebrow, h1, intro } = Astro.props;
   .page-hero-inner {
     position: relative;
     z-index: 1;
+  }
+
+  /* etwas mehr Höhe, damit das Lorbeer-Wasserzeichen atmen kann */
+  .page-hero.has-watermark {
+    padding-block: clamp(3.5rem, 9vw, 6.5rem) clamp(2rem, 5vw, 3.5rem);
+  }
+  /* dezentes Marken-Wasserzeichen (Lorbeer): rechts, vertikal zentriert, statisch */
+  .page-hero-watermark {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    right: clamp(-24px, 2vw, 56px);
+    translate: 0 -50%;
+    width: clamp(200px, 26vw, 360px);
+    height: auto;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+  @media (max-width: 700px) {
+    .page-hero-watermark {
+      width: clamp(170px, 42vw, 240px);
+      right: -22px;
+      opacity: 0.05;
+    }
   }
   .page-hero-title {
     font-size: var(--fs-h1);

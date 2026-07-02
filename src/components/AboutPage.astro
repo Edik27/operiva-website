@@ -13,7 +13,7 @@ const a = t.about;
 ---
 
 <BaseLayout lang={lang} title={a.title} description={a.description}>
-  <PageHero eyebrow={a.eyebrow} h1={a.h1} />
+  <PageHero eyebrow={a.eyebrow} h1={a.h1} watermark />
 
   <section class="section about-intro">
     <div class="container container-narrow">
@@ -28,11 +28,30 @@ const a = t.about;
       <p class="eyebrow" data-reveal>{a.valuesTitle}</p>
       <div class="values-grid">
         {a.values.map((value, i) => (
-          <div class="value-item" data-reveal style={`--reveal-delay: ${i * 80}ms`}>
-            <span class="value-mark" aria-hidden="true"></span>
+          <article class="value-item" data-reveal data-glow style={`--reveal-delay: ${i * 90}ms`}>
+            <span class="value-icon" aria-hidden="true">
+              {i === 0 && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9" pathLength="1" />
+                  <path d="M8 12.4 11 15.4 16.5 9" pathLength="1" />
+                </svg>
+              )}
+              {i === 1 && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" pathLength="1" />
+                  <circle cx="12" cy="12" r="3" pathLength="1" />
+                </svg>
+              )}
+              {i === 2 && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3 20 6v5c0 5-3.4 8-8 10-4.6-2-8-5-8-10V6l8-3Z" pathLength="1" />
+                  <path d="M8.5 12l2.4 2.5 4.6-5" pathLength="1" />
+                </svg>
+              )}
+            </span>
             <h3 class="value-title">{value.title}</h3>
             <p class="value-text">{value.text}</p>
-          </div>
+          </article>
         ))}
       </div>
     </div>
@@ -54,22 +73,80 @@ const a = t.about;
   .values-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
     margin-top: 1.5rem;
   }
-  .value-item { padding-top: 1.5rem; border-top: 1px solid var(--color-border-strong); }
-  .value-mark {
-    display: block;
-    width: 32px;
-    height: 3px;
-    background: var(--color-gold);
-    margin-bottom: 1.25rem;
-    border-radius: 2px;
+  .value-item {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
   }
+  .value-item:hover {
+    border-color: var(--color-gold);
+    transform: translateY(-4px);
+  }
+  /* Gold-Linie am unteren Rand wächst beim Hover ein */
+  .value-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease);
+  }
+  .value-item:hover::after { transform: scaleX(1); }
+
+  .value-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: var(--color-gold-dim);
+    color: var(--color-gold);
+    margin-bottom: 1.25rem;
+    transition: transform 0.3s var(--ease);
+  }
+  .value-icon svg { width: 26px; height: 26px; }
+  .value-item:hover .value-icon { transform: translateY(-2px); }
+
+  /* Icon zeichnet sich beim Einblenden selbst (stroke-dashoffset), pathLength=1 */
+  .value-icon :is(path, circle) {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.85s var(--ease);
+    transition-delay: calc(var(--reveal-delay, 0ms) + 200ms);
+  }
+  [data-reveal].is-visible .value-icon :is(path, circle) {
+    stroke-dashoffset: 0;
+  }
+  /* beim Hover zeichnet sich das Icon erneut */
+  .value-item:hover .value-icon :is(path, circle) {
+    animation: value-icon-draw 0.9s var(--ease);
+  }
+  @keyframes value-icon-draw {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
+
   .value-title { font-size: var(--fs-h3); margin-bottom: 0.6rem; }
   .value-text { font-size: 1rem; }
 
   @media (max-width: 800px) {
-    .values-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .values-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .value-icon :is(path, circle) { stroke-dashoffset: 0; transition: none; }
+    .value-item:hover .value-icon :is(path, circle) { animation: none; }
   }
 </style>
