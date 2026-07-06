@@ -18,16 +18,21 @@ const p = t.process;
 
   <section class="section">
     <div class="container container-narrow">
-      <div class="process-steps">
-        {p.steps.map((step, i) => (
-          <ProcessStep
-            number={i + 1}
-            total={p.steps.length}
-            label={step.label}
-            title={step.title}
-            text={step.text}
-          />
-        ))}
+      <div class="process-timeline">
+        <svg class="timeline-svg" aria-hidden="true" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <line class="timeline-track" x1="0" y1="0" x2="0" y2="0" />
+          <line class="timeline-progress" x1="0" y1="0" x2="0" y2="0" />
+        </svg>
+        <div class="process-steps">
+          {p.steps.map((step, i) => (
+            <ProcessStep
+              number={i + 1}
+              label={step.label}
+              title={step.title}
+              text={step.text}
+            />
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -41,8 +46,117 @@ const p = t.process;
 </BaseLayout>
 
 <style>
+  .process-timeline { position: relative; }
+  .timeline-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .timeline-track {
+    stroke: var(--color-border-strong);
+    stroke-width: 2;
+  }
+  .timeline-progress {
+    stroke: var(--color-gold);
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
   .process-steps {
-    display: flex;
-    flex-direction: column;
+    position: relative;
+    z-index: 1;
   }
 </style>
+
+<script>
+  // Prozess-Linie: zeichnet sich beim Scrollen progressiv (stroke-dashoffset),
+  // gekoppelt an die Scroll-Position (rAF-gedrosselt). Der erreichte Schritt
+  // erhält eine goldene Füllung. Bei reduced-motion: Linie voll gezeichnet,
+  // Kreise nur golden umrandet (siehe CSS), keine Scroll-Kopplung.
+  const timeline = document.querySelector('.process-timeline') as HTMLElement | null;
+
+  if (timeline) {
+    const svg = timeline.querySelector('.timeline-svg') as SVGSVGElement;
+    const track = timeline.querySelector('.timeline-track') as SVGLineElement;
+    const prog = timeline.querySelector('.timeline-progress') as SVGLineElement;
+    const stepsWrap = timeline.querySelector('.process-steps') as HTMLElement;
+    const nums = Array.from(timeline.querySelectorAll('[data-step-num]')) as HTMLElement[];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let len = 0;
+    let ticking = false;
+
+    // Misst die Kreis-Mittelpunkte und legt Track/Progress-Linie darüber.
+    // Gibt die Viewport-Y-Mitten der Kreise zurück (für Fortschritt & Füllung).
+    const geometry = () => {
+      if (nums.length < 2) return null;
+      const wrap = stepsWrap.getBoundingClientRect();
+      const cs = nums.map((n) => {
+        const r = n.getBoundingClientRect();
+        return { x: (r.left + r.right) / 2, yView: (r.top + r.bottom) / 2 };
+      });
+      const x = cs[0].x - wrap.left;
+      const y1 = cs[0].yView - wrap.top;
+      const y2 = cs[cs.length - 1].yView - wrap.top;
+      len = Math.max(0, y2 - y1);
+      svg.setAttribute('viewBox', `0 0 ${wrap.width} ${wrap.height}`);
+      for (const l of [track, prog]) {
+        l.setAttribute('x1', String(x));
+        l.setAttribute('x2', String(x));
+        l.setAttribute('y1', String(y1));
+        l.setAttribute('y2', String(y2));
+      }
+      prog.style.strokeDasharray = String(len);
+      return cs;
+    };
+
+    const update = () => {
+      ticking = false;
+      const cs = geometry();
+      if (!cs) return;
+      // Anker etwas unterhalb der Viewport-Mitte: Schritte „aktivieren", sobald
+      // sie diese Linie passieren.
+      const anchor = window.innerHeight * 0.55;
+      const span = Math.max(1, cs[cs.length - 1].yView - cs[0].yView);
+      let frac = (anchor - cs[0].yView) / span;
+      frac = Math.min(1, Math.max(0, frac));
+      prog.style.strokeDashoffset = String(len * (1 - frac));
+
+      let active = -1;
+      cs.forEach((c, i) => {
+        if (c.yView <= anchor) active = i;
+      });
+      nums.forEach((n, i) => n.classList.toggle('is-active', i <= active));
+    };
+
+    const drawFull = () => {
+      const cs = geometry();
+      if (!cs) return;
+      prog.style.strokeDashoffset = '0';
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    if (reduce) {
+      drawFull();
+      window.addEventListener('resize', drawFull);
+      (document as any).fonts?.ready.then(drawFull);
+    } else {
+      update();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', update);
+      (document as any).fonts?.ready.then(update);
+      // nach dem Scroll-Reveal-Einblenden neu vermessen
+      setTimeout(update, 300);
+      setTimeout(update, 800);
+    }
+  }
+</script>
