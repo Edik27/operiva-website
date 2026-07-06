@@ -135,6 +135,18 @@ const enHref = alternatePath(pathname, 'en');
     }
     .footer-brand { grid-column: 1 / -1; }
   }
+  /* mobil: größere Tap-Ziele + Platz, damit der fixe CTA-Balken
+     den Footer-Abschluss nicht verdeckt (inkl. iPhone-Safe-Area) */
+  @media (max-width: 900px) {
+    .footer-col a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+    .site-footer {
+      padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
   @media (max-width: 420px) {
     .footer-grid { grid-template-columns: 1fr; }
   }

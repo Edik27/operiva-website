@@ -67,7 +67,7 @@
   --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
 
   /* Fluid Type Scale */
-  --fs-hero: clamp(2.4rem, 6vw, 4.4rem);
+  --fs-hero: clamp(2rem, 6vw, 4.4rem);
   --fs-h1: clamp(2rem, 4.8vw, 3.2rem);
   --fs-h2: clamp(1.55rem, 3.4vw, 2.3rem);
   --fs-h3: clamp(1.2rem, 2.2vw, 1.4rem);
@@ -81,7 +81,7 @@
   --gutter: clamp(1.25rem, 5vw, 2.5rem);
 
   /* Abstände */
-  --space-section: clamp(4rem, 10vw, 7.5rem);
+  --space-section: clamp(2.75rem, 10vw, 7.5rem);
 
   /* Radien & Effekte */
   --radius: 14px;
@@ -117,7 +117,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
+  /* lange dt. Komposita nicht über den Rand laufen lassen */
+  overflow-wrap: break-word;
 }
 
 h1, h2, h3, h4 {
@@ -126,6 +129,9 @@ h1, h2, h3, h4 {
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--color-text);
+  /* Überschriften mit langen Wörtern mobil sauber trennen */
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 p { color: var(--color-text-muted); }
