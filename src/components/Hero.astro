@@ -66,6 +66,10 @@ const words = h1.split(' ');
     pointer-events: none;
     z-index: 0;
     animation: hero-breathe 9s ease-in-out infinite;
+    /* Glow läuft nach unten weich aus → keine harte Kante an der Sektionsgrenze
+       (-webkit- zuerst als Safari/iOS-Fallback) */
+    -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 82%);
+    mask-image: linear-gradient(to bottom, #000 50%, transparent 82%);
   }
   .hero-inner {
     position: relative;

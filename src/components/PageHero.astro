@@ -41,14 +41,20 @@ const { eyebrow, h1, intro, watermark = false } = Astro.props;
   /* dezenter Gold-Schimmer, oben links, klar zurückhaltend */
   .page-hero-glow {
     position: absolute;
-    top: -40%;
+    top: 0;
     left: -8%;
     width: min(680px, 90vw);
-    height: 680px;
-    background: radial-gradient(circle at center, var(--color-gold-glow) 0%, transparent 60%);
+    /* nur der obere Bereich der Sektion — der Glow erreicht die Unterkante nie,
+       daher kein harter Schnitt durch overflow:hidden */
+    height: min(75%, 460px);
+    background: radial-gradient(115% 90% at 32% 0%, var(--color-gold-glow) 0%, transparent 70%);
     opacity: 0.7;
     pointer-events: none;
     z-index: 0;
+    /* löst sich weich auf, lange bevor die Sektionskante kommt
+       (-webkit- zuerst als Safari/iOS-Fallback) */
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
   }
   .page-hero-inner {
     position: relative;
@@ -70,6 +76,9 @@ const { eyebrow, h1, intro, watermark = false } = Astro.props;
     height: auto;
     opacity: 0.08;
     pointer-events: none;
+    /* Lorbeerkranz oben/unten weich ausblenden, falls die Sektion ihn anschneidet */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 80%, transparent 100%);
   }
   @media (max-width: 700px) {
     .page-hero-watermark {
