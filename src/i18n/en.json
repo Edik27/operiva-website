@@ -44,6 +44,7 @@
       "eyebrow": "Services",
       "websitesTitle": "Websites",
       "websitesText": "Modern, fast websites that impress on every device. Custom-designed, SEO-ready, built to launch.",
+      "websitesPrice": "Websites from €490",
       "automationTitle": "Automation",
       "automationText": "Repetitive tasks run on autopilot: enquiries, appointments, emails, data hand-offs. You save time, we set it up."
     },
@@ -76,7 +77,14 @@
       "items": [
         {
           "q": "What does a website or automation cost?",
-          "a": "It depends on the scope — a lean landing page is a different story than a multi-page website with connected workflows. Instead of off-the-shelf packages, we quote fairly and transparently, tailored to what you actually need. The first assessment is free and without obligation."
+          "a": "It depends on the scope — a lean landing page is a different story than a multi-page website with connected workflows. Instead of off-the-shelf packages, we quote fairly and transparently, tailored to what you actually need. The first assessment is free and without obligation.",
+          "link": {
+            "before": "You'll find some orientation in our packages on the ",
+            "label": "services page",
+            "after": ".",
+            "page": "services",
+            "anchor": "#preise"
+          }
         },
         {
           "q": "How long does it take until the site is live?",
@@ -142,6 +150,53 @@
       "text": "Not sure what you need? We'll advise you honestly — even if it turns out to be less than expected.",
       "button": "Enquire for free"
     }
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "Transparent pricing",
+    "intro": "Every project is different — these packages give you an honest orientation. You'll receive your binding quote after a free initial consultation.",
+    "badge": "Popular",
+    "cta": "Request a project",
+    "maintenance": "Optional: care & maintenance from €29/month — updates, security, small changes.",
+    "footnote": "All prices in EUR. The final price depends on project scope — you'll receive a binding quote in advance.",
+    "plans": [
+      {
+        "name": "Landing Page",
+        "price": "from €490",
+        "features": [
+          "One-page website, custom-designed",
+          "Optimised for every device",
+          "Contact form",
+          "SEO essentials",
+          "Legal pages included",
+          "Go-live included"
+        ]
+      },
+      {
+        "name": "Business Website",
+        "price": "from €990",
+        "featured": true,
+        "features": [
+          "Multi-page website (e.g. Home, Services, About, Contact)",
+          "All copy written & SEO-optimised",
+          "Custom design",
+          "Contact form & legal pages",
+          "Sitemap & Google Search Console",
+          "Go-live support"
+        ]
+      },
+      {
+        "name": "Website + Automation",
+        "price": "on request",
+        "features": [
+          "Business website plus automation",
+          "Enquiries flow automatically into your inbox or CRM",
+          "Appointment confirmations & follow-ups without manual work",
+          "Individual analysis of your processes",
+          "All from one team"
+        ]
+      }
+    ]
   },
   "process": {
     "title": "How We Work – Your Website in 6 Steps | Operiva",
@@ -223,12 +278,56 @@
     }
   },
   "references": {
-    "title": "References | Operiva",
-    "description": "Selected projects by Operiva.",
+    "title": "References – Our Work | Operiva",
+    "description": "Four concept projects by Operiva – from a calm gallery presence to a full animation showcase. Fictional businesses, real design.",
     "eyebrow": "References",
-    "h1": "Selected projects",
-    "intro": "This page is prepared and will be filled with the first published projects.",
-    "placeholder": "Coming soon."
+    "h1": "Our Work",
+    "intro": "Four concept projects that show how differently websites can sound — from a calm gallery presence to a full animation showcase. Honestly labelled: everything here is concept, every design is real. Concept demos are in German.",
+    "concepts": {
+      "eyebrow": "Concept projects",
+      "title": "Four industries, four signatures.",
+      "intro": "Fictional businesses, real design: these concept projects show how we adapt tone, layout and motion to each industry.",
+      "badge": "Concept project",
+      "demoLabel": "View live demo",
+      "items": [
+        {
+          "name": "Holzwerk Brandt",
+          "industry": "Carpentry",
+          "text": "Bold and down-to-earth: trust, fixed-price logic, clear services.",
+          "href": "/demos/handwerk/",
+          "img": "/referenzen/handwerk.jpg",
+          "alt": "Screenshot of the Holzwerk Brandt concept demo — carpentry"
+        },
+        {
+          "name": "Salon Marlene",
+          "industry": "Hair salon",
+          "text": "Editorial and soft: magazine layout, elegant price card, booking focus.",
+          "href": "/demos/friseur/",
+          "img": "/referenzen/friseur.jpg",
+          "alt": "Screenshot of the Salon Marlene concept demo — hair salon"
+        },
+        {
+          "name": "Mara Vellin",
+          "industry": "Artist",
+          "text": "Radically reduced: gallery character, large typography, the work at the centre.",
+          "href": "/demos/kunst/",
+          "img": "/referenzen/kunst.jpg",
+          "alt": "Screenshot of the Mara Vellin concept demo — artist"
+        },
+        {
+          "name": "PULS. Studio",
+          "industry": "Fitness studio",
+          "text": "Animation showcase: preloader, kinetic type, 3D effects — the full technical register.",
+          "href": "/demos/fitness/",
+          "img": "/referenzen/fitness.jpg",
+          "alt": "Screenshot of the PULS. Studio concept demo — fitness studio"
+        }
+      ]
+    },
+    "cta": {
+      "text": "Your project could be the first real one on this page.",
+      "button": "Request a project"
+    }
   },
   "imprint": {
     "title": "Imprint | Operiva",

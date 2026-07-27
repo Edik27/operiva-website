@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from './PageHero.astro';
+import PricingSection from './PricingSection.astro';
 import CTASection from './CTASection.astro';
 import { useTranslations, path, type Lang } from '../i18n/utils';
 
@@ -67,6 +68,8 @@ const blocks = [
       </div>
     </section>
   ))}
+
+  <PricingSection lang={lang} />
 
   <CTASection
     text={s.cta.text}

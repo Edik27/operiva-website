@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Mara Vellin — Malerei</title>
+  <meta name="description" content="Konzeptprojekt: abstrakte Malerei, große Formate. Fiktive Demo-Website von Operiva." />
+  <style>
+    /* ============================================================
+       MARA VELLIN — Malerei · Konzeptprojekt / Demo von Operiva
+       Self-contained One-Pager. Galeristisch, radikal reduziert.
+       Weiß · Schwarz · ein Signalrot (nur Mikro-Elemente).
+       ============================================================ */
+
+    :root {
+      --paper:  #fafaf8;   /* Galerie-Weiß */
+      --ink:    #111111;   /* Typo */
+      --red:    #d43425;   /* einziger Akzent — nur Mikro */
+      --gray:   #6b6b68;   /* präziser Sekundärtext */
+      --line:   #e4e4e0;   /* feine Linien */
+      --fill:   #eeeeea;   /* monochrome Fallback-Fläche */
+      --fill-2: #d9d9d3;   /* Werknummer im Fallback */
+
+      --font: "Helvetica Neue", Helvetica, "Arial Nova", Arial, "Inter",
+              system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --maxw: 1440px;
+      --pad: clamp(1.25rem, 5vw, 5rem);
+      --ease: cubic-bezier(0.2, 0, 0, 1);   /* präzise, ohne Bounce */
+      --ease-io: cubic-bezier(0.16, 1, 0.3, 1);   /* Galerie-Etikette */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--paper);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      padding-bottom: 46px;   /* fixierter Banner */
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 0.92;
+      text-transform: uppercase;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
+
+    /* kleine, präzise Auszeichnungszeile */
+    .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .dot { color: var(--red); }
+
+    /* ============================================================
+       HEADER — minimal
+       ============================================================ */
+    header.site {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 80;
+      background: var(--paper);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s var(--ease);
+    }
+    header.site.scrolled { border-bottom-color: var(--line); }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .brand {
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: clamp(1.4rem, 3vw, 2.6rem); list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+      position: relative; padding: 2px 0; color: var(--ink);
+    }
+    .nav-links a::after {
+      content: ""; position: absolute; left: 0; bottom: -2px;
+      width: 0; height: 1.5px; background: var(--red);
+      transition: width 0.28s var(--ease);
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ============================================================
+       HERO — fast leer, riesige Typo, ein angeschnittenes Werk
+       ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 68px;
+      overflow: hidden;
+    }
+    .hero .wrap { position: relative; z-index: 2; }
+    .hero h1 {
+      font-size: clamp(3.25rem, 15vw, 9rem);
+      letter-spacing: -0.045em;
+      line-height: 0.9;
+      max-width: 12ch;
+    }
+    .hero h1 .dot { color: var(--red); }
+    .hero .sub {
+      margin-top: 1.6rem;
+      font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+      letter-spacing: 0.04em;
+      color: var(--gray);
+    }
+    /* angeschnittenes Werk am rechten Rand */
+    .hero-work {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: min(38vw, 520px);
+      z-index: 1;
+      background: var(--fill);
+      overflow: hidden;
+    }
+    .hero-work img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .hero-work img.img-failed { display: none; }
+    .hero-work .num {
+      position: absolute; left: 1.2rem; bottom: 1rem;
+      font-size: 0.68rem; letter-spacing: 0.16em; color: var(--gray);
+    }
+    /* Scroll-Hinweis */
+    .scroll-hint {
+      position: absolute; left: var(--pad); bottom: 1.8rem; z-index: 2;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gray);
+      display: inline-flex; align-items: center; gap: 0.6rem;
+    }
+    .scroll-hint .bar {
+      display: inline-block; width: 46px; height: 1px; background: var(--ink);
+      transform-origin: left; animation: hintbar 2.6s var(--ease) infinite;
+    }
+    @keyframes hintbar {
+      0%, 100% { transform: scaleX(0.35); opacity: 0.4; }
+      50% { transform: scaleX(1); opacity: 1; }
+    }
+
+    /* Hero-Reveal beim Laden: Clip-Reveal der Zeile(n), dann Punkt, dann Subline */
+    .hero h1 .hline { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0.02em 0.03em; margin: -0.02em -0.03em; }
+    .hero h1 .hline-in { display: inline-block; transition: transform 0.5s var(--ease-io); }
+    .hero h1 .hero-dot { display: inline-block; transform-origin: 50% 82%; transition: transform 0.25s var(--ease-io); }
+    .hero .sub { transition: opacity 0.4s var(--ease-io); }
+    /* Ausgangszustand nur wenn JS die Animation vorbereitet (sonst sofort sichtbar) */
+    .hero.hero-anim h1 .hline-in { transform: translateY(105%); }
+    .hero.hero-anim h1 .hero-dot { transform: scale(0); }
+    .hero.hero-anim .sub { opacity: 0; }
+    .hero.hero-anim.ready h1 .hline:nth-child(1) .hline-in { transform: translateY(0); transition-delay: 0.08s; }
+    .hero.hero-anim.ready h1 .hline:nth-child(2) .hline-in { transform: translateY(0); transition-delay: 0.17s; }
+    .hero.hero-anim.ready h1 .hline:nth-child(3) .hline-in { transform: translateY(0); transition-delay: 0.26s; }
+    .hero.hero-anim.ready h1 .hero-dot { transform: scale(1); transition-delay: 0.62s; }
+    .hero.hero-anim.ready .sub { opacity: 1; transition-delay: 0.85s; }
+
+    /* ============================================================
+       Galerie-Cursor (nur Desktop mit feinem Zeiger)
+       ============================================================ */
+    .gcursor {
+      position: fixed; top: 0; left: 0; z-index: 130;
+      display: none; align-items: center; gap: 0.5rem;
+      padding: 0.4rem 0.72rem;
+      background: var(--paper);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink);
+      white-space: nowrap;
+    }
+    .gcursor .gdot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); display: inline-block; flex: none; }
+    .gcursor .gplus { color: var(--red); }
+    .gcursor.active { display: flex; }
+    @media (hover: hover) and (pointer: fine) {
+      body.cursor-fx .work-open { cursor: none; }
+    }
+
+    /* ============================================================
+       Section-Rhythmik
+       ============================================================ */
+    section { padding: clamp(5rem, 12vw, 11rem) 0; }
+    .sec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: clamp(2.5rem, 6vw, 5rem); }
+    .sec-head h2 {
+      font-size: clamp(2rem, 6vw, 4.4rem);
+      letter-spacing: -0.04em;
+    }
+    .sec-head .idx { font-size: 0.72rem; letter-spacing: 0.18em; color: var(--red); }
+
+    /* ============================================================
+       WERKE — asymmetrisches Galerie-Grid
+       ============================================================ */
+    .works {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: clamp(1.5rem, 4vw, 4rem);
+      row-gap: clamp(4rem, 8vw, 8rem);
+    }
+    .work { display: block; }
+    .work-open {
+      display: block; width: 100%; border: 0; padding: 0; margin: 0;
+      background: var(--fill);
+      position: relative; overflow: hidden;
+      cursor: zoom-in;
+    }
+    .work-open .num {
+      position: absolute; inset: 0; z-index: 0;
+      display: grid; place-items: center;
+      font-size: clamp(2rem, 5vw, 4rem); font-weight: 700;
+      letter-spacing: -0.04em; color: var(--fill-2);
+    }
+    .work-open img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .work-open img.img-failed { display: none; }
+    .work-cap {
+      margin-top: 0.9rem;
+      font-size: 0.76rem; letter-spacing: 0.01em; line-height: 1.5;
+      color: var(--gray);
+    }
+    /* Scroll-Versatz sitzt auf dem Inner (getrennt vom Reveal-Transform der Figure) */
+    .work-inner { display: block; }
+    body.parallax-on .work-inner { will-change: transform; }
+    /* Tastatur-Fokus bleibt sichtbar */
+    .work-open:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    /* variierende Spans & Formate */
+    .w1 { grid-column: 1 / 7; }        .w1 .work-open { aspect-ratio: 4 / 5; }
+    .w2 { grid-column: 8 / 13; margin-top: 9vh; } .w2 .work-open { aspect-ratio: 4 / 3; }
+    .w3 { grid-column: 1 / 5; margin-top: 2vh; }  .w3 .work-open { aspect-ratio: 1 / 1; }
+    .w4 { grid-column: 6 / 12; }       .w4 .work-open { aspect-ratio: 3 / 2; }
+    .w5 { grid-column: 1 / 6; margin-top: 4vh; }  .w5 .work-open { aspect-ratio: 4 / 5; }
+    .w6 { grid-column: 8 / 12; margin-top: 10vh; }.w6 .work-open { aspect-ratio: 3 / 4; }
+    .w7 { grid-column: 1 / 8; }        .w7 .work-open { aspect-ratio: 16 / 10; }
+    .w8 { grid-column: 9 / 13; margin-top: 6vh; } .w8 .work-open { aspect-ratio: 1 / 1; }
+
+    /* ============================================================
+       ÜBER — zweispaltig
+       ============================================================ */
+    .about-grid {
+      display: grid; grid-template-columns: 5fr 6fr;
+      gap: clamp(2rem, 6vw, 6rem); align-items: start;
+    }
+    .about-figure { position: relative; background: var(--fill); overflow: hidden; aspect-ratio: 4 / 5; }
+    .about-figure img { width: 100%; height: 100%; object-fit: cover; }
+    .about-figure img.img-failed { display: none; }
+    .about-figure .num {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-size: 0.72rem; letter-spacing: 0.18em; color: var(--fill-2);
+      text-transform: uppercase;
+    }
+    .about-body h2 {
+      font-size: clamp(1.9rem, 5vw, 3.4rem); letter-spacing: -0.04em;
+      margin-bottom: 1.6rem;
+    }
+    .about-body p { max-width: 46ch; margin-bottom: 1.1rem; color: var(--ink); }
+    .about-body .vita-list {
+      margin-top: 2.2rem; padding-top: 1.4rem; border-top: 1px solid var(--line);
+      font-size: 0.8rem; color: var(--gray); line-height: 1.9;
+    }
+    .about-body .vita-list b { color: var(--ink); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.72rem; display: block; margin-bottom: 0.4rem; }
+
+    /* ============================================================
+       AUFTRAGSARBEITEN
+       ============================================================ */
+    .commission-grid { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+    .commission-body p { max-width: 52ch; font-size: 1rem; margin-bottom: 1.1rem; color: var(--ink); }
+    .commission-body .req { margin-top: 1.6rem; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray); }
+    .commission-body .req b { color: var(--ink); }
+
+    /* ============================================================
+       KONTAKT — reduziert
+       ============================================================ */
+    .contact-grid { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+    .contact-info .name { font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: -0.03em; text-transform: uppercase; font-weight: 700; }
+    .contact-info a.mail { display: inline-block; margin-top: 0.8rem; font-size: 1rem; position: relative; }
+    .contact-info a.mail::after {
+      content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 1px; background: var(--line);
+      transition: background 0.25s var(--ease);
+    }
+    .contact-info a.mail:hover::after { background: var(--red); }
+
+    form.mini { max-width: 460px; }
+    .field { margin-bottom: 1.1rem; }
+    .field label { display: block; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.5rem; }
+    .field input, .field textarea {
+      width: 100%; font-family: var(--font); font-size: 0.95rem; color: var(--ink);
+      background: transparent; border: 0; border-bottom: 1px solid var(--ink);
+      padding: 0.6rem 0; transition: border-color 0.25s var(--ease);
+    }
+    .field textarea { resize: vertical; min-height: 70px; }
+    .field input:focus, .field textarea:focus { outline: none; border-bottom-color: var(--red); }
+    button.submit {
+      margin-top: 0.4rem; background: none; border: 0; cursor: pointer;
+      font-family: var(--font); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink); padding: 0.2rem 0;
+      position: relative;
+    }
+    button.submit::after {
+      content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 1.5px; background: var(--ink);
+      transition: background 0.25s var(--ease);
+    }
+    button.submit:hover::after { background: var(--red); }
+    .form-msg { display: none; margin-top: 1.2rem; font-size: 0.82rem; letter-spacing: 0.02em; color: var(--red); }
+    .form-msg.show { display: block; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer.site {
+      border-top: 1px solid var(--line);
+      padding: 2.4rem 0;
+    }
+    .foot-row {
+      display: flex; flex-wrap: wrap; gap: 0.6rem 1.6rem; justify-content: space-between; align-items: center;
+      font-size: 0.72rem; letter-spacing: 0.06em; color: var(--gray); text-transform: uppercase;
+    }
+    .foot-row a { color: var(--gray); }
+    .foot-row a:hover { color: var(--ink); }
+    .demo-tag { color: var(--red); margin-left: 0.4rem; }
+
+    /* ============================================================
+       Konzept-Banner (fixiert, Schwarz/Weiß)
+       ============================================================ */
+    .concept-banner {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+      background: var(--paper);
+      border-top: 1px solid var(--ink);
+      padding: 0.6rem var(--pad);
+      padding-bottom: max(0.6rem, env(safe-area-inset-bottom));
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink); text-align: center;
+    }
+    .concept-banner a { text-decoration: underline; text-underline-offset: 2px; }
+    .concept-banner a:hover { color: var(--red); }
+
+    /* ============================================================
+       LIGHTBOX
+       ============================================================ */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 120;
+      background: var(--paper);
+      display: flex; flex-direction: column;
+      padding: clamp(1.5rem, 4vw, 3.5rem);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.2s linear, visibility 0.2s linear;
+    }
+    .lightbox.open { opacity: 1; visibility: visible; }
+    .lightbox-top { display: flex; justify-content: space-between; align-items: center; }
+    .lb-counter {
+      font-family: var(--font); font-size: 0.72rem; letter-spacing: 0.14em;
+      color: var(--gray); font-variant-numeric: tabular-nums;
+    }
+    .lightbox-close {
+      background: none; border: 0; cursor: pointer;
+      font-size: 1.6rem; line-height: 1; color: var(--ink); padding: 0.2rem 0.4rem;
+      font-family: var(--font);
+    }
+    .lightbox-close:hover { color: var(--red); }
+    .lightbox-stage {
+      flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;
+      padding: 1rem 0;
+    }
+    .lightbox-stage img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      width: auto; height: auto;
+      transition: opacity 0.25s var(--ease-io);
+    }
+    .lightbox-stage img.fading { opacity: 0; }
+    .lightbox-stage img.img-failed { display: none; }
+    .lb-fallback {
+      display: none;
+      width: min(70vw, 60vh); aspect-ratio: 4/5; background: var(--fill);
+      place-items: center; font-size: 3rem; font-weight: 700; color: var(--fill-2);
+    }
+    .lightbox.show-fallback .lb-fallback { display: grid; }
+    .lightbox-cap { text-align: center; font-size: 0.78rem; letter-spacing: 0.02em; color: var(--gray); padding-top: 0.6rem; transition: opacity 0.25s var(--ease-io); }
+    .lightbox-cap.fading { opacity: 0; }
+
+    /* ============================================================
+       Scroll-Reveal — knapp, präzise, gestaffelt
+       ============================================================ */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.4s var(--ease), transform 0.4s var(--ease); }
+    .reveal.in { opacity: 1; transform: none; }
+    .works .work:nth-child(1).in { transition-delay: 0.00s; }
+    .works .work:nth-child(2).in { transition-delay: 0.05s; }
+    .works .work:nth-child(3).in { transition-delay: 0.10s; }
+    .works .work:nth-child(4).in { transition-delay: 0.05s; }
+    .works .work:nth-child(5).in { transition-delay: 0.10s; }
+    .works .work:nth-child(6).in { transition-delay: 0.15s; }
+    .works .work:nth-child(7).in { transition-delay: 0.05s; }
+    .works .work:nth-child(8).in { transition-delay: 0.10s; }
+    .reveal:not(.in) { will-change: opacity, transform; }
+
+    /* ============================================================
+       Hover-Etikette (nur Desktop): Bildunterschrift ein, Bild ruhig
+       ============================================================ */
+    @media (hover: hover) {
+      .work-cap { opacity: 0; transition: opacity 0.3s var(--ease); }
+      .work:hover .work-cap, .work-open:focus-visible ~ .work-cap { opacity: 1; }
+    }
+
+    /* ============================================================
+       Responsive
+       ============================================================ */
+    @media (max-width: 860px) {
+      .about-grid, .commission-grid, .contact-grid { grid-template-columns: 1fr; }
+      .about-figure { max-width: 460px; }
+    }
+    @media (max-width: 760px) {
+      .hero { min-height: 92svh; }
+      .hero-work { position: relative; width: 100%; height: 46vh; margin-top: 2.5rem; }
+      .hero { justify-content: flex-start; padding-top: 120px; }
+      .scroll-hint { display: none; }
+      /* Werke: eine Spalte, volle Breite */
+      .works { grid-template-columns: 1fr; row-gap: clamp(3rem, 10vw, 5rem); }
+      .work { grid-column: 1 / -1 !important; margin-top: 0 !important; }
+      .w1 .work-open, .w2 .work-open, .w3 .work-open, .w4 .work-open,
+      .w5 .work-open, .w6 .work-open, .w7 .work-open, .w8 .work-open { aspect-ratio: 4 / 5; }
+      .w2 .work-open, .w4 .work-open, .w7 .work-open { aspect-ratio: 4 / 3; }
+    }
+    @media (max-width: 560px) {
+      .nav-links { gap: 1.1rem; }
+      .nav-links a { font-size: 0.72rem; }
+      .brand { font-size: 0.74rem; }
+      /* lange Überschriften (z. B. AUFTRAGSARBEITEN) dürfen nicht abschneiden */
+      .sec-head h2 { font-size: clamp(1.6rem, 8vw, 2.6rem); letter-spacing: -0.02em; overflow-wrap: break-word; hyphens: auto; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .work-cap { opacity: 1 !important; transition: none !important; }
+      .scroll-hint .bar { animation: none !important; }
+      .lightbox { transition: none !important; }
+      .nav-links a::after, .contact-info a.mail::after, button.submit::after { transition: none !important; }
+      /* Hero-Reveal sofort sichtbar */
+      .hero.hero-anim h1 .hline-in { transform: none !important; }
+      .hero.hero-anim h1 .hero-dot { transform: none !important; }
+      .hero.hero-anim .sub { opacity: 1 !important; }
+      .hero h1 .hline-in, .hero h1 .hero-dot, .hero .sub { transition: none !important; }
+      /* Lightbox-Crossfade aus */
+      .lightbox-stage img, .lightbox-cap { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site" id="top">
+    <div class="wrap nav">
+      <a class="brand" href="#top">Mara Vellin<span class="dot">.</span></a>
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links">
+          <li><a href="#werke">Werke</a></li>
+          <li><a href="#ueber">Über</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-work" aria-hidden="true">
+      <span class="num">Werk 01</span>
+      <img src="img/werk-1.jpg" alt="" width="1040" height="1300" fetchpriority="high"
+           onerror="this.classList.add('img-failed')" />
+    </div>
+    <div class="wrap">
+      <h1 id="hero-title"><span class="hline"><span class="hline-in">Malerei</span></span><span class="dot hero-dot">.</span></h1>
+      <p class="sub">Abstrakte Arbeiten · Große Formate · [Region]</p>
+    </div>
+    <a class="scroll-hint" href="#werke"><span class="bar"></span> Werke</a>
+  </section>
+
+  <!-- ================= WERKE ================= -->
+  <section id="werke" aria-labelledby="werke-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx">01</span>
+        <h2 id="werke-title">Werke</h2>
+      </div>
+
+      <div class="works">
+        <figure class="work w1 reveal">
+          <button class="work-open" data-full="img/werk-1.jpg" data-num="01"
+                  data-cap="Ohne Titel IV — Öl auf Leinwand, 140 × 100 cm, 2025"
+                  aria-label="Vergrößern: Ohne Titel IV">
+            <span class="num" aria-hidden="true">01</span>
+            <img src="img/werk-1.jpg" alt="Abstraktes Werk, Öl auf Leinwand — Ohne Titel IV" width="1040" height="1300" loading="lazy" onerror="this.classList.add('img-failed')" />
+          </button>
+          <figcaption class="work-cap">Ohne Titel IV — Öl auf Leinwand, 140 × 100 cm, 2025</figcaption>
+        </figure>
+
+        <figure class="work w2 reveal">
+          <button class="work-open" data-full="img/werk-2.jpg" data-num="02"
+                  data-cap="Feldstudie II — Acryl auf Leinwand, 80 × 120 cm, 2024"
+                  aria-label="Vergrößern: Feldstudie II">
+            <span class="num" aria-hidden="true">02</span>
+            <img src="img/werk-2.jpg" alt="Abstraktes Werk, Acryl auf Leinwand — Feldstudie II" width="1280" height="960" loading="lazy" onerror="this.classList.add('img-failed')" />
+          </button>
+          <figcaption class="work-cap">Feldstudie II — Acryl auf Leinwand, 80 × 120 cm, 2024</figcaption>
+        </figure>
+
+        <figure class="work w3 reveal">
+          <button class="work-open" data-full="img/werk-3.jpg" data-num="03"
+                  data-cap="Nachmittag — Öl auf Leinwand, 100 × 100 cm, 2025"
+                  aria-label="Vergrößern: Nachmittag">
+            <span class="num" aria-hidden="true">03</span>
+            <img src="img/werk-3.jpg" alt="Abstraktes Werk, Öl auf Leinwand — Nachmittag" width="1100" height="1100" loading="lazy" onerror="this.classList.add('img-failed')" />
+          </button>
+          <figcaption class="work-cap">Nachmittag — Öl auf Leinwand, 100 × 100 cm, 2025</figcaption>
+        </figure>
+
+        <figure class="work w4 reveal">
+          <button class="work-open" data-full="img/werk-4.jpg" data-num="04"
+                  data-cap="Ohne Titel VII — Öl und Kreide auf Leinwand, 200 × 150 cm, 2023"
+                  aria-label="Vergrößern: Ohne Titel VII">
+            <span class="num" aria-hidden="true">04</span>
+            <img src="img/werk-4.jpg" alt="Abstraktes Werk, Öl und Kreide auf Leinwand — Ohne Titel VII" width="1500" height="1000" loading="lazy" onerror="this.classList.add('img-failed')" />
+          </button>
+          <figcaption class="work-cap">Ohne Titel VII — Öl und Kreide auf Leinwand, 200 × 150 cm, 2023</figcaption>
+        </figure>
+
+        <figure class="work w5 reveal">
+          <button class="work-open" data-full="img/werk-5.jpg" data-num="05"
+                  data-cap="Küstenlinie — Acryl auf Leinwand, 60 × 90 cm, 2024"
+                  aria-label="Vergrößern: Küstenlinie">
+            <span class="num" aria-hidden="true">05</span>
+            <img src="img/werk-5.jpg" alt="Abstraktes Werk, Acryl auf Leinwand — Küstenlinie" width="1040" height="1300" loading="lazy" onerror="this.classList.add('img-failed')" />
+          </button>
+          <figcaption class="work-cap">Küstenlinie — Acryl auf Leinwand, 60 × 90 cm, 2024</figcaption>
+        </figure>
+
+        <figure class="work w6 reveal">
+          <button class="work-open" data-full="img/werk-6.jpg" data-num="06"
+                  data-cap="Stiller Raum — Öl auf Leinwand, 120 × 90 cm, 2025"
+                  aria-label="Vergrößern: Stiller Raum">
+            <span class="num" aria-hidden="true">06</span>
+            <img src="img/werk-6.jpg" alt="Abstraktes Werk, Öl auf Leinwand — Stiller Raum" width="960" height="1280" loading="lazy" onerror="this.classList.add('img-failed')" />
+          </button>
+          <figcaption class="work-cap">Stiller Raum — Öl auf Leinwand, 120 × 90 cm, 2025</figcaption>
+        </figure>
+
+        <figure class="work w7 reveal">
+          <button class="work-open" data-full="img/werk-7.jpg" data-num="07"
+                  data-cap="Serie Grau, No. 3 — Mischtechnik auf Papier, 50 × 70 cm, 2022"
+                  aria-label="Vergrößern: Serie Grau, No. 3">
+            <span class="num" aria-hidden="true">07</span>
+            <img src="img/werk-7.jpg" alt="Abstraktes Werk, Mischtechnik auf Papier — Serie Grau, No. 3" width="1600" height="1000" loading="lazy" onerror="this.classList.add('img-failed')" />
+          </button>
+          <figcaption class="work-cap">Serie Grau, No. 3 — Mischtechnik auf Papier, 50 × 70 cm, 2022</figcaption>
+        </figure>
+
+        <figure class="work w8 reveal">
+          <button class="work-open" data-full="img/werk-8.jpg" data-num="08"
+                  data-cap="Ohne Titel IX — Öl auf Leinwand, 160 × 120 cm, 2025"
+                  aria-label="Vergrößern: Ohne Titel IX">
+            <span class="num" aria-hidden="true">08</span>
+            <img src="img/werk-8.jpg" alt="Abstraktes Werk, Öl auf Leinwand — Ohne Titel IX" width="1100" height="1100" loading="lazy" onerror="this.classList.add('img-failed')" />
+          </button>
+          <figcaption class="work-cap">Ohne Titel IX — Öl auf Leinwand, 160 × 120 cm, 2025</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ÜBER ================= -->
+  <section id="ueber" aria-labelledby="ueber-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx">02</span>
+        <h2 id="ueber-title">Über</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-figure reveal">
+          <span class="num" aria-hidden="true">Atelier</span>
+          <img src="img/atelier.jpg" alt="Blick ins Atelier von Mara Vellin (fiktiv)" width="1040" height="1300" loading="lazy" onerror="this.classList.add('img-failed')" />
+        </div>
+
+        <div class="about-body reveal">
+          <h2 id="ueber-title-2">Mara Vellin</h2>
+          <p>Ich male abstrakt, meist in großen Formaten. Am liebsten arbeite ich in Serien, über Wochen, bis eine Fläche stimmt.</p>
+          <p>Farbe und Ruhe interessieren mich mehr als eine Geschichte. Was auf der Leinwand bleibt, soll für sich stehen — ohne Erklärung.</p>
+          <p>Ich arbeite in meinem Atelier in [Region] und nehme eine begrenzte Zahl an Auftragsarbeiten im Jahr an.</p>
+
+          <div class="vita-list">
+            <b>Ausstellungen (Auswahl, fiktiv)</b>
+            Galerie am Hafen, 2024<br />
+            Kunstverein Mitte, 2023<br />
+            Raum für Malerei, 2021
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AUFTRAGSARBEITEN ================= -->
+  <section id="auftrag" aria-labelledby="auftrag-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx">03</span>
+        <h2 id="auftrag-title">Auftragsarbeiten</h2>
+      </div>
+
+      <div class="commission-grid">
+        <div></div>
+        <div class="commission-body reveal">
+          <p>Für Wohnräume, Praxen oder Büros male ich Arbeiten auf Maß — abgestimmt auf Format, Wand und Licht.</p>
+          <p>Wir sprechen vorher in Ruhe über Größe, Farbwelt und den Raum, in dem das Bild später hängt. Danach entsteht die Arbeit in meinem Tempo.</p>
+          <p>Der Preis richtet sich nach Format und Aufwand.</p>
+          <p class="req"><b>Preise auf Anfrage.</b></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KONTAKT ================= -->
+  <section id="kontakt" aria-labelledby="kontakt-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx">04</span>
+        <h2 id="kontakt-title">Kontakt</h2>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="name">Mara Vellin</div>
+          <a class="mail" href="mailto:kontakt@beispiel.demo">kontakt@beispiel.demo</a>
+        </div>
+
+        <form class="mini reveal" id="contactForm" novalidate>
+          <div class="field">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" name="email" placeholder="ihre@mail.de" />
+          </div>
+          <div class="field">
+            <label for="msg">Nachricht</label>
+            <textarea id="msg" name="msg" placeholder="Worum geht es?"></textarea>
+          </div>
+          <button type="submit" class="submit">Senden</button>
+          <div class="form-msg" id="formMsg" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site">
+    <div class="wrap foot-row">
+      <span>Mara Vellin (fiktiv) · Konzeptprojekt von Operiva</span>
+      <span>
+        <a href="#" onclick="return false;" style="cursor:not-allowed;">Impressum <span class="demo-tag">Demo</span></a>
+        &nbsp;·&nbsp;
+        <a href="#" onclick="return false;" style="cursor:not-allowed;">Datenschutz <span class="demo-tag">Demo</span></a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- ================= KONZEPT-BANNER ================= -->
+  <div class="concept-banner" role="note">
+    Konzeptprojekt von Operiva — <a href="https://operiva.com" target="_blank" rel="noopener">operiva.com</a>
+  </div>
+
+  <!-- ================= GALERIE-CURSOR ================= -->
+  <div class="gcursor" id="gcursor" aria-hidden="true"><span class="gdot"></span><span>Ansehen <span class="gplus">+</span></span></div>
+
+  <!-- ================= LIGHTBOX ================= -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Werkansicht">
+    <div class="lightbox-top">
+      <span class="lb-counter" id="lbCounter" aria-hidden="true"></span>
+      <button class="lightbox-close" id="lbClose" aria-label="Schließen">&times;</button>
+    </div>
+    <div class="lightbox-stage">
+      <img id="lbImg" src="" alt="" />
+      <div class="lb-fallback" id="lbFallback" aria-hidden="true"></div>
+    </div>
+    <div class="lightbox-cap" id="lbCap"></div>
+  </div>
+
+  <!-- ================= SCRIPT ================= -->
+  <script>
+    (function () {
+      "use strict";
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // Header-Linie beim Scrollen
+      var header = document.querySelector("header.site");
+      var onHeaderScroll = function () {
+        if (window.scrollY > 8) header.classList.add("scrolled");
+        else header.classList.remove("scrolled");
+      };
+      window.addEventListener("scroll", onHeaderScroll, { passive: true });
+      onHeaderScroll();
+
+      // (1) HERO-REVEAL beim Laden — Clip-Zeile(n), dann Punkt, dann Subline
+      var heroEl = document.querySelector(".hero");
+      if (heroEl && !reduce) {
+        heroEl.classList.add("hero-anim");
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { heroEl.classList.add("ready"); });
+        });
+      }
+
+      // Scroll-Reveal der Sektionen — knapp, gestaffelt, einmalig
+      var reveals = document.querySelectorAll(".reveal");
+      if (reduce || !("IntersectionObserver" in window)) {
+        reveals.forEach(function (el) { el.classList.add("in"); });
+      } else {
+        var mob = window.matchMedia("(max-width: 760px)").matches;
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: mob ? 0.04 : 0.1, rootMargin: mob ? "0px 0px 6% 0px" : "0px 0px -6% 0px" });
+        reveals.forEach(function (el) { io.observe(el); });
+      }
+
+      // Werke einsammeln + inneren Wrapper (für Scroll-Versatz, getrennt vom Reveal)
+      var figures = Array.prototype.slice.call(document.querySelectorAll(".work"));
+      var openBtns = [];
+      var works = [];
+      var factors = [0.03, -0.04, 0.025, -0.03, 0.045, -0.02, 0.035, -0.04];
+      var parallaxItems = [];
+      figures.forEach(function (fig, i) {
+        var inner = document.createElement("div");
+        inner.className = "work-inner";
+        while (fig.firstChild) inner.appendChild(fig.firstChild);
+        fig.appendChild(inner);
+        var btn = inner.querySelector(".work-open");
+        if (btn) {
+          btn.dataset.index = openBtns.length;
+          works.push({
+            full: btn.getAttribute("data-full"),
+            cap: btn.getAttribute("data-cap"),
+            num: btn.getAttribute("data-num")
+          });
+          openBtns.push(btn);
+        }
+        parallaxItems.push({ fig: fig, inner: inner, factor: factors[i % factors.length] });
+      });
+
+      // (4) LIGHTBOX — Index, Pfeile, Swipe, Crossfade, Zähler
+      var lb = document.getElementById("lightbox");
+      var lbImg = document.getElementById("lbImg");
+      var lbCap = document.getElementById("lbCap");
+      var lbFallback = document.getElementById("lbFallback");
+      var lbClose = document.getElementById("lbClose");
+      var lbCounter = document.getElementById("lbCounter");
+      var total = works.length;
+      var current = 0;
+      var lastTrigger = null;
+      var capTimer = null;
+
+      function applyWork(w) {
+        lb.classList.remove("show-fallback");
+        lbImg.classList.remove("img-failed");
+        lbFallback.textContent = w.num;
+        lbImg.alt = w.cap;
+        lbImg.onerror = function () {
+          lbImg.classList.add("img-failed");
+          lb.classList.add("show-fallback");
+        };
+        lbImg.src = w.full;
+        if (lbImg.complete && lbImg.naturalWidth === 0) { lbImg.onerror(); }
+        lbCap.textContent = w.cap;
+      }
+      function render(idx, animate) {
+        current = (idx + total) % total;
+        var w = works[current];
+        lbCounter.textContent = (current + 1) + " / " + total;
+        lastTrigger = openBtns[current];
+        if (capTimer) { clearTimeout(capTimer); capTimer = null; }
+        if (animate && !reduce) {
+          lbImg.classList.add("fading");
+          lbCap.classList.add("fading");
+          setTimeout(function () {
+            applyWork(w);
+            requestAnimationFrame(function () {
+              lbImg.classList.remove("fading");            // Bild fadet ein
+              capTimer = setTimeout(function () {          // Caption 100ms verzögert
+                lbCap.classList.remove("fading");
+              }, 100);
+            });
+          }, 180);
+        } else {
+          lbImg.classList.remove("fading");
+          lbCap.classList.remove("fading");
+          applyWork(w);
+        }
+      }
+      function openLightbox(idx) {
+        render(idx, false);
+        lb.classList.add("open");
+        document.body.style.overflow = "hidden";
+        lbClose.focus();
+      }
+      function closeLightbox() {
+        lb.classList.remove("open");
+        document.body.style.overflow = "";
+        if (lastTrigger) { lastTrigger.focus(); }
+      }
+      function nextWork() { render(current + 1, true); }
+      function prevWork() { render(current - 1, true); }
+
+      openBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () { openLightbox(+btn.dataset.index); });
+      });
+      lbClose.addEventListener("click", closeLightbox);
+
+      // Klick/Tap auf die Fläche schließt (nicht auf Bild, Zähler oder ×)
+      var swiped = false;
+      lb.addEventListener("click", function (e) {
+        if (swiped) { swiped = false; return; }
+        if (e.target !== lbImg && e.target !== lbClose && e.target !== lbCounter) closeLightbox();
+      });
+      // Tastatur: ESC schließt, ←/→ blättern
+      document.addEventListener("keydown", function (e) {
+        if (!lb.classList.contains("open")) return;
+        if (e.key === "Escape") closeLightbox();
+        else if (e.key === "ArrowRight") nextWork();
+        else if (e.key === "ArrowLeft") prevWork();
+      });
+      // Touch: Swipe blättert
+      var tsx = 0, tsy = 0;
+      lb.addEventListener("touchstart", function (e) {
+        var t = e.changedTouches[0]; tsx = t.clientX; tsy = t.clientY; swiped = false;
+      }, { passive: true });
+      lb.addEventListener("touchend", function (e) {
+        var t = e.changedTouches[0];
+        var dx = t.clientX - tsx, dy = t.clientY - tsy;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+          swiped = true;
+          if (dx < 0) nextWork(); else prevWork();
+        }
+      }, { passive: true });
+
+      // (2) GALERIE-CURSOR — nur feiner Zeiger, nachziehend per Lerp
+      var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      var gcursor = document.getElementById("gcursor");
+      if (fine && !reduce && gcursor) {
+        document.body.classList.add("cursor-fx");
+        var gx = 0, gy = 0, tx = 0, ty = 0, gactive = false, graf = null;
+        function gloop() {
+          if (!gactive) { graf = null; return; }
+          gx += (tx - gx) * 0.15;
+          gy += (ty - gy) * 0.15;
+          gcursor.style.transform = "translate(" + gx + "px," + gy + "px) translate(-50%,-50%)";
+          graf = requestAnimationFrame(gloop);
+        }
+        window.addEventListener("mousemove", function (e) { tx = e.clientX; ty = e.clientY; }, { passive: true });
+        openBtns.forEach(function (btn) {
+          btn.addEventListener("mouseenter", function () {
+            gactive = true; gx = tx; gy = ty;
+            gcursor.classList.add("active");
+            if (!graf) graf = requestAnimationFrame(gloop);
+          });
+          btn.addEventListener("mouseleave", function () {
+            gactive = false;
+            gcursor.classList.remove("active");
+          });
+        });
+      }
+
+      // (3) SCROLL-VERSATZ — minimal (max ±14px), rAF, nur Desktop
+      var parallaxOn = false, pTicking = false;
+      function computeParallax() {
+        var mid = window.innerHeight / 2;
+        for (var i = 0; i < parallaxItems.length; i++) {
+          var it = parallaxItems[i];
+          var r = it.fig.getBoundingClientRect();
+          var off = (r.top + r.height / 2 - mid) * it.factor;
+          if (off > 14) off = 14; else if (off < -14) off = -14;
+          it.inner.style.transform = "translate3d(0," + off.toFixed(2) + "px,0)";
+        }
+        pTicking = false;
+      }
+      function onParallaxScroll() {
+        if (!pTicking) { pTicking = true; requestAnimationFrame(computeParallax); }
+      }
+      function enableParallax() {
+        if (parallaxOn) return;
+        parallaxOn = true;
+        document.body.classList.add("parallax-on");
+        window.addEventListener("scroll", onParallaxScroll, { passive: true });
+        computeParallax();
+      }
+      function disableParallax() {
+        if (!parallaxOn) return;
+        parallaxOn = false;
+        document.body.classList.remove("parallax-on");
+        window.removeEventListener("scroll", onParallaxScroll);
+        parallaxItems.forEach(function (it) { it.inner.style.transform = ""; });
+      }
+      function evalParallax() {
+        if (!reduce && window.matchMedia("(min-width: 761px)").matches) enableParallax();
+        else disableParallax();
+      }
+      evalParallax();
+      window.addEventListener("resize", function () {
+        evalParallax();
+        if (parallaxOn) computeParallax();
+      }, { passive: true });
+
+      // Kontakt-Formular = Attrappe
+      var form = document.getElementById("contactForm");
+      var msg = document.getElementById("formMsg");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        msg.textContent = "Dies ist ein Konzeptprojekt — das Formular ist nicht aktiv.";
+        msg.classList.add("show");
+      });
+    })();
+  </script>
+</body>
+</html>

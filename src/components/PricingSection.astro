@@ -1,0 +1,191 @@
+---
+import { useTranslations, path, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const p = t.pricing;
+const contactHref = path('contact', lang);
+---
+
+<section class="section pricing" id="preise">
+  <div class="container">
+    <p class="eyebrow" data-reveal>{p.eyebrow}</p>
+    <h2 class="pricing-title" data-reveal>{p.title}</h2>
+    <p class="lead pricing-intro" data-reveal>{p.intro}</p>
+
+    <div class="pricing-grid">
+      {p.plans.map((plan, i) => (
+        <article
+          class:list={['pricing-card', { 'is-featured': plan.featured }]}
+          data-reveal
+          data-glow
+          style={`--reveal-delay: ${i * 90}ms`}
+        >
+          {plan.featured && <span class="pricing-badge">{p.badge}</span>}
+          <h3 class="pricing-name">{plan.name}</h3>
+          <p class="pricing-price">{plan.price}</p>
+          <ul class="pricing-features">
+            {plan.features.map((feature) => (
+              <li class="pricing-feature">
+                <span class="pricing-check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12.5 10 17.5 19 6.5" />
+                  </svg>
+                </span>
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+          <a
+            href={contactHref}
+            class:list={['btn', 'pricing-cta', plan.featured ? 'btn-primary' : 'btn-secondary']}
+          >
+            {p.cta}
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <p class="pricing-maintenance" data-reveal>{p.maintenance}</p>
+    <p class="pricing-footnote" data-reveal>{p.footnote}</p>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    border-bottom: 1px solid var(--color-border);
+    scroll-margin-top: 96px;
+  }
+  .pricing-title {
+    font-size: var(--fs-h2);
+    margin-bottom: 0.9rem;
+  }
+  .pricing-intro {
+    max-width: 60ch;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .pricing-card:hover {
+    border-color: var(--color-gold);
+    transform: translateY(-4px);
+  }
+
+  /* Mittlere Karte hervorgehoben: goldener Rahmen, leichte Anhebung, warmes Licht */
+  .pricing-card.is-featured {
+    border-color: var(--color-gold);
+    background: linear-gradient(180deg, var(--color-bg-elevated), var(--color-bg-card));
+    box-shadow: 0 0 0 1px var(--color-gold-dim), 0 20px 45px -25px var(--color-gold-glow);
+  }
+  @media (min-width: 901px) {
+    .pricing-card.is-featured { transform: translateY(-12px); }
+    .pricing-card.is-featured:hover { transform: translateY(-16px); }
+  }
+
+  .pricing-badge {
+    align-self: flex-start;
+    margin-bottom: 1rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    background: var(--color-gold);
+    color: var(--color-on-gold);
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pricing-name {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.5rem;
+  }
+  .pricing-price {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(1.9rem, 4vw, 2.4rem);
+    line-height: 1.1;
+    color: var(--color-gold);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pricing-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+  }
+  .pricing-feature {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+  .pricing-check {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-gold-dim);
+    color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+  .pricing-check svg { width: 13px; height: 13px; }
+
+  .pricing-cta {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .pricing-maintenance {
+    margin-top: clamp(1.75rem, 3vw, 2.5rem);
+    text-align: center;
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+  .pricing-footnote {
+    margin-top: 0.6rem;
+    text-align: center;
+    color: var(--color-text-faint);
+    font-size: 0.8rem;
+    max-width: 62ch;
+    margin-inline: auto;
+  }
+
+  /* Tablet: 2 + 1 */
+  @media (max-width: 900px) {
+    .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  /* Mobil: 1 Spalte, Reihenfolge beibehalten */
+  @media (max-width: 640px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+</style>

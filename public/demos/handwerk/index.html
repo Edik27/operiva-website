@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Holzwerk Brandt — Schreinerei &amp; Innenausbau</title>
+  <meta name="description" content="Konzeptprojekt: Meisterbetrieb für Möbel nach Maß und Innenausbau. Fiktive Demo-Website von Operiva." />
+  <style>
+    /* ============================================================
+       HOLZWERK BRANDT — Konzeptprojekt / Demo von Operiva
+       Self-contained One-Pager. Kein Framework, keine CDN.
+       ============================================================ */
+
+    :root {
+      --ink:        #2b2825;   /* warmes Anthrazit — dunkle Flächen */
+      --ink-soft:   #3a352f;   /* dunkle Karten auf Anthrazit */
+      --cream:      #faf6ef;   /* helle Flächen */
+      --cream-2:    #f2ebdf;   /* leicht abgesetzte helle Fläche */
+      --amber:      #c47a3d;   /* Akzent Bernstein/Holz */
+      --amber-dk:   #a5622d;   /* Akzent dunkler (Hover) */
+      --text:       #332e29;   /* Text auf hell */
+      --text-soft:  #6b6157;   /* gedämpfter Text auf hell */
+      --text-inv:   #f3ede2;   /* Text auf dunkel */
+      --text-inv-soft:#bcb2a3; /* gedämpfter Text auf dunkel */
+      --line:       #e2d8c7;   /* Trennlinien hell */
+      --line-dk:    #48423b;   /* Trennlinien dunkel */
+
+      --font-head: "Space Grotesk", "Archivo", "Helvetica Neue", -apple-system,
+                   BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
+                   Roboto, system-ui, sans-serif;
+
+      --maxw: 1160px;
+      --radius: 6px;
+      --shadow: 0 18px 40px -22px rgba(43,40,37,0.45);
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      color: var(--text);
+    }
+
+    p { color: var(--text-soft); }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; }
+
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+    .eyebrow {
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber-dk);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 26px; height: 2px;
+      background: var(--amber);
+      display: inline-block;
+    }
+    section.dark .eyebrow { color: var(--amber); }
+    section.dark .eyebrow::before { background: var(--amber); }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.98rem;
+      padding: 14px 26px;
+      border-radius: var(--radius);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), background 0.2s var(--ease),
+                  color 0.2s var(--ease), border-color 0.2s var(--ease);
+      white-space: nowrap;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: var(--amber); color: #fff; }
+    .btn-primary:hover { background: var(--amber-dk); }
+    .btn-ghost { background: transparent; border-color: var(--line); color: var(--text); }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber-dk); }
+    section.dark .btn-ghost { border-color: var(--line-dk); color: var(--text-inv); }
+    section.dark .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    header.site {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250, 246, 239, 0.86);
+      backdrop-filter: saturate(140%) blur(10px);
+      -webkit-backdrop-filter: saturate(140%) blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    header.site.scrolled {
+      border-bottom-color: var(--line);
+      box-shadow: 0 6px 24px -18px rgba(43,40,37,0.5);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 24px;
+    }
+    .brand {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.12rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+    }
+    .brand .mark {
+      width: 30px; height: 30px;
+      flex: none;
+      color: var(--amber);
+    }
+    .brand small {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-head);
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text);
+      position: relative;
+      padding: 4px 0;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 0; height: 2px;
+      background: var(--amber);
+      transition: width 0.25s var(--ease);
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta { display: flex; align-items: center; gap: 14px; }
+    .nav-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+      padding: 11px 20px;
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+    }
+    .nav-phone:hover { border-color: var(--amber); color: var(--amber-dk); }
+    .nav-phone svg { width: 17px; height: 17px; }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .burger span {
+      width: 24px; height: 2px;
+      background: var(--text);
+      transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ============================================================
+       HERO (Foto-Hintergrund + dunkles, warmes Overlay)
+       ============================================================ */
+    .hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: min(760px, 90vh);
+      padding: 150px 0 96px;
+      overflow: hidden;
+      /* Fallback-Verlauf, falls hero.jpg fehlt */
+      background:
+        radial-gradient(1100px 520px at 80% -10%, rgba(196,122,61,0.24), transparent 60%),
+        linear-gradient(160deg, #3a2f24 0%, var(--ink) 58%, #201c18 100%);
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+    .hero-bg img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: saturate(1.1) contrast(1.02) sepia(0.14);
+    }
+    .hero-bg img.img-failed { display: none; }
+    /* dezentes Holzmaserungs-Pattern über allem */
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23c47a3d' stroke-width='1' stroke-opacity='0.10'%3E%3Cpath d='M-10 20 Q 60 5 130 20'/%3E%3Cpath d='M-10 45 Q 60 32 130 46'/%3E%3Cpath d='M-10 72 Q 60 60 130 73'/%3E%3Cpath d='M-10 98 Q 60 86 130 99'/%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+    /* dunkles Overlay für Textkontrast (links kräftiger) */
+    .hero::after {
+      content: "";
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(18,15,12,0.88) 0%, rgba(18,15,12,0.68) 44%, rgba(18,15,12,0.28) 100%),
+        linear-gradient(0deg, rgba(18,15,12,0.70), rgba(18,15,12,0.05) 42%);
+    }
+    .hero .wrap { position: relative; z-index: 2; }
+    .hero-copy { max-width: 640px; }
+    .hero .eyebrow { color: var(--amber); }
+    .hero .eyebrow::before { background: var(--amber); }
+    .hero h1 {
+      font-size: clamp(2.7rem, 6.4vw, 4.7rem);
+      letter-spacing: -0.03em;
+      margin: 20px 0 0;
+      color: var(--text-inv);
+    }
+    .hero h1 .amber { color: var(--amber); }
+    .hero .sub {
+      font-size: 1.22rem;
+      max-width: 46ch;
+      margin: 22px 0 32px;
+      color: #e8dece;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+    .hero .btn-ghost { border-color: rgba(243,237,226,0.42); color: var(--text-inv); }
+    .hero .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+    .trust {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 22px;
+      margin-top: 34px;
+      padding-top: 26px;
+      border-top: 1px solid rgba(243,237,226,0.18);
+      font-family: var(--font-head);
+      font-weight: 500;
+      font-size: 0.92rem;
+      color: var(--text-inv);
+    }
+    .trust span { display: inline-flex; align-items: center; gap: 8px; }
+    .trust svg { width: 16px; height: 16px; color: var(--amber); flex: none; }
+    .trust .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(243,237,226,0.4); }
+
+    /* ============================================================
+       Fotos: einheitlicher warmer Look + SVG-Fallback
+       ============================================================ */
+    .img-failed { display: none !important; }
+
+    /* ============================================================
+       Generische Section-Rhythmik
+       ============================================================ */
+    section { padding: 96px 0; position: relative; }
+    section.dark {
+      background: var(--ink);
+      color: var(--text-inv);
+    }
+    section.dark h1, section.dark h2, section.dark h3, section.dark h4 { color: var(--text-inv); }
+    section.dark p { color: var(--text-inv-soft); }
+
+    .sec-head { max-width: 720px; margin-bottom: 52px; }
+    .sec-head h2 {
+      font-size: clamp(2rem, 4.4vw, 3.05rem);
+      margin: 16px 0 14px;
+    }
+    .sec-head p { font-size: 1.12rem; }
+
+    /* ---------- Leistungen ---------- */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px 26px 28px;
+      transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease),
+                  border-color 0.28s var(--ease);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+      border-color: #d8c8ad;
+    }
+    .card .ic {
+      width: 52px; height: 52px;
+      display: grid; place-items: center;
+      border-radius: var(--radius);
+      background: rgba(196,122,61,0.12);
+      color: var(--amber-dk);
+      margin-bottom: 20px;
+    }
+    .card .ic svg { width: 28px; height: 28px; }
+    .card h3 { font-size: 1.24rem; margin-bottom: 9px; }
+    .card p { font-size: 0.98rem; }
+    /* 5 Karten gleichmäßig anordnen: 3 oben, 2 mittig darunter */
+    .cards .card { grid-column: span 2; }
+    .cards .card:nth-child(4) { grid-column: 2 / span 2; }
+    .cards .card:nth-child(5) { grid-column: 4 / span 2; }
+    /* Tablet: 2 + 2 + 1 (mittig) */
+    @media (max-width: 940px) {
+      .cards { grid-template-columns: repeat(4, 1fr); }
+      .cards .card { grid-column: span 2; }
+      .cards .card:nth-child(4) { grid-column: span 2; }
+      .cards .card:nth-child(5) { grid-column: 2 / span 2; }
+    }
+    /* Mobil: eine Spalte */
+    @media (max-width: 620px) {
+      .cards { grid-template-columns: 1fr; }
+      .cards .card,
+      .cards .card:nth-child(4),
+      .cards .card:nth-child(5) { grid-column: auto; }
+    }
+
+    /* ---------- So arbeiten wir ---------- */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      counter-reset: step;
+    }
+    .step {
+      position: relative;
+      padding: 34px 28px 30px;
+      background: var(--ink-soft);
+      border: 1px solid var(--line-dk);
+      border-radius: var(--radius);
+    }
+    .step .num {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 2.6rem;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .step h3 { font-size: 1.3rem; margin-bottom: 10px; }
+    .step p { font-size: 0.99rem; }
+    .step .connector {
+      position: absolute;
+      top: 52px; right: -20px;
+      width: 40px; height: 2px;
+      color: var(--amber);
+    }
+
+    /* ---------- Referenzen ---------- */
+    .refs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .ref {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fff;
+      transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+    }
+    .ref:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .ref-art {
+      aspect-ratio: 4 / 3;
+      position: relative;
+      overflow: hidden;
+      background: var(--ink);
+    }
+    .ref-art .ref-fallback { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+    .ref-art .ref-img {
+      position: absolute; inset: 0; z-index: 1;
+      width: 100%; height: 100%; object-fit: cover;
+      filter: saturate(1.12) contrast(1.03) sepia(0.16);
+      transition: transform 0.5s var(--ease);
+    }
+    .ref:hover .ref-img { transform: scale(1.045); }
+    /* warmer Farbton-Overlay vereinheitlicht alle Projektfotos */
+    .ref-art::after {
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(155deg, rgba(196,122,61,0.18), rgba(43,40,37,0.30));
+      mix-blend-mode: multiply;
+    }
+    .ref-body { padding: 20px 22px 22px; }
+    .ref-body .tag {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber-dk);
+    }
+    .ref-body h3 { font-size: 1.22rem; margin: 8px 0 6px; }
+    .ref-body p { font-size: 0.94rem; }
+
+    /* ---------- Über uns ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .about-copy p { font-size: 1.08rem; margin-bottom: 18px; }
+    .values { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 10px; }
+    .value {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 22px;
+    }
+    .value .ic { color: var(--amber-dk); margin-bottom: 12px; }
+    .value .ic svg { width: 26px; height: 26px; }
+    .value h4 { font-family: var(--font-head); font-size: 1.08rem; margin-bottom: 5px; }
+    .value p { font-size: 0.92rem; }
+    .about-figure {
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+    .about-figure .banner {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+      padding: 22px 24px;
+      background: linear-gradient(0deg, rgba(43,40,37,0.86), transparent);
+      color: var(--text-inv);
+      font-family: var(--font-head);
+    }
+    .about-figure .banner { z-index: 3; }
+    .about-figure .banner b { font-size: 1.35rem; display: block; }
+    .about-figure .banner small { color: var(--text-inv-soft); letter-spacing: 0.05em; }
+    .about-figure .about-fallback { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+    .about-figure .about-img {
+      position: absolute; inset: 0; z-index: 1;
+      width: 100%; height: 100%; object-fit: cover;
+      filter: saturate(1.1) contrast(1.02) sepia(0.14);
+    }
+    .about-figure::after {
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(155deg, rgba(196,122,61,0.16), rgba(43,40,37,0.24));
+      mix-blend-mode: multiply;
+    }
+
+    /* ---------- Kontakt ---------- */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 52px;
+      align-items: start;
+    }
+    .contact-info h2 { font-size: clamp(2rem, 4.4vw, 3.05rem); margin: 16px 0 16px; }
+    .contact-info p { font-size: 1.1rem; margin-bottom: 26px; }
+    .contact-list { list-style: none; display: grid; gap: 16px; }
+    .contact-list li { display: flex; align-items: flex-start; gap: 14px; }
+    .contact-list .ic {
+      width: 42px; height: 42px; flex: none;
+      display: grid; place-items: center;
+      border-radius: var(--radius);
+      background: rgba(196,122,61,0.16);
+      color: var(--amber);
+    }
+    .contact-list .ic svg { width: 20px; height: 20px; }
+    .contact-list b { font-family: var(--font-head); color: var(--text-inv); display: block; font-weight: 600; }
+    .contact-list span { color: var(--text-inv-soft); font-size: 0.96rem; }
+
+    form.card-form {
+      background: var(--cream);
+      border-radius: 10px;
+      padding: 34px 32px 32px;
+      box-shadow: var(--shadow);
+    }
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-family: var(--font-head);
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 7px;
+    }
+    .field input, .field textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      padding: 13px 15px;
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .field textarea { resize: vertical; min-height: 120px; }
+    .field input:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(196,122,61,0.16);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    form.card-form .btn-primary { width: 100%; margin-top: 6px; }
+    .form-note {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      margin-top: 14px;
+      text-align: center;
+    }
+    .form-msg {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      background: rgba(196,122,61,0.12);
+      border: 1px solid var(--amber);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: var(--font-head);
+      font-weight: 500;
+      text-align: center;
+    }
+    .form-msg.show { display: block; animation: pop 0.4s var(--ease); }
+    @keyframes pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer.site {
+      background: #211e1b;
+      color: var(--text-inv-soft);
+      padding: 66px 0 110px; /* Platz für fixierten Banner */
+    }
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--line-dk);
+    }
+    .foot-brand .brand { color: var(--text-inv); }
+    .foot-brand .brand small { color: var(--text-inv-soft); }
+    .foot-brand p { font-size: 0.94rem; margin-top: 16px; max-width: 34ch; }
+    .foot-col h4 {
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-inv);
+      margin-bottom: 16px;
+    }
+    .foot-col ul { list-style: none; display: grid; gap: 10px; }
+    .foot-col a, .foot-col li { font-size: 0.94rem; color: var(--text-inv-soft); }
+    .foot-col a:hover { color: var(--amber); }
+    .demo-tag {
+      font-size: 0.7rem;
+      color: var(--amber);
+      border: 1px solid var(--line-dk);
+      border-radius: 3px;
+      padding: 1px 6px;
+      margin-left: 6px;
+      letter-spacing: 0.08em;
+    }
+    .foot-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 26px;
+      font-size: 0.86rem;
+    }
+    .foot-disclaimer {
+      margin-top: 22px;
+      font-size: 0.86rem;
+      color: var(--text-inv-soft);
+      background: rgba(196,122,61,0.08);
+      border-left: 3px solid var(--amber);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    /* ============================================================
+       Konzept-Banner (fixiert, immer sichtbar)
+       ============================================================ */
+    .concept-banner {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 200;
+      background: var(--ink);
+      border-top: 1px solid rgba(196,122,61,0.35);
+      color: var(--text-inv);
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      padding: 9px 20px;
+      padding-bottom: max(9px, env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+    }
+    .concept-banner .badge {
+      color: var(--amber);
+      font-family: var(--font-head);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .concept-banner .badge svg { width: 15px; height: 15px; }
+    .concept-banner a { color: var(--amber); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+    .concept-banner a:hover { color: #e0975a; }
+
+    /* ============================================================
+       Testimonial
+       ============================================================ */
+    .testimonial { background: var(--cream-2); }
+    .quote-wrap { max-width: 860px; margin: 0 auto; text-align: center; position: relative; }
+    .quote-mark {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+      font-size: 6rem;
+      line-height: 1;
+      color: var(--amber);
+      opacity: 0.4;
+      margin: 0 0 -1.7rem;   /* zieht den Text dicht an das Zeichen heran */
+      user-select: none;
+    }
+    .quote-text {
+      font-family: var(--font-head); font-weight: 500;
+      font-size: clamp(1.4rem, 3.1vw, 2rem);
+      line-height: 1.36; letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .quote-author {
+      margin-top: 26px;
+      font-family: var(--font-head); font-weight: 600;
+      font-size: 1rem; letter-spacing: 0.02em;
+      color: var(--amber-dk);
+    }
+    .quote-author span {
+      display: block; margin-top: 5px;
+      font-weight: 400; font-size: 0.85rem; letter-spacing: 0.06em;
+      color: var(--text-soft);
+    }
+
+    /* ============================================================
+       FAQ (Accordion via <details>)
+       ============================================================ */
+    .faq-list { max-width: 800px; margin: 0 auto; display: grid; gap: 14px; }
+    .faq-item {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 22px 24px;
+      font-family: var(--font-head); font-weight: 600; font-size: 1.1rem;
+      color: var(--text);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+    .faq-item[open] summary { color: var(--amber-dk); }
+    .faq-icon {
+      flex: none; width: 22px; height: 22px; color: var(--amber-dk);
+      transition: transform 0.3s var(--ease);
+    }
+    .faq-item[open] .faq-icon { transform: rotate(45deg); }
+    .faq-answer { padding: 0 24px 24px; }
+    .faq-answer p { font-size: 1rem; }
+
+    /* ============================================================
+       Mobiler Anruf-Button (sticky, < 768px)
+       ============================================================ */
+    .mobile-call {
+      display: none;
+      position: fixed; left: 0; right: 0;
+      bottom: var(--banner-h, 40px);
+      z-index: 190;
+      align-items: center; justify-content: center; gap: 10px;
+      background: var(--amber); color: #fff;
+      font-family: var(--font-head); font-weight: 700; font-size: 1.02rem;
+      letter-spacing: 0.01em;
+      padding: 15px 20px;
+      box-shadow: 0 -6px 22px -10px rgba(0,0,0,0.55);
+      transition: background 0.2s var(--ease);
+    }
+    .mobile-call svg { width: 19px; height: 19px; flex: none; }
+    .mobile-call:active { background: var(--amber-dk); }
+
+    /* ============================================================
+       Scroll-Reveal
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+      will-change: opacity, transform;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.08s; }
+    .reveal.d2 { transition-delay: 0.16s; }
+    .reveal.d3 { transition-delay: 0.24s; }
+    .reveal.d4 { transition-delay: 0.32s; }
+
+    /* ============================================================
+       Responsive
+       ============================================================ */
+    @media (max-width: 940px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 44px; }
+      .hero-visual { max-width: 420px; }
+      .steps { grid-template-columns: 1fr; }
+      .step .connector { display: none; }
+      .refs { grid-template-columns: 1fr 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-figure { max-width: 460px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 38px; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-links, .nav-phone .label { display: none; }
+      .burger { display: flex; }
+      .nav-links.mobile-open {
+        display: flex;
+        position: absolute;
+        top: 72px; left: 0; right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        background: var(--cream);
+        border-bottom: 1px solid var(--line);
+        padding: 12px 24px 20px;
+        box-shadow: var(--shadow);
+      }
+      .nav-links.mobile-open a { width: 100%; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 1.05rem; }
+      .nav-links.mobile-open a:last-child { border-bottom: none; }
+      section { padding: 72px 0; }
+      .hero { padding: 128px 0 76px; }
+      .refs { grid-template-columns: 1fr; }
+      .values { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr; gap: 30px; }
+      .concept-banner { font-size: 0.74rem; padding: 8px 14px; padding-bottom: max(8px, env(safe-area-inset-bottom)); flex-wrap: wrap; gap: 4px 8px; }
+      .quote-mark { font-size: 4.6rem; margin-bottom: -1.3rem; }
+      .faq-item summary { padding: 18px 18px; font-size: 1.02rem; }
+      .faq-answer { padding: 0 18px 20px; }
+    }
+
+    /* Mobiler Anruf-Button + gestapelte Fixierung (Banner darunter) */
+    @media (max-width: 767px) {
+      .mobile-call { display: flex; }
+      /* Platz schaffen, damit Footer nicht hinter Anruf-Button + Banner liegt */
+      footer.site { padding-bottom: 150px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .card, .ref, .btn, .ref-img, .faq-icon, .mobile-call { transition: none !important; }
+      .ref:hover .ref-img { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site" id="top">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Holzwerk Brandt — Startseite">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/><path d="M12 5v3"/>
+        </svg>
+        <span>HOLZWERK BRANDT
+          <small>Schreinerei · Innenausbau</small>
+        </span>
+      </a>
+
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#leistungen">Leistungen</a></li>
+          <li><a href="#referenzen">Referenzen</a></li>
+          <li><a href="#ueber-uns">Über uns</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="nav-phone" href="tel:0000000000">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.68 2.75a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.33-1.33a2 2 0 0 1 2.11-.45c.89.32 1.81.55 2.75.68A2 2 0 0 1 22 16.92z"/></svg>
+          <span class="label">0000 000000</span>
+        </a>
+        <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="img/hero.jpg" alt="" width="1920" height="1280" fetchpriority="high"
+           onerror="this.classList.add('img-failed')" />
+    </div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow reveal">Meisterbetrieb · Familienbetrieb in 2. Generation</span>
+        <h1 id="hero-title" class="reveal d1">Handwerk,<br>das <span class="amber">bleibt.</span></h1>
+        <p class="sub reveal d2">Möbel nach Maß und Innenausbau vom Meisterbetrieb — für [Region] und Umgebung. Sauber geplant, ehrlich kalkuliert, termintreu gebaut.</p>
+        <div class="hero-actions reveal d3">
+          <a class="btn btn-primary" href="#kontakt">Unverbindlich anfragen</a>
+          <a class="btn btn-ghost" href="#leistungen">Leistungen ansehen</a>
+        </div>
+        <div class="trust reveal d4">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            Meisterbetrieb
+          </span>
+          <span class="dot"></span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Festpreisgarantie
+          </span>
+          <span class="dot"></span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            Termintreue
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LEISTUNGEN ================= -->
+  <section id="leistungen" aria-labelledby="leistungen-title">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Was wir bauen</span>
+        <h2 id="leistungen-title">Fünf Gewerke, ein Anspruch: sauber gemacht.</h2>
+        <p>Vom einzelnen Möbelstück bis zum kompletten Innenausbau — bei uns aus einer Hand, mit einem Ansprechpartner vom ersten Gespräch bis zur Übergabe.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card reveal d1">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 10h18"/><path d="M12 4v6"/><path d="M8 15h2"/><path d="M14 15h2"/></svg>
+          </div>
+          <h3>Möbel nach Maß</h3>
+          <p>Schränke, Regale, Sideboards und Tische — passgenau für Ihren Raum gefertigt. Kein Kompromiss von der Stange.</p>
+        </article>
+
+        <article class="card reveal d2">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V8l9-5 9 5v13"/><path d="M3 21h18"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/></svg>
+          </div>
+          <h3>Innenausbau</h3>
+          <p>Wand- und Deckenverkleidungen, Einbauten, Trennwände. Wir gestalten Räume, die funktionieren und bleiben.</p>
+        </article>
+
+        <article class="card reveal d3">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="1"/><path d="M15 12h.01"/><path d="M4 8h16"/></svg>
+          </div>
+          <h3>Türen &amp; Fenster</h3>
+          <p>Zimmertüren, Haustüren und Holzfenster — Anfertigung, Austausch und fachgerechter Einbau inklusive.</p>
+        </article>
+
+        <article class="card reveal d1">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 12h18"/><path d="M7 8v0"/><path d="M7 16v0"/><path d="M15 8h2"/><path d="M15 16h2"/></svg>
+          </div>
+          <h3>Küchenmontage</h3>
+          <p>Aufmaß, Aufbau und Anschluss — auch im Altbau mit krummen Wänden. Am Ende sitzt jede Fuge.</p>
+        </article>
+
+        <article class="card reveal d2">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2 2.3-2.3z"/></svg>
+          </div>
+          <h3>Reparaturen</h3>
+          <p>Klemmende Türen, gebrochene Beschläge, aufgequollene Fronten. Wir bringen in Ordnung, was noch zu retten ist.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SO ARBEITEN WIR ================= -->
+  <section id="ablauf" class="dark" aria-labelledby="ablauf-title">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">So arbeiten wir</span>
+        <h2 id="ablauf-title">Drei Schritte. Keine Überraschungen.</h2>
+        <p>Sie wissen von Anfang an, was gebaut wird und was es kostet. Genau so, wie wir selbst behandelt werden möchten.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal d1">
+          <span class="num">01</span>
+          <svg class="connector" viewBox="0 0 40 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M0 4h32"/><path d="M28 1l5 3-5 3"/></svg>
+          <h3>Beratung vor Ort</h3>
+          <p>Wir kommen zu Ihnen, messen auf und hören zu. Sie erklären, was Sie brauchen — wir sagen ehrlich, was geht.</p>
+        </div>
+        <div class="step reveal d2">
+          <span class="num">02</span>
+          <svg class="connector" viewBox="0 0 40 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M0 4h32"/><path d="M28 1l5 3-5 3"/></svg>
+          <h3>Festpreis-Angebot</h3>
+          <p>Sie bekommen ein klares, schriftliches Angebot zum Festpreis. Was drinsteht, gilt — ohne Nachschlag am Ende.</p>
+        </div>
+        <div class="step reveal d3">
+          <span class="num">03</span>
+          <h3>Saubere Umsetzung</h3>
+          <p>Wir bauen termingerecht, halten die Baustelle sauber und übergeben erst, wenn wirklich alles passt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REFERENZEN ================= -->
+  <section id="referenzen" aria-labelledby="referenzen-title">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Beispielarbeiten</span>
+        <h2 id="referenzen-title">Ein Ausschnitt aus der Werkstatt.</h2>
+        <p>Drei Projekte, wie sie bei uns täglich entstehen. Unterschiedliche Aufgaben, gleicher Anspruch an Passform und Oberfläche.</p>
+      </div>
+
+      <div class="refs">
+        <!-- Ref 1: Einbauschrank Altbau -->
+        <article class="ref reveal d1">
+          <div class="ref-art">
+            <img class="ref-img" src="img/projekt-schrank.jpg" alt="Auf Maß gefertigter Einbauschrank in einer Altbau-Dachschräge" width="800" height="600" loading="lazy" onerror="this.classList.add('img-failed')" />
+            <svg class="ref-fallback" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#8a6238"/><stop offset="1" stop-color="#5f4225"/>
+                </linearGradient>
+              </defs>
+              <rect width="400" height="300" fill="url(#g1)"/>
+              <g stroke="#3a2a17" stroke-width="2" fill="#7a5530" opacity="0.95">
+                <rect x="40" y="30" width="150" height="240"/>
+                <rect x="210" y="30" width="150" height="240"/>
+              </g>
+              <g stroke="#4a3620" stroke-width="1.5" opacity="0.5" fill="none">
+                <path d="M55 60 Q115 52 175 62"/><path d="M55 110 Q115 100 175 112"/>
+                <path d="M55 165 Q115 156 175 168"/><path d="M55 220 Q115 212 175 224"/>
+                <path d="M225 60 Q285 52 345 62"/><path d="M225 110 Q285 100 345 112"/>
+                <path d="M225 165 Q285 156 345 168"/><path d="M225 220 Q285 212 345 224"/>
+              </g>
+              <circle cx="175" cy="150" r="5" fill="#d9c39a"/>
+              <circle cx="225" cy="150" r="5" fill="#d9c39a"/>
+            </svg>
+          </div>
+          <div class="ref-body">
+            <span class="tag">Möbel nach Maß</span>
+            <h3>Einbauschrank Altbau</h3>
+            <p>Wandhoher Schrank für eine Dachschräge — jeder Winkel einzeln aufgemessen und gebaut.</p>
+          </div>
+        </article>
+
+        <!-- Ref 2: Küche Eiche massiv -->
+        <article class="ref reveal d2">
+          <div class="ref-art">
+            <img class="ref-img" src="img/projekt-kueche.jpg" alt="Einbauküche mit massiven Eichenfronten und passgenauer Arbeitsplatte" width="800" height="600" loading="lazy" onerror="this.classList.add('img-failed')" />
+            <svg class="ref-fallback" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#c9a877"/><stop offset="1" stop-color="#9c7844"/>
+                </linearGradient>
+              </defs>
+              <rect width="400" height="300" fill="url(#g2)"/>
+              <rect x="0" y="150" width="400" height="26" fill="#3a352f"/>
+              <g fill="#b28d55" stroke="#6f5330" stroke-width="2">
+                <rect x="40" y="176" width="80" height="94"/>
+                <rect x="130" y="176" width="80" height="94"/>
+                <rect x="220" y="176" width="60" height="94"/>
+                <rect x="290" y="176" width="70" height="94"/>
+              </g>
+              <g fill="#a9843f" stroke="#6f5330" stroke-width="2">
+                <rect x="40" y="40" width="70" height="80"/>
+                <rect x="290" y="40" width="70" height="80"/>
+              </g>
+              <g stroke="#4d3a1e" stroke-width="3" stroke-linecap="round">
+                <path d="M92 210v26"/><path d="M182 210v26"/><path d="M255 210v26"/><path d="M330 210v26"/>
+              </g>
+              <rect x="150" y="126" width="100" height="24" rx="3" fill="#2b2825"/>
+            </svg>
+          </div>
+          <div class="ref-body">
+            <span class="tag">Küchenmontage</span>
+            <h3>Küche Eiche massiv</h3>
+            <p>Massive Eichenfronten mit passgenauer Arbeitsplatte — montiert in einem sanierten Reihenhaus.</p>
+          </div>
+        </article>
+
+        <!-- Ref 3: Praxisempfang -->
+        <article class="ref reveal d3">
+          <div class="ref-art">
+            <img class="ref-img" src="img/projekt-tresen.jpg" alt="Empfangstresen aus Holz mit integriertem Stauraum in einer Praxis" width="800" height="600" loading="lazy" onerror="this.classList.add('img-failed')" />
+            <svg class="ref-fallback" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#3a352f"/><stop offset="1" stop-color="#2b2825"/>
+                </linearGradient>
+              </defs>
+              <rect width="400" height="300" fill="url(#g3)"/>
+              <path d="M60 210 L60 150 Q60 130 90 130 L300 130 Q340 130 340 165 L340 210 Z" fill="#b07a3e" stroke="#7a5228" stroke-width="2"/>
+              <rect x="60" y="205" width="280" height="65" fill="#8a5f30"/>
+              <g stroke="#6f4c24" stroke-width="1.5" opacity="0.6" fill="none">
+                <path d="M80 230 H320"/><path d="M80 248 H320"/>
+              </g>
+              <rect x="150" y="150" width="110" height="14" rx="2" fill="#d9c39a" opacity="0.85"/>
+              <circle cx="120" cy="90" r="16" fill="none" stroke="#c47a3d" stroke-width="3"/>
+              <rect x="250" y="70" width="90" height="8" rx="4" fill="#c47a3d" opacity="0.7"/>
+              <rect x="250" y="88" width="60" height="8" rx="4" fill="#c47a3d" opacity="0.45"/>
+            </svg>
+          </div>
+          <div class="ref-body">
+            <span class="tag">Innenausbau</span>
+            <h3>Praxisempfang</h3>
+            <p>Empfangstresen mit integriertem Stauraum für eine Arztpraxis — robust, ruhig, repräsentativ.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIAL ================= -->
+  <section id="stimmen" class="testimonial" aria-labelledby="stimmen-title">
+    <div class="wrap">
+      <div class="quote-wrap reveal">
+        <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+        <h2 id="stimmen-title" class="quote-text">Die Beratung war ehrlich und der Festpreis hat gehalten — keine Nachträge, kein böses Erwachen. Unser Einbauschrank sitzt millimetergenau, und der zugesagte Termin stand.</h2>
+        <p class="quote-author">Familie M., [Ort]
+          <span>Auftrag: Möbel nach Maß</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ÜBER UNS ================= -->
+  <section id="ueber-uns" class="dark" aria-labelledby="ueber-title">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-copy">
+          <span class="eyebrow reveal">Über uns</span>
+          <h2 class="reveal d1" style="font-size:clamp(2rem,4.4vw,3.05rem);margin:16px 0 20px;">Zwei Generationen an der Werkbank.</h2>
+          <p class="reveal d1">Holzwerk Brandt ist ein Familienbetrieb. Gegründet vom Seniorchef, heute geführt in zweiter Generation — mit denselben Werten und modernerer Maschine.</p>
+          <p class="reveal d2">Wir sind ein überschaubares Team. Das heißt: Sie reden mit den Leuten, die auch bei Ihnen arbeiten. Kein Callcenter, keine Subunternehmer-Kette, keine leeren Versprechen.</p>
+
+          <div class="values">
+            <div class="value reveal d1">
+              <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 2.4 7.4H22l-6 4.5 2.3 7.1L12 16.7 5.7 21l2.3-7.1-6-4.5h7.6z"/></svg></div>
+              <h4>Qualität</h4>
+              <p>Sauberes Handwerk, geprüfte Materialien, langlebige Oberflächen.</p>
+            </div>
+            <div class="value reveal d2">
+              <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+              <h4>Verlässlichkeit</h4>
+              <p>Zugesagte Termine halten wir. Rückmeldung bekommen Sie zeitnah.</p>
+            </div>
+            <div class="value reveal d1">
+              <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+              <h4>Faire Preise</h4>
+              <p>Ehrlich kalkuliert, zum Festpreis. Was wir sagen, das gilt.</p>
+            </div>
+            <div class="value reveal d2">
+              <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg></div>
+              <h4>Bodenständig</h4>
+              <p>Regional verwurzelt, seit Jahrzehnten am selben Ort zu Hause.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-figure reveal d2">
+          <img class="about-img" src="img/werkstatt.jpg" alt="Blick in die Werkstatt mit Werkbank und Werkzeug" width="700" height="700" loading="lazy" onerror="this.classList.add('img-failed')" />
+          <svg class="about-fallback" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" aria-hidden="true">
+            <defs>
+              <linearGradient id="af" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#8a6238"/><stop offset="0.55" stop-color="#6e4a2c"/><stop offset="1" stop-color="#4a3320"/>
+              </linearGradient>
+            </defs>
+            <rect width="500" height="500" fill="url(#af)"/>
+            <g stroke="#3a2814" stroke-width="1.6" opacity="0.4" fill="none">
+              <path d="M0 70 Q250 40 500 76"/><path d="M0 150 Q250 120 500 156"/>
+              <path d="M0 230 Q250 202 500 236"/><path d="M0 310 Q250 284 500 316"/>
+              <path d="M0 390 Q250 366 500 396"/><path d="M0 460 Q250 438 500 466"/>
+            </g>
+            <!-- stilisierter Hobel -->
+            <g transform="translate(140 200) rotate(-12)">
+              <rect x="0" y="0" width="220" height="70" rx="10" fill="#c47a3d" stroke="#7a4a20" stroke-width="3"/>
+              <rect x="70" y="-34" width="46" height="40" rx="6" fill="#8a5a2c" stroke="#5f3c1a" stroke-width="3"/>
+              <path d="M120 30 L150 78" stroke="#f3ede2" stroke-width="6" stroke-linecap="round"/>
+              <circle cx="180" cy="35" r="10" fill="#3a352f"/>
+            </g>
+          </svg>
+          <div class="banner">
+            <b>Holzwerk Brandt</b>
+            <small>Meisterbetrieb · seit 1986 in Familienhand</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-left:auto;margin-right:auto;text-align:center;">
+        <span class="eyebrow">Häufige Fragen</span>
+        <h2 id="faq-title">Kurz erklärt, bevor Sie fragen.</h2>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item reveal d1">
+          <summary>Was kostet ein Möbelstück nach Maß?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Das hängt von Größe, Material und Aufwand ab — eine seriöse Pauschale gibt es nicht. Wir messen bei Ihnen vor Ort auf und rechnen alles offen durch. Vorab bekommen Sie einen Festpreis, an den wir uns halten.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal d2">
+          <summary>Wie lange dauert ein Auftrag?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Kleinere Arbeiten erledigen wir oft in wenigen Tagen. Für Anfertigungen nach Maß planen wir je nach Auslastung meist zwei bis vier Wochen ein. Den konkreten Termin nennen wir Ihnen mit dem Angebot — und halten ihn.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal d3">
+          <summary>Machen Sie auch kleine Reparaturen?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Ja, gerne. Eine klemmende Tür, ein loser Beschlag oder eine gequollene Front sind uns nicht zu klein. Sagen Sie uns kurz, worum es geht — wenn sich die Reparatur lohnt, kümmern wir uns darum.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KONTAKT ================= -->
+  <section id="kontakt" class="dark" style="background:#232019;" aria-labelledby="kontakt-title">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <span class="eyebrow reveal">Kontakt</span>
+          <h2 id="kontakt-title" class="reveal d1">Erzählen Sie uns von Ihrem Vorhaben.</h2>
+          <p class="reveal d1">Beschreiben Sie kurz, worum es geht — wir melden uns und vereinbaren einen Termin zum Aufmaß. Die Erstberatung ist unverbindlich.</p>
+
+          <ul class="contact-list reveal d2">
+            <li>
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.68 2.75a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.33-1.33a2 2 0 0 1 2.11-.45c.89.32 1.81.55 2.75.68A2 2 0 0 1 22 16.92z"/></svg></span>
+              <span><b>Telefon</b>0000 000000 <em style="opacity:.6;font-style:normal;">(Platzhalter)</em></span>
+            </li>
+            <li>
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
+              <span><b>E-Mail</b>anfrage@holzwerk-brandt.example</span>
+            </li>
+            <li>
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <span><b>Werkstatt</b>Tischlergasse 12, 00000 Musterstadt <em style="opacity:.6;font-style:normal;">(fiktiv)</em></span>
+            </li>
+            <li>
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+              <span><b>Zeiten</b>Mo–Fr 07:30–16:30 Uhr</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="card-form reveal d2" id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Ihr Name</label>
+            <input type="text" id="name" name="name" placeholder="Vor- und Nachname" autocomplete="name" required />
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="kontaktweg">E-Mail oder Telefon</label>
+              <input type="text" id="kontaktweg" name="kontaktweg" placeholder="Wie erreichen wir Sie?" required />
+            </div>
+            <div class="field">
+              <label for="ort">Ort (optional)</label>
+              <input type="text" id="ort" name="ort" placeholder="Wo soll gearbeitet werden?" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="anliegen">Ihr Anliegen</label>
+            <textarea id="anliegen" name="anliegen" placeholder="Was können wir für Sie bauen? Ein paar Stichworte genügen." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Anfrage senden</button>
+          <p class="form-note">Mit dem Absenden stimmen Sie einer Bearbeitung Ihrer Angaben zu. (Demo — keine Datenübertragung.)</p>
+          <div class="form-msg" id="formMsg" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <span class="brand">
+            <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--amber)"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
+            <span>HOLZWERK BRANDT<small>Schreinerei · Innenausbau</small></span>
+          </span>
+          <p>Meisterbetrieb für Möbel nach Maß und Innenausbau — für [Region] und Umgebung. Handwerk, das bleibt.</p>
+          <div class="foot-disclaimer">
+            Dies ist ein fiktives Konzeptprojekt zur Demonstration. Erstellt von Operiva. Alle Angaben, Namen und Kontaktdaten sind frei erfunden.
+          </div>
+        </div>
+
+        <div class="foot-col">
+          <h4>Leistungen</h4>
+          <ul>
+            <li><a href="#leistungen">Möbel nach Maß</a></li>
+            <li><a href="#leistungen">Innenausbau</a></li>
+            <li><a href="#leistungen">Türen &amp; Fenster</a></li>
+            <li><a href="#leistungen">Küchenmontage</a></li>
+            <li><a href="#leistungen">Reparaturen</a></li>
+          </ul>
+        </div>
+
+        <div class="foot-col">
+          <h4>Betrieb</h4>
+          <ul>
+            <li><a href="#referenzen">Referenzen</a></li>
+            <li><a href="#ueber-uns">Über uns</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+            <li><a href="#" onclick="return false;" style="cursor:not-allowed;">Impressum <span class="demo-tag">Demo</span></a></li>
+            <li><a href="#" onclick="return false;" style="cursor:not-allowed;">Datenschutz <span class="demo-tag">Demo</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="foot-bottom">
+        <span>Tischlergasse 12, 00000 Musterstadt <em style="opacity:.6;font-style:normal;">(fiktiv)</em> · Tel. 0000 000000</span>
+        <span>© <span id="year"></span> Holzwerk Brandt (fiktiv) — Konzept von Operiva</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MOBILER ANRUF-BUTTON (< 768px) ================= -->
+  <a class="mobile-call" href="tel:0000000000" aria-label="Jetzt anrufen — Platzhalternummer 0000 000000">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.68 2.75a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.33-1.33a2 2 0 0 1 2.11-.45c.89.32 1.81.55 2.75.68A2 2 0 0 1 22 16.92z"/></svg>
+    Jetzt anrufen
+  </a>
+
+  <!-- ================= KONZEPT-BANNER (fixiert) ================= -->
+  <div class="concept-banner" role="note">
+    <span class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      Konzeptprojekt
+    </span>
+    <span>von Operiva — <a href="https://operiva.com" target="_blank" rel="noopener">operiva.com</a></span>
+  </div>
+
+  <!-- ================= SCRIPT ================= -->
+  <script>
+    (function () {
+      "use strict";
+
+      // Jahr im Footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Konzept-Banner-Höhe messen → mobiler Anruf-Button stapelt sauber darüber
+      var banner = document.querySelector(".concept-banner");
+      var setBannerH = function () {
+        document.documentElement.style.setProperty("--banner-h", banner.offsetHeight + "px");
+      };
+      setBannerH();
+      window.addEventListener("resize", setBannerH, { passive: true });
+
+      // Header-Schatten beim Scrollen
+      var header = document.querySelector("header.site");
+      var onScroll = function () {
+        if (window.scrollY > 12) header.classList.add("scrolled");
+        else header.classList.remove("scrolled");
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // Mobile-Menü
+      var burger = document.getElementById("burger");
+      var navLinks = document.getElementById("navLinks");
+      burger.addEventListener("click", function () {
+        var open = navLinks.classList.toggle("mobile-open");
+        burger.classList.toggle("open", open);
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+        burger.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
+      });
+      navLinks.addEventListener("click", function (e) {
+        if (e.target.tagName === "A") {
+          navLinks.classList.remove("mobile-open");
+          burger.classList.remove("open");
+          burger.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      // Scroll-Reveal (IntersectionObserver, mit Fallback)
+      var reveals = document.querySelectorAll(".reveal");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce || !("IntersectionObserver" in window)) {
+        reveals.forEach(function (el) { el.classList.add("in"); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
+        reveals.forEach(function (el) { io.observe(el); });
+      }
+
+      // Kontakt-Formular = Attrappe
+      var form = document.getElementById("contactForm");
+      var msg = document.getElementById("formMsg");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        msg.textContent = "Dies ist ein Konzeptprojekt — das Formular ist nicht aktiv.";
+        msg.classList.add("show");
+        msg.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>PULS. Studio — Mehr als Training.</title>
+  <meta name="description" content="Konzeptprojekt: Fitnessstudio, Kraft & Ausdauer, Kurse, Personal Training. Fiktive Demo-Website von Operiva." />
+  <script>
+    /* Früh: FX-Flag + Preloader-Entscheidung (kein Flash für reduced-motion / Rückkehrer) */
+    (function () {
+      var d = document.documentElement;
+      d.className += " fx";
+      try {
+        var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var seen = sessionStorage.getItem("puls_seen");
+        if (!reduce && !seen) d.className += " preload";
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    /* ============================================================
+       PULS. Studio · Konzeptprojekt / Demo von Operiva
+       Animations-Showcase. Near-Black · Weiß · Neon-Limette.
+       Bewegung nur über transform/opacity. rAF. Passive Listener.
+       ============================================================ */
+
+    :root {
+      --bg:     #0a0a0c;
+      --panel:  #101014;
+      --white:  #f4f6f0;
+      --dim:    #9a9c95;
+      --lime:   #c8f542;
+      --line:   #222327;
+      --font:   "Helvetica Neue", "Arial Nova", Arial, "Inter", system-ui,
+                -apple-system, BlinkMacSystemFont, sans-serif;
+      --maxw:   1400px;
+      --pad:    clamp(1.1rem, 4vw, 4rem);
+      --hard:   cubic-bezier(0.7, 0, 0.2, 1);   /* hartes, sportliches Easing */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--white);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      padding-bottom: 44px; /* fixierter Banner */
+    }
+    /* Custom Cursor aktiv → nativen ausblenden (nur Desktop) */
+    body.cursor-on, body.cursor-on a, body.cursor-on button, body.cursor-on .course-row { cursor: none; }
+
+    h1, h2, h3 {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 0.86;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
+
+    .kicker {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--lime);
+      display: inline-flex; align-items: center; gap: 0.7rem;
+    }
+    .kicker::before { content: ""; width: 26px; height: 2px; background: var(--lime); }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      font-family: var(--font); font-weight: 800; font-size: 0.82rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 1rem 1.8rem; border: 2px solid var(--lime); border-radius: 0;
+      background: var(--lime); color: #0a0a0c; cursor: pointer;
+      transition: background 0.25s var(--hard), color 0.25s var(--hard);
+      will-change: transform;
+    }
+    .btn.ghost { background: transparent; color: var(--white); border-color: #3a3b3f; }
+    .btn.ghost:hover { border-color: var(--lime); color: var(--lime); }
+    .btn:hover { background: #d9ff5c; }
+    .magnetic { position: relative; }
+
+    /* ============================================================
+       SCROLL-PROGRESS (9)
+       ============================================================ */
+    .progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 95;
+      background: var(--lime);
+      transform: scaleX(0); transform-origin: left;
+    }
+
+    /* ============================================================
+       PRELOADER (1)
+       ============================================================ */
+    .preloader {
+      position: fixed; inset: 0; z-index: 200; display: none;
+      background: var(--bg);
+      align-items: flex-end; justify-content: space-between;
+      padding: var(--pad);
+      transform: translateY(0);
+    }
+    .preload .preloader { display: flex; }
+    .preloader.lift { transform: translateY(-100%); transition: transform 0.7s var(--hard); }
+    .preloader .count {
+      font-size: clamp(4rem, 22vw, 16rem); font-weight: 800; letter-spacing: -0.05em; line-height: 0.8;
+      color: var(--white);
+    }
+    .preloader .count::after { content: "%"; color: var(--lime); font-size: 0.3em; vertical-align: super; }
+    .preloader .pl-label { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--dim); padding-bottom: 1.2rem; }
+
+    /* ============================================================
+       CUSTOM CURSOR (2)
+       ============================================================ */
+    .cursor-dot, .cursor-ring {
+      position: fixed; top: 0; left: 0; z-index: 190; pointer-events: none;
+      border-radius: 50%; opacity: 0;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-dot { width: 6px; height: 6px; background: var(--lime); }
+    .cursor-ring {
+      width: 40px; height: 40px; border: 1.5px solid rgba(200,245,66,0.7);
+      display: grid; place-items: center;
+      transition: width 0.25s var(--hard), height 0.25s var(--hard), background 0.25s var(--hard), border-color 0.25s var(--hard);
+    }
+    .cursor-ring .lbl {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #0a0a0c; opacity: 0;
+    }
+    body.cursor-on .cursor-dot, body.cursor-on .cursor-ring { opacity: 1; }
+    .cursor-ring.grow { width: 64px; height: 64px; background: rgba(200,245,66,0.12); }
+    .cursor-ring.view { width: 84px; height: 84px; background: var(--lime); border-color: var(--lime); }
+    .cursor-ring.view .lbl { opacity: 1; }
+    .cursor-ring.view ~ .cursor-dot, body.cursor-on .cursor-ring.view + .cursor-dot { opacity: 0; }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    header.site {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 90;
+      background: rgba(10,10,12,0);
+      transition: background 0.3s var(--hard), border-color 0.3s var(--hard);
+      border-bottom: 1px solid transparent;
+    }
+    header.site.scrolled { background: rgba(10,10,12,0.86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom-color: var(--line); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .brand { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; }
+    .brand .d { color: var(--lime); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); position: relative; padding: 3px 0; }
+    .nav-links a::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 0; height: 2px; background: var(--lime); transition: width 0.25s var(--hard); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta .btn { padding: 0.7rem 1.3rem; }
+    .burger { display: none; flex-direction: column; gap: 5px; background: none; border: 0; cursor: pointer; padding: 8px; }
+    .burger span { width: 26px; height: 2px; background: var(--white); transition: transform 0.3s var(--hard), opacity 0.3s var(--hard); }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ============================================================
+       Duotone-Bilder
+       ============================================================ */
+    .duotone {
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #0a0a0c 0%, #131a08 55%, #26340f 100%);
+    }
+    .duotone img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(1) contrast(1.15) brightness(0.82);
+    }
+    .duotone img.img-failed { display: none; }
+    .duotone::before {
+      content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: rgba(200,245,66,0.14); mix-blend-mode: screen;
+    }
+    .duotone::after {
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(135deg, rgba(10,10,12,0.62), rgba(200,245,66,0.30));
+      mix-blend-mode: overlay;
+    }
+
+    /* ============================================================
+       HERO (4, 10)
+       ============================================================ */
+    .hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg { position: absolute; inset: -8% 0 -8% 0; z-index: 0; }
+    .hero-bg .duotone { width: 100%; height: 100%; }
+    .hero-shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(10,10,12,0.5) 0%, rgba(10,10,12,0.2) 40%, rgba(10,10,12,0.92) 100%); }
+    .hero .wrap { position: relative; z-index: 2; padding-bottom: clamp(3rem, 8vh, 7rem); padding-top: 100px; width: 100%; }
+    .hero h1 { font-size: clamp(3rem, 12.5vw, 9rem); letter-spacing: -0.045em; }
+    .hero h1 .ln { display: block; overflow: hidden; }
+    .hero h1 .ln > span { display: block; }
+    .hero h1 .lime { color: var(--lime); }
+    .hero .sub { max-width: 46ch; margin: 1.6rem 0 2rem; color: var(--dim); font-size: clamp(0.95rem, 1.4vw, 1.1rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .hero-scroll { position: absolute; right: var(--pad); bottom: clamp(3rem,8vh,7rem); z-index: 2; font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--dim); writing-mode: vertical-rl; }
+
+    /* Clip-Reveal (gestaffelt) für Zeilen & Headlines */
+    .fx .clip > span { transform: translateY(105%); transition: transform 0.6s var(--hard); }
+    .clip.in > span, .clip > span { }
+    .fx .clip.in > span { transform: translateY(0); }
+    .fx .clip.d1 > span { transition-delay: 0.06s; }
+    .fx .clip.d2 > span { transition-delay: 0.14s; }
+    .fx .clip.d3 > span { transition-delay: 0.22s; }
+
+    /* generisches Fade-Up-Reveal */
+    .fx .up { opacity: 0; transform: translateY(24px); transition: opacity 0.5s var(--hard), transform 0.5s var(--hard); }
+    .fx .up.in { opacity: 1; transform: none; }
+    .fx .up.d1 { transition-delay: 0.06s; } .fx .up.d2 { transition-delay: 0.12s; } .fx .up.d3 { transition-delay: 0.18s; } .fx .up.d4 { transition-delay: 0.24s; }
+
+    /* ============================================================
+       MARQUEE (3)
+       ============================================================ */
+    .marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1.1rem 0; background: var(--bg); }
+    .marquee.on-lime { background: var(--lime); border-color: var(--lime); }
+    .marquee-track { display: flex; width: max-content; will-change: transform; }
+    .marquee-group { display: flex; flex: none; }
+    .marquee-group span { display: inline-block; padding: 0 1.4rem; font-size: clamp(1.4rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; white-space: nowrap; }
+    .marquee.on-lime .marquee-group span { color: #0a0a0c; }
+    .marquee-group span .star { color: var(--lime); }
+    .marquee.on-lime .marquee-group span .star { color: #0a0a0c; }
+
+    /* ============================================================
+       Sektionen allgemein
+       ============================================================ */
+    section.block { padding: clamp(4.5rem, 11vw, 10rem) 0; position: relative; }
+    .sec-head { margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+    .sec-head h2 { font-size: clamp(2.4rem, 8vw, 6rem); letter-spacing: -0.04em; }
+    .sec-head .kicker { margin-bottom: 1.2rem; }
+
+    /* ============================================================
+       KURSE — Hover-Liste + schwebendes Vorschaubild (8)
+       ============================================================ */
+    .courses-list { border-top: 1px solid var(--line); }
+    .course-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: clamp(1.2rem, 3vw, 2.2rem) 0; border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+    .course-row .cname { font-size: clamp(1.8rem, 6vw, 4.2rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; color: var(--white); transition: color 0.3s var(--hard), transform 0.4s var(--hard); }
+    .course-row .cmeta { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); flex: none; }
+    @media (hover: hover) and (pointer: fine) {
+      .course-row:hover .cname { color: var(--lime); transform: translateX(1.2rem); }
+    }
+
+    /* ============================================================
+       STATS — Countup (5)
+       ============================================================ */
+    .stats { background: var(--panel); }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .stat .num { font-size: clamp(3rem, 9vw, 7rem); font-weight: 800; letter-spacing: -0.04em; line-height: 0.9; color: var(--lime); }
+    .stat .num .suf { color: var(--white); font-size: 0.5em; }
+    .stat .lbl { margin-top: 0.6rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
+    .stats-note { margin-top: 2.4rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #5f6058; }
+
+    /* ============================================================
+       PERSONAL TRAINING — Tilt-Karten (6)
+       ============================================================ */
+    .tilt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+    .tilt-card {
+      position: relative; background: var(--panel); border: 1px solid var(--line);
+      overflow: hidden; transform-style: preserve-3d; will-change: transform;
+      transition: transform 0.4s var(--hard);
+    }
+    .tilt-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+    .tilt-media .duotone { width: 100%; height: 100%; }
+    .tilt-media .duotone img, .tilt-media .duotone { transition: transform 0.5s var(--hard); }
+    .tilt-inner { padding: 1.6rem 1.5rem 1.8rem; }
+    .tilt-inner h3 { font-size: 1.5rem; }
+    .tilt-inner p { margin-top: 0.6rem; font-size: 0.86rem; color: var(--dim); }
+    .tilt-glare {
+      position: absolute; top: 0; left: 0; width: 90%; height: 90%; z-index: 3; pointer-events: none;
+      background: radial-gradient(circle, rgba(200,245,66,0.25), rgba(200,245,66,0) 60%);
+      opacity: 0; transform: translate(-50%,-50%); will-change: transform, opacity; mix-blend-mode: screen;
+    }
+    .tilt-num { position: absolute; top: 1rem; right: 1.2rem; z-index: 4; font-size: 0.72rem; letter-spacing: 0.16em; color: var(--lime); }
+
+    /* ============================================================
+       PREISE
+       ============================================================ */
+    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+    .price-card { border: 1px solid var(--line); background: var(--panel); padding: 2rem 1.8rem 2.2rem; display: flex; flex-direction: column; }
+    .price-card.feat { border-color: var(--lime); background: #0e1206; }
+    .price-card .tier { font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
+    .price-card.feat .tier { color: var(--lime); }
+    .price-card .amt { margin: 1rem 0 0.2rem; font-size: clamp(2.4rem, 5vw, 3.4rem); font-weight: 800; letter-spacing: -0.03em; }
+    .price-card .amt .per { font-size: 0.32em; color: var(--dim); font-weight: 700; letter-spacing: 0; }
+    .price-card ul { list-style: none; margin: 1.4rem 0 1.8rem; display: grid; gap: 0.7rem; }
+    .price-card li { font-size: 0.86rem; color: var(--white); padding-left: 1.3rem; position: relative; }
+    .price-card li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 8px; height: 8px; background: var(--lime); }
+    .price-card .btn { margin-top: auto; width: 100%; }
+    .price-note { margin-top: 1.6rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5f6058; }
+
+    /* ============================================================
+       FORMULAR (Attrappe)
+       ============================================================ */
+    .try-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+    .try-info h2 { font-size: clamp(2.4rem, 7vw, 5rem); }
+    .try-info p { margin-top: 1.2rem; color: var(--dim); max-width: 40ch; }
+    .try-info .phone { margin-top: 1.8rem; font-size: 1.4rem; font-weight: 800; letter-spacing: 0.02em; }
+    .try-info .phone span { color: var(--lime); }
+    form.try-form { display: grid; gap: 1.1rem; }
+    .field label { display: block; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.5rem; }
+    .field input, .field select, .field textarea {
+      width: 100%; font-family: var(--font); font-size: 1rem; color: var(--white);
+      background: #111216; border: 1px solid var(--line); padding: 0.9rem 1rem;
+      transition: border-color 0.25s var(--hard);
+    }
+    .field select { appearance: none; -webkit-appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23c8f542' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+    .field textarea { resize: vertical; min-height: 90px; }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--lime); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    .form-msg { display: none; padding: 0.9rem 1rem; border: 1px solid var(--lime); color: var(--lime); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.02em; }
+    .form-msg.show { display: block; }
+
+    /* ============================================================
+       FOOTER + Banner
+       ============================================================ */
+    footer.site { border-top: 1px solid var(--line); padding: 3rem 0 3.4rem; }
+    .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.4rem; align-items: baseline; }
+    .foot-brand { font-size: 2rem; font-weight: 800; text-transform: uppercase; }
+    .foot-brand .d { color: var(--lime); }
+    .foot-cols { display: flex; gap: 2.4rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--dim); }
+    .foot-cols a:hover { color: var(--lime); }
+    .demo-tag { color: var(--lime); }
+    .foot-disc { margin-top: 2.2rem; padding-top: 1.6rem; border-top: 1px solid var(--line); font-size: 0.74rem; letter-spacing: 0.06em; color: #5f6058; }
+
+    .concept-banner {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 100;
+      background: var(--bg); border-top: 1px solid var(--lime);
+      padding: 0.55rem var(--pad); padding-bottom: max(0.55rem, env(safe-area-inset-bottom));
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); text-align: center;
+    }
+    .concept-banner b { color: var(--lime); }
+    .concept-banner a { color: var(--lime); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ============================================================
+       Responsive
+       ============================================================ */
+    @media (max-width: 940px) {
+      .stats-grid { grid-template-columns: 1fr; gap: 2.4rem; }
+      .tilt-grid { grid-template-columns: 1fr; }
+      .price-grid { grid-template-columns: 1fr; }
+      .try-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 820px) {
+      .nav-links, .nav-cta { display: none; }
+      .burger { display: flex; }
+      .nav-links.open {
+        display: flex; position: absolute; top: 70px; left: 0; right: 0; flex-direction: column; align-items: flex-start;
+        gap: 0; background: rgba(10,10,12,0.97); border-bottom: 1px solid var(--line); padding: 0.5rem var(--pad) 1.4rem;
+      }
+      .nav-links.open a { width: 100%; padding: 1rem 0; border-bottom: 1px solid var(--line); font-size: 1rem; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION — komplette Ruhe, alles statisch sichtbar
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      .preloader { display: none !important; }
+      .progress { display: none !important; }
+      .cursor-dot, .cursor-ring { display: none !important; }
+      .fx .clip > span { transform: none !important; transition: none !important; }
+      .fx .up { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .marquee-track { transform: none !important; flex-wrap: wrap; width: 100%; }
+      .marquee-group:nth-child(2) { display: none; }
+      .tilt-card, .tilt-media .duotone, .btn { transition: none !important; transform: none !important; }
+      .tilt-glare { display: none !important; }
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL-PROGRESS (9) -->
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- PRELOADER (1) -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="count" id="plCount">0</div>
+    <div class="pl-label">PULS. Studio — lädt</div>
+  </div>
+
+  <!-- CUSTOM CURSOR (2) -->
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="lbl">Ansehen</span></div>
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site" id="top">
+    <div class="wrap nav">
+      <a class="brand" href="#top">PULS<span class="d">.</span></a>
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#kurse">Kurse</a></li>
+          <li><a href="#personal">Personal</a></li>
+          <li><a href="#preise">Preise</a></li>
+          <li><a href="#probetraining">Kontakt</a></li>
+        </ul>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn magnetic" href="#probetraining">Probetraining</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" id="heroBg" aria-hidden="true">
+      <div class="duotone" style="width:100%;height:100%">
+        <img src="img/hero.jpg" alt="" width="1920" height="1280" fetchpriority="high" onerror="this.classList.add('img-failed')" />
+      </div>
+    </div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="kicker up" data-hero>Kraft · Ausdauer · [Region]</span>
+      <h1 id="hero-title">
+        <span class="ln clip"><span>Mehr als</span></span>
+        <span class="ln clip d1"><span class="lime" data-scramble="Training.">Training.</span></span>
+      </h1>
+      <p class="sub up d2" data-hero>Kein Schnickschnack, keine Ausreden. Kraft, Ausdauer und Technik — mit Leuten, die wissen, was sie tun. Komm vorbei und probier’s aus.</p>
+      <div class="hero-actions up d3" data-hero>
+        <a class="btn magnetic" href="#probetraining">Probetraining sichern</a>
+        <a class="btn ghost magnetic" href="#kurse">Kurse ansehen</a>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">Scroll ↓</div>
+  </section>
+
+  <!-- ================= MARQUEE (3) ================= -->
+  <div class="marquee" data-marquee data-dir="-1" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-group"><span>Kraft <i class="star">—</i> Ausdauer <i class="star">—</i> Technik <i class="star">—</i> Disziplin <i class="star">—</i> </span></div>
+      <div class="marquee-group"><span>Kraft <i class="star">—</i> Ausdauer <i class="star">—</i> Technik <i class="star">—</i> Disziplin <i class="star">—</i> </span></div>
+    </div>
+  </div>
+
+  <!-- ================= KURSE (8) ================= -->
+  <section class="block" id="kurse" aria-labelledby="kurse-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker up">Kurse</span>
+        <h2 id="kurse-title" class="clip"><span>Wähl deine Waffe.</span></h2>
+      </div>
+
+      <div class="courses-list" id="coursesList">
+        <div class="course-row up" data-preview="img/training-1.jpg" data-alt="Krafttraining im Studio">
+          <span class="cname">Krafttraining</span>
+          <span class="cmeta">Hantel · Maschine · Frei</span>
+        </div>
+        <div class="course-row up d1" data-preview="img/training-2.jpg" data-alt="HIIT-Kurs im Studio">
+          <span class="cname">HIIT</span>
+          <span class="cmeta">45 Min · Intervalle</span>
+        </div>
+        <div class="course-row up d2" data-preview="img/training-3.jpg" data-alt="Mobility-Training im Studio">
+          <span class="cname">Mobility</span>
+          <span class="cmeta">Beweglichkeit · Reha</span>
+        </div>
+        <div class="course-row up d3" data-preview="img/training-4.jpg" data-alt="Boxtraining im Studio">
+          <span class="cname">Boxen</span>
+          <span class="cmeta">Technik · Sparring</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STATS (5) ================= -->
+  <section class="block stats" id="stats" aria-labelledby="stats-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker up">In Zahlen</span>
+        <h2 id="stats-title" class="clip"><span>Kurz gerechnet.</span></h2>
+      </div>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat up">
+          <div class="num"><span data-count="420">0</span><span class="suf"> m²</span></div>
+          <div class="lbl">Trainingsfläche</div>
+        </div>
+        <div class="stat up d1">
+          <div class="num"><span data-count="60">0</span><span class="suf">+</span></div>
+          <div class="lbl">Kurse pro Woche</div>
+        </div>
+        <div class="stat up d2">
+          <div class="num"><span data-count="24">0</span><span class="suf">/7</span></div>
+          <div class="lbl">Geöffnet</div>
+        </div>
+      </div>
+      <p class="stats-note">Beispielwerte — Konzeptprojekt.</p>
+    </div>
+  </section>
+
+  <!-- ================= PERSONAL TRAINING (6) ================= -->
+  <section class="block" id="personal" aria-labelledby="personal-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker up">Personal Training</span>
+        <h2 id="personal-title" class="clip"><span>Einer für dich.</span></h2>
+      </div>
+      <div class="tilt-grid" id="tiltGrid">
+        <article class="tilt-card up">
+          <span class="tilt-num">01</span>
+          <div class="tilt-media"><div class="duotone"><img src="img/training-1.jpg" alt="Personal Training Kraft-Fokus" width="900" height="675" loading="lazy" onerror="this.classList.add('img-failed')" /></div></div>
+          <div class="tilt-inner"><h3>Kraft-Fokus</h3><p>Sauberer Aufbau von Grundkraft. Kniebeuge, Kreuzheben, Bankdrücken — Technik zuerst, Gewicht danach.</p></div>
+          <div class="tilt-glare"></div>
+        </article>
+        <article class="tilt-card up d1">
+          <span class="tilt-num">02</span>
+          <div class="tilt-media"><div class="duotone"><img src="img/training-2.jpg" alt="Personal Training Wettkampf-Prep" width="900" height="675" loading="lazy" onerror="this.classList.add('img-failed')" /></div></div>
+          <div class="tilt-inner"><h3>Wettkampf-Prep</h3><p>Gezielt auf einen Termin hin. Plan, Kontrolle, Anpassung — Woche für Woche, ohne Bauchgefühl.</p></div>
+          <div class="tilt-glare"></div>
+        </article>
+        <article class="tilt-card up d2">
+          <span class="tilt-num">03</span>
+          <div class="tilt-media"><div class="duotone"><img src="img/training-3.jpg" alt="Personal Training Reha und Aufbau" width="900" height="675" loading="lazy" onerror="this.classList.add('img-failed')" /></div></div>
+          <div class="tilt-inner"><h3>Reha &amp; Aufbau</h3><p>Nach Pause oder Verletzung zurück in Form. Ruhig dosiert, mit Blick auf das, was gerade geht.</p></div>
+          <div class="tilt-glare"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PREISE ================= -->
+  <section class="block" id="preise" aria-labelledby="preise-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker up">Preise</span>
+        <h2 id="preise-title" class="clip"><span>Klarer Deal.</span></h2>
+      </div>
+      <div class="price-grid">
+        <div class="price-card up">
+          <span class="tier">Flex</span>
+          <div class="amt">ab 39 €<span class="per"> /Monat</span></div>
+          <ul>
+            <li>Zugang zur Trainingsfläche</li>
+            <li>Monatlich kündbar</li>
+            <li>App mit Trainingsplan</li>
+          </ul>
+          <a class="btn ghost magnetic" href="#probetraining">Wählen</a>
+        </div>
+        <div class="price-card feat up d1">
+          <span class="tier">Unlimited</span>
+          <div class="amt">ab 59 €<span class="per"> /Monat</span></div>
+          <ul>
+            <li>Fläche + alle Kurse</li>
+            <li>Sauna &amp; Duschen</li>
+            <li>1× Check-in pro Monat</li>
+          </ul>
+          <a class="btn magnetic" href="#probetraining">Wählen</a>
+        </div>
+        <div class="price-card up d2">
+          <span class="tier">Personal</span>
+          <div class="amt">ab 119 €<span class="per"> /Monat</span></div>
+          <ul>
+            <li>Alles aus Unlimited</li>
+            <li>4× Personal Training</li>
+            <li>Fester Coach</li>
+          </ul>
+          <a class="btn ghost magnetic" href="#probetraining">Wählen</a>
+        </div>
+      </div>
+      <p class="price-note">Beispielpreise — Konzeptprojekt.</p>
+    </div>
+  </section>
+
+  <!-- ================= MARQUEE (3) ================= -->
+  <div class="marquee on-lime" data-marquee data-dir="1" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-group"><span>Jetzt anfangen <i class="star">✦</i> Kein Vertrag-Stress <i class="star">✦</i> Probetraining <i class="star">✦</i> </span></div>
+      <div class="marquee-group"><span>Jetzt anfangen <i class="star">✦</i> Kein Vertrag-Stress <i class="star">✦</i> Probetraining <i class="star">✦</i> </span></div>
+    </div>
+  </div>
+
+  <!-- ================= PROBETRAINING (Attrappe) ================= -->
+  <section class="block" id="probetraining" aria-labelledby="try-title">
+    <div class="wrap try-grid">
+      <div class="try-info">
+        <span class="kicker up">Probetraining</span>
+        <h2 id="try-title" class="clip"><span>Komm vorbei.</span></h2>
+        <p class="up d1">Sag uns kurz, wann es dir passt. Wir zeigen dir alles, du trainierst einmal mit — unverbindlich.</p>
+        <div class="phone up d2">Tel. <span>0000 000000</span></div>
+      </div>
+
+      <form class="try-form up d1" id="tryForm" novalidate>
+        <div class="form-row">
+          <div class="field"><label for="name">Name</label><input type="text" id="name" name="name" placeholder="Dein Name" autocomplete="name" /></div>
+          <div class="field"><label for="kontakt">E-Mail / Telefon</label><input type="text" id="kontakt" name="kontakt" placeholder="Wie erreichen wir dich?" /></div>
+        </div>
+        <div class="field">
+          <label for="ziel">Dein Ziel</label>
+          <select id="ziel" name="ziel">
+            <option value="" selected disabled>Bitte wählen …</option>
+            <option>Kraft aufbauen</option>
+            <option>Ausdauer / Abnehmen</option>
+            <option>Kurse besuchen</option>
+            <option>Personal Training</option>
+          </select>
+        </div>
+        <div class="field"><label for="nachricht">Nachricht (optional)</label><textarea id="nachricht" name="nachricht" placeholder="Noch was, das wir wissen sollten?"></textarea></div>
+        <button type="submit" class="btn magnetic">Probetraining anfragen</button>
+        <div class="form-msg" id="formMsg" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site">
+    <div class="wrap">
+      <div class="foot-top">
+        <div class="foot-brand">PULS<span class="d">.</span></div>
+        <div class="foot-cols">
+          <span>Studioweg 1, 00000 [Region] <em style="opacity:.6;font-style:normal">(fiktiv)</em></span>
+          <span>Tel. 0000 000000</span>
+          <span><a href="#" onclick="return false;" style="cursor:not-allowed">Impressum <b class="demo-tag">Demo</b></a></span>
+          <span><a href="#" onclick="return false;" style="cursor:not-allowed">Datenschutz <b class="demo-tag">Demo</b></a></span>
+        </div>
+      </div>
+      <p class="foot-disc">Fiktives Konzeptprojekt zur Demonstration. Erstellt von Operiva. Alle Angaben frei erfunden. © <span id="year"></span> PULS. Studio (fiktiv).</p>
+    </div>
+  </footer>
+
+  <!-- ================= KONZEPT-BANNER ================= -->
+  <div class="concept-banner" role="note">
+    <b>Konzeptprojekt</b> von Operiva — <a href="https://operiva.com" target="_blank" rel="noopener">operiva.com</a>
+  </div>
+
+  <!-- ================= SCRIPT ================= -->
+  <script>
+    (function () {
+      "use strict";
+      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+      var mobile = matchMedia("(max-width: 820px)").matches;
+      var lowPower = (navigator.hardwareConcurrency || 8) <= 4;
+      var heavyFX = finePointer && !mobile && !reduce && !lowPower; // Cursor, Tilt, Magnetic, Preview
+      var root = document.documentElement;
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // ---- gecachte Pointer-/Scroll-Werte (passiv) ----
+      var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+      var scrollY = window.pageYOffset || 0;
+      window.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
+      window.addEventListener("scroll", function () { scrollY = window.pageYOffset || 0; }, { passive: true });
+
+      // ============================================================
+      // Header-Zustand
+      // ============================================================
+      var header = document.querySelector("header.site");
+      function headerState() { header.classList.toggle("scrolled", scrollY > 40); }
+      window.addEventListener("scroll", headerState, { passive: true }); headerState();
+
+      var burger = document.getElementById("burger");
+      var navLinks = document.getElementById("navLinks");
+      burger.addEventListener("click", function () {
+        var open = navLinks.classList.toggle("open");
+        burger.classList.toggle("open", open);
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      navLinks.addEventListener("click", function (e) { if (e.target.tagName === "A") { navLinks.classList.remove("open"); burger.classList.remove("open"); } });
+
+      // ============================================================
+      // Reveals: clip + up (IntersectionObserver)  [4]
+      // ============================================================
+      var reveals = document.querySelectorAll(".clip, .up");
+      function showAll() { reveals.forEach(function (el) { el.classList.add("in"); }); }
+      if (reduce || !("IntersectionObserver" in window)) {
+        showAll();
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+        }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+        // Hero-Elemente werden separat nach dem Preloader gezeigt
+        reveals.forEach(function (el) { if (!el.hasAttribute("data-hero") && !el.closest("#hero-title")) io.observe(el); });
+      }
+
+      // ============================================================
+      // (10) TEXT-SCRAMBLE
+      // ============================================================
+      function scramble(el, dur) {
+        var target = el.getAttribute("data-scramble");
+        if (reduce) { el.textContent = target; return; }
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&/0123456789";
+        var start = performance.now();
+        function frame(t) {
+          var p = Math.min((t - start) / dur, 1);
+          var revealCount = Math.floor(p * target.length);
+          var out = "";
+          for (var i = 0; i < target.length; i++) {
+            var c = target[i];
+            if (i < revealCount || c === " " || c === ".") out += c;
+            else out += chars[(Math.random() * chars.length) | 0];
+          }
+          el.textContent = out;
+          if (p < 1) requestAnimationFrame(frame); else el.textContent = target;
+        }
+        requestAnimationFrame(frame);
+      }
+
+      // ============================================================
+      // Hero-Reveal (nach Preloader oder sofort)
+      // ============================================================
+      var heroClips = document.querySelectorAll("#hero-title .clip");
+      var heroUps = document.querySelectorAll(".hero [data-hero]");
+      function revealHero() {
+        heroClips.forEach(function (el) { el.classList.add("in"); });
+        heroUps.forEach(function (el) { el.classList.add("in"); });
+        var sc = document.querySelector("[data-scramble]");
+        if (sc) setTimeout(function () { scramble(sc, 700); }, 220);
+      }
+
+      // ============================================================
+      // (1) PRELOADER
+      // ============================================================
+      var preloader = document.getElementById("preloader");
+      var runPreloader = root.classList.contains("preload") && !reduce;
+      if (runPreloader) {
+        var plCount = document.getElementById("plCount");
+        var startT = performance.now(), DUR = 1200;
+        function ease(p) { return 1 - Math.pow(1 - p, 3); }
+        function count(t) {
+          var p = Math.min((t - startT) / DUR, 1);
+          plCount.textContent = Math.round(ease(p) * 100);
+          if (p < 1) requestAnimationFrame(count);
+          else {
+            try { sessionStorage.setItem("puls_seen", "1"); } catch (e) {}
+            preloader.classList.add("lift");
+            revealHero();
+            setTimeout(function () { preloader.style.display = "none"; }, 720);
+          }
+        }
+        requestAnimationFrame(count);
+      } else {
+        preloader.style.display = "none";
+        // Hero direkt zeigen
+        if (reduce) revealHero();
+        else requestAnimationFrame(function () { requestAnimationFrame(revealHero); });
+      }
+
+      // ============================================================
+      // (5) COUNTUP
+      // ============================================================
+      var counters = document.querySelectorAll("[data-count]");
+      function runCount(el) {
+        var target = parseInt(el.getAttribute("data-count"), 10);
+        if (reduce) { el.textContent = target; return; }
+        var s = performance.now(), d = 1400;
+        function step(t) {
+          var p = Math.min((t - s) / d, 1);
+          el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target);
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      if (reduce || !("IntersectionObserver" in window)) {
+        counters.forEach(function (el) { el.textContent = el.getAttribute("data-count"); });
+      } else {
+        var cio = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { runCount(en.target); cio.unobserve(en.target); } });
+        }, { threshold: 0.5 });
+        counters.forEach(function (el) { cio.observe(el); });
+      }
+
+      // ============================================================
+      // (2) CUSTOM CURSOR — Zustände
+      // ============================================================
+      var ring = document.getElementById("cursorRing");
+      var dot = document.getElementById("cursorDot");
+      var rx = mx, ry = my;
+      if (heavyFX) {
+        document.body.classList.add("cursor-on");
+        document.addEventListener("mouseover", function (e) {
+          var t = e.target;
+          ring.classList.remove("grow", "view");
+          if (t.closest(".duotone, .tilt-card")) ring.classList.add("view");
+          else if (t.closest("a, button, .magnetic")) ring.classList.add("grow");
+        }, { passive: true });
+      }
+
+      // ============================================================
+      // (7) MAGNETIC BUTTONS  (nur Desktop)
+      // ============================================================
+      var magnets = [];
+      if (heavyFX) {
+        document.querySelectorAll(".magnetic").forEach(function (el) {
+          var m = { el: el, active: false, cx: 0, cy: 0, x: 0, y: 0 };
+          el.addEventListener("mouseenter", function () { var r = el.getBoundingClientRect(); m.cx = r.left + r.width / 2; m.cy = r.top + r.height / 2; m.active = true; });
+          el.addEventListener("mouseleave", function () { m.active = false; });
+          magnets.push(m);
+        });
+      }
+
+      // ============================================================
+      // (6) TILT-KARTEN  (nur Desktop)
+      // ============================================================
+      var tilts = [];
+      if (heavyFX) {
+        document.querySelectorAll(".tilt-card").forEach(function (card) {
+          var media = card.querySelector(".tilt-media .duotone");
+          var glare = card.querySelector(".tilt-glare");
+          var t = { el: card, media: media, glare: glare, active: false, rx: 0, ry: 0, tx: 0, ty: 0, gx: 0, gy: 0 };
+          card.addEventListener("mouseenter", function () { t.active = true; glare.style.opacity = "1"; if (media) media.style.transform = "scale(1.06)"; });
+          card.addEventListener("mouseleave", function () { t.active = false; glare.style.opacity = "0"; if (media) media.style.transform = ""; });
+          card.addEventListener("mousemove", function (e) {
+            var r = card.getBoundingClientRect();
+            var px = (e.clientX - r.left) / r.width;   // 0..1
+            var py = (e.clientY - r.top) / r.height;
+            t.tx = (py - 0.5) * -12;   // rotateX  (max ~6°)
+            t.ty = (px - 0.5) * 12;    // rotateY
+            t.gx = e.clientX - r.left; t.gy = e.clientY - r.top;
+          });
+          tilts.push(t);
+        });
+      }
+
+      // ============================================================
+      // (3) MARQUEE-Setup
+      // ============================================================
+      var marquees = [];
+      document.querySelectorAll("[data-marquee]").forEach(function (mq) {
+        var track = mq.querySelector(".marquee-track");
+        var group = mq.querySelector(".marquee-group");
+        marquees.push({ track: track, w: group.offsetWidth, pos: 0, dir: parseFloat(mq.getAttribute("data-dir")) || 1 });
+      });
+      window.addEventListener("resize", function () {
+        marquees.forEach(function (m) { m.w = m.track.querySelector(".marquee-group").offsetWidth; });
+      }, { passive: true });
+
+      // ============================================================
+      // Progress + Hero-Parallax Setup
+      // ============================================================
+      var progress = document.getElementById("progress");
+      var heroBg = document.getElementById("heroBg");
+      var lastScroll = scrollY, scrollVel = 0;
+      var parallaxFactor = mobile ? 0.06 : 0.12;
+
+      // ============================================================
+      // MASTER-LOOP (ein rAF, nur transform/opacity)
+      // ============================================================
+      var running = false;
+      function loop() {
+        // Scroll-Velocity glätten
+        var dv = scrollY - lastScroll; lastScroll = scrollY;
+        scrollVel += (dv - scrollVel) * 0.18;
+
+        // (9) Progress
+        var docH = document.documentElement.scrollHeight - window.innerHeight;
+        var p = docH > 0 ? scrollY / docH : 0;
+        progress.style.transform = "scaleX(" + p.toFixed(4) + ")";
+
+        // (4) Hero-Parallax (nur solange sichtbar)
+        if (heroBg && scrollY < window.innerHeight * 1.1) {
+          var ty = scrollY * parallaxFactor;
+          var sc = 1 + Math.min(scrollY, window.innerHeight) * 0.00018;
+          heroBg.style.transform = "translate3d(0," + ty.toFixed(1) + "px,0) scale(" + sc.toFixed(4) + ")";
+        }
+
+        // (3) Marquees (+ leichte Scroll-Kopplung)
+        var coupling = lowPower ? 0 : Math.max(-6, Math.min(6, scrollVel * 0.14));
+        for (var i = 0; i < marquees.length; i++) {
+          var m = marquees[i];
+          var speed = (0.9 + Math.abs(coupling) * 0.4) * m.dir;
+          m.pos -= speed + coupling * m.dir * 0.2;
+          if (m.w > 0) { if (m.pos <= -m.w) m.pos += m.w; else if (m.pos >= 0) m.pos -= m.w; }
+          m.track.style.transform = "translate3d(" + m.pos.toFixed(2) + "px,0,0)";
+        }
+
+        if (heavyFX) {
+          // (2) Cursor
+          rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+          dot.style.transform = "translate(" + mx + "px," + my + "px) translate(-50%,-50%)";
+          ring.style.transform = "translate(" + rx + "px," + ry + "px) translate(-50%,-50%)";
+
+          // (7) Magnetic
+          for (var j = 0; j < magnets.length; j++) {
+            var mg = magnets[j];
+            var txM = 0, tyM = 0;
+            if (mg.active) {
+              txM = Math.max(-8, Math.min(8, (mx - mg.cx) * 0.3));
+              tyM = Math.max(-8, Math.min(8, (my - mg.cy) * 0.3));
+            }
+            mg.x += (txM - mg.x) * 0.2; mg.y += (tyM - mg.y) * 0.2;
+            mg.el.style.transform = "translate(" + mg.x.toFixed(2) + "px," + mg.y.toFixed(2) + "px)";
+          }
+
+          // (6) Tilt
+          for (var k = 0; k < tilts.length; k++) {
+            var t = tilts[k];
+            var targetX = t.active ? t.tx : 0, targetY = t.active ? t.ty : 0;
+            t.rx += (targetX - t.rx) * 0.14; t.ry += (targetY - t.ry) * 0.14;
+            t.el.style.transform = "perspective(800px) rotateX(" + t.rx.toFixed(2) + "deg) rotateY(" + t.ry.toFixed(2) + "deg)";
+            if (t.active && t.glare) t.glare.style.transform = "translate(" + t.gx + "px," + t.gy + "px) translate(-50%,-50%)";
+          }
+        }
+
+        raf = requestAnimationFrame(loop);
+      }
+      var raf = null;
+      function startLoop() { if (!running && !reduce) { running = true; raf = requestAnimationFrame(loop); } }
+      function stopLoop() { running = false; if (raf) cancelAnimationFrame(raf); }
+      // Bei ausgeblendetem Tab pausieren (Performance)
+      document.addEventListener("visibilitychange", function () { if (document.hidden) stopLoop(); else startLoop(); });
+      startLoop();
+
+      // ============================================================
+      // Formular = Attrappe
+      // ============================================================
+      var form = document.getElementById("tryForm");
+      var msg = document.getElementById("formMsg");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        msg.textContent = "Konzeptprojekt — das Formular ist nicht aktiv.";
+        msg.classList.add("show");
+      });
+    })();
+  </script>
+</body>
+</html>

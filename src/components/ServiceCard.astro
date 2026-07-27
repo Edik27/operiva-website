@@ -5,8 +5,9 @@ interface Props {
   text: string;
   href?: string;
   linkLabel?: string;
+  note?: string;
 }
-const { icon, title, text, href, linkLabel } = Astro.props;
+const { icon, title, text, href, linkLabel, note } = Astro.props;
 ---
 
 <article class="service-card" data-reveal data-glow>
@@ -37,6 +38,7 @@ const { icon, title, text, href, linkLabel } = Astro.props;
   )}
   <h3 class="service-title">{title}</h3>
   <p class="service-text">{text}</p>
+  {note && <p class="service-note">{note}</p>}
   {href && linkLabel && (
     <a href={href} class="service-link">
       {linkLabel}
@@ -109,6 +111,13 @@ const { icon, title, text, href, linkLabel } = Astro.props;
   .service-text {
     font-size: 1rem;
     line-height: 1.6;
+  }
+  .service-note {
+    margin-top: 1rem;
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--color-gold);
   }
   .service-link {
     display: inline-flex;

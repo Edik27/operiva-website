@@ -34,6 +34,7 @@ const h = t.home;
           icon="websites"
           title={h.teaser.websitesTitle}
           text={h.teaser.websitesText}
+          note={h.teaser.websitesPrice}
           href={path('services', lang)}
           linkLabel={t.nav.services}
         />
@@ -91,7 +92,7 @@ const h = t.home;
     </div>
   </section>
 
-  <FAQ eyebrow={h.faq.eyebrow} title={h.faq.title} items={h.faq.items} />
+  <FAQ eyebrow={h.faq.eyebrow} title={h.faq.title} items={h.faq.items} lang={lang} />
 
   <CTASection
     title={h.cta.title}

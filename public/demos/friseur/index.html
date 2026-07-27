@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Salon Marlene — Haare. Farbe. Auszeit.</title>
+  <meta name="description" content="Konzeptprojekt: moderner Friseursalon mit Wohlfühl-Anspruch. Fiktive Demo-Website von Operiva." />
+  <style>
+    /* ============================================================
+       SALON MARLENE — Konzeptprojekt / Demo von Operiva
+       Self-contained One-Pager. Kein Framework, keine CDN.
+       Hell, weich, edel.
+       ============================================================ */
+
+    :root {
+      --cream:      #f7f2ec;   /* Grund (warmes Creme) */
+      --cream-2:    #efe7dc;   /* leicht abgesetzt */
+      --rose:       #e8d5c8;   /* Rosé-Beige, Flächen/Akzente */
+      --rose-soft:  #f0e2d8;   /* helleres Rosé */
+      --green:      #3e4a3d;   /* tiefes Grün — Text/Kontrast */
+      --green-dk:   #333d32;   /* dunklere Grünfläche (Footer) */
+      --terra:      #b3766a;   /* Akzent altrosé/terrakotta */
+      --terra-dk:   #9c6156;   /* Akzent dunkler (Hover) */
+      --text:       #45403a;   /* Fließtext auf hell */
+      --text-soft:  #7d7469;   /* gedämpft auf hell */
+      --text-inv:   #f1ece3;   /* Text auf grün */
+      --text-inv-soft:#c3c9bd; /* gedämpft auf grün */
+      --line:       #e6ddd0;   /* Trennlinien hell */
+      --line-dk:    #55604f;   /* Trennlinien auf grün */
+
+      --font-head: "Iowan Old Style", "Palatino Linotype", "Palatino",
+                   "Book Antiqua", Georgia, "Times New Roman", serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   Helvetica, Arial, system-ui, sans-serif;
+
+      --maxw: 1180px;
+      --radius: 14px;
+      --shadow: 0 34px 70px -34px rgba(62,74,61,0.26);
+      --shadow-soft: 0 20px 44px -26px rgba(62,74,61,0.20);
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+      --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-head);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: 0.005em;
+      color: var(--green);
+    }
+
+    p { color: var(--text-soft); }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; }
+
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 26px; }
+
+    .eyebrow {
+      font-family: var(--font-head);
+      font-style: italic;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      color: var(--terra);
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 34px; height: 1px;
+      background: var(--terra);
+      display: inline-block;
+    }
+    section.dark .eyebrow { color: #d8a99e; }
+    section.dark .eyebrow::before { background: #d8a99e; }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.98rem;
+      letter-spacing: 0.01em;
+      padding: 15px 30px;
+      border-radius: 999px;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: transform 0.45s var(--ease-soft), box-shadow 0.45s var(--ease-soft),
+                  background 0.4s var(--ease-soft), color 0.4s var(--ease-soft),
+                  border-color 0.4s var(--ease-soft);
+      white-space: nowrap;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: var(--terra); color: #fff; }
+    .btn-primary:hover { background: var(--terra-dk); }
+    .btn-ghost { background: transparent; border-color: var(--terra); color: var(--terra-dk); }
+    .btn-ghost:hover { background: var(--terra); color: #fff; }
+    section.dark .btn-ghost { border-color: rgba(241,236,227,0.5); color: var(--text-inv); }
+    section.dark .btn-ghost:hover { background: var(--text-inv); color: var(--green); border-color: var(--text-inv); }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    header.site {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(247, 242, 236, 0.82);
+      backdrop-filter: saturate(140%) blur(12px);
+      -webkit-backdrop-filter: saturate(140%) blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    header.site.scrolled {
+      border-bottom-color: var(--line);
+      box-shadow: 0 6px 26px -20px rgba(62,74,61,0.5);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+      gap: 24px;
+    }
+    .brand {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 1.42rem;
+      letter-spacing: 0.01em;
+      color: var(--green);
+      display: inline-flex;
+      align-items: baseline;
+      gap: 9px;
+    }
+    .brand .dot { color: var(--terra); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.96rem;
+      color: var(--green);
+      position: relative;
+      padding: 4px 0;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 0; height: 1.5px;
+      background: var(--terra);
+      transition: width 0.25s var(--ease);
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta { display: flex; align-items: center; gap: 14px; }
+    .nav-cta .btn { padding: 11px 22px; font-size: 0.92rem; }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .burger span {
+      width: 24px; height: 2px; border-radius: 2px;
+      background: var(--green);
+      transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ============================================================
+       Fotos: einheitlicher warmer Look + Farbflächen-Fallback
+       ============================================================ */
+    .media {
+      position: relative;
+      overflow: hidden;
+      /* Fallback-Farbfläche in Palette, falls Bild fehlt */
+      background: linear-gradient(135deg, var(--rose-soft) 0%, var(--rose) 55%, #dcc0b2 100%);
+    }
+    .media > img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: saturate(1.03) brightness(1.02) contrast(0.99);
+    }
+    .media > img.img-failed { display: none; }
+    /* dezenter warmer Overlay vereinheitlicht alle Fotos */
+    .media::after {
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(150deg, rgba(179,118,106,0.10), rgba(62,74,61,0.10));
+      mix-blend-mode: multiply;
+    }
+    /* dekoratives Icon in Fallback-Flächen (nur sichtbar, wenn kein Foto) */
+    .media .ph-icon {
+      position: absolute; inset: 0; z-index: 0;
+      display: grid; place-items: center;
+      color: rgba(179,118,106,0.4);
+    }
+    .media .ph-icon svg { width: 46px; height: 46px; }
+
+    /* Bild-Reveal: Creme-Wisch von links nach rechts, Bild beruhigt sich von 1.05 → 1.0 */
+    .img-reveal > img { transform: scale(1.05); transition: transform 0.9s var(--ease-soft); }
+    .img-reveal.in > img { transform: scale(1); }
+    .img-reveal::before {
+      content: ""; position: absolute; inset: 0; z-index: 4;
+      background: var(--cream);
+      transform: scaleX(1);
+      transform-origin: right;
+      transition: transform 0.85s var(--ease-soft);
+    }
+    .img-reveal.in::before { transform: scaleX(0); }
+    /* will-change nur solange noch nicht aufgedeckt (sparsam) */
+    .img-reveal:not(.in) > img,
+    .img-reveal:not(.in)::before { will-change: transform; }
+
+    /* ============================================================
+       HERO — Split: Text links, Hochformat-Bild rechts (Overlap)
+       ============================================================ */
+    .hero {
+      position: relative;
+      padding: 150px 0 84px;
+      background: linear-gradient(120deg, var(--rose-soft), var(--cream) 66%);
+    }
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .hero-copy { max-width: 560px; }
+    .hero h1 {
+      font-size: clamp(3rem, 6.6vw, 5.2rem);
+      font-weight: 600;
+      line-height: 1.03;
+      letter-spacing: -0.01em;
+      margin: 18px 0 0;
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--terra);
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+      padding: 0.06em 0.14em;
+      margin: -0.06em -0.14em;
+    }
+    .hero h1 em > span {
+      display: inline-block;
+      transform: translateY(108%);
+      transition: transform 0.85s var(--ease-soft) 0.15s;
+    }
+    .hero h1.in em > span { transform: translateY(0); }
+    .hero .sub {
+      font-size: 1.2rem;
+      max-width: 42ch;
+      margin: 24px 0 34px;
+      color: var(--text);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .hero-figure {
+      position: relative;
+      z-index: 2;
+      transform: translateY(64px);   /* ragt sanft über die Sektionsgrenze */
+    }
+    .hero-figure .media {
+      aspect-ratio: 3 / 4;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+    /* Ken-Burns: sehr langsamer Zoom, nur ohne reduced-motion */
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.06); } }
+      .hero-figure .media > img { animation: kenburns 20s var(--ease-soft) forwards; }
+    }
+    .trust {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 20px;
+      margin-top: 38px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+      font-size: 0.9rem;
+      color: var(--green);
+    }
+    .trust span { display: inline-flex; align-items: center; gap: 8px; }
+    .trust svg { width: 17px; height: 17px; color: var(--terra); flex: none; }
+    .trust .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--rose); }
+
+    /* ============================================================
+       Generische Section-Rhythmik
+       ============================================================ */
+    section { padding: 104px 0; position: relative; }
+    section.dark {
+      background: var(--green);
+      color: var(--text-inv);
+    }
+    section.dark h1, section.dark h2, section.dark h3, section.dark h4 { color: var(--text-inv); }
+    section.dark p { color: var(--text-inv-soft); }
+
+    .sec-head { max-width: 640px; margin-bottom: 56px; }
+    .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .sec-head h2 {
+      font-size: clamp(2.4rem, 5.2vw, 4rem);
+      margin: 16px 0 16px;
+    }
+    .sec-head p { font-size: 1.14rem; }
+
+    /* ---------- Leistungen — alternierende Bild-Text-Reihen ---------- */
+    .services { display: flex; flex-direction: column; }
+    .service {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 66px;
+      align-items: center;
+      padding: 62px 0;
+      border-top: 1px solid var(--line);
+    }
+    .service:first-child { border-top: none; padding-top: 10px; }
+    .service:nth-child(even) .svc-media { order: 2; }
+    .svc-media .media {
+      aspect-ratio: 4 / 3;
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .svc-text { max-width: 44ch; }
+    .svc-index {
+      font-family: var(--font-head);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--terra);
+    }
+    .svc-text h3 {
+      font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+      margin: 6px 0 14px;
+    }
+    .svc-text p { font-size: 1.1rem; }
+
+    /* ---------- Preise — Salonkarte im Menü-Stil ---------- */
+    .prices { background: var(--rose-soft); }
+    .price-menu {
+      max-width: 940px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 74px;
+    }
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 17px 2px;
+      border-bottom: 1px solid rgba(179,118,106,0.25);
+    }
+    .price-name {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      color: var(--green);
+      flex: none;
+    }
+    .price-name small {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.84rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+      letter-spacing: 0;
+    }
+    .price-dots {
+      flex: 1 1 auto;
+      border-bottom: 1px dotted rgba(124,116,105,0.55);
+      transform: translateY(-5px);
+      min-width: 18px;
+    }
+    .price-value {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--terra-dk);
+      font-weight: 500;
+      flex: none;
+      white-space: nowrap;
+    }
+    .price-note {
+      max-width: 940px; margin: 32px auto 0;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-soft);
+    }
+    /* Beim Eintritt: Punktlinien wachsen von links, Preise faden minimal verzögert */
+    .price-dots { transform: scaleX(0); transform-origin: left; transition: transform 0.7s var(--ease-soft); }
+    .price-menu.in .price-dots { transform: scaleX(1); }
+    .price-value { opacity: 0; transition: opacity 0.6s var(--ease-soft); }
+    .price-menu.in .price-value { opacity: 1; }
+    .price-menu.in .price-row:nth-child(1) .price-dots { transition-delay: 0s; }
+    .price-menu.in .price-row:nth-child(2) .price-dots { transition-delay: 0.06s; }
+    .price-menu.in .price-row:nth-child(3) .price-dots { transition-delay: 0.12s; }
+    .price-menu.in .price-row:nth-child(4) .price-dots { transition-delay: 0.18s; }
+    .price-menu.in .price-row:nth-child(5) .price-dots { transition-delay: 0.24s; }
+    .price-menu.in .price-row:nth-child(6) .price-dots { transition-delay: 0.30s; }
+    .price-menu.in .price-row:nth-child(7) .price-dots { transition-delay: 0.36s; }
+    .price-menu.in .price-row:nth-child(8) .price-dots { transition-delay: 0.42s; }
+    .price-menu.in .price-row:nth-child(9) .price-dots { transition-delay: 0.48s; }
+    .price-menu.in .price-row:nth-child(1) .price-value { transition-delay: 0.15s; }
+    .price-menu.in .price-row:nth-child(2) .price-value { transition-delay: 0.21s; }
+    .price-menu.in .price-row:nth-child(3) .price-value { transition-delay: 0.27s; }
+    .price-menu.in .price-row:nth-child(4) .price-value { transition-delay: 0.33s; }
+    .price-menu.in .price-row:nth-child(5) .price-value { transition-delay: 0.39s; }
+    .price-menu.in .price-row:nth-child(6) .price-value { transition-delay: 0.45s; }
+    .price-menu.in .price-row:nth-child(7) .price-value { transition-delay: 0.51s; }
+    .price-menu.in .price-row:nth-child(8) .price-value { transition-delay: 0.57s; }
+    .price-menu.in .price-row:nth-child(9) .price-value { transition-delay: 0.63s; }
+
+    /* ---------- Testimonials — ein großes Zitat + kleines darunter ---------- */
+    .quote-hero { max-width: 900px; margin: 0 auto; text-align: center; }
+    .quote-hero .big-mark {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+      font-size: clamp(5.5rem, 13vw, 9.5rem);
+      line-height: 0.8;
+      color: #d8a99e;
+      opacity: 0.55;
+      margin-bottom: -0.34em;
+      user-select: none;
+    }
+    .quote-hero blockquote {
+      font-family: var(--font-head);
+      font-style: italic;
+      font-size: clamp(1.7rem, 3.6vw, 2.7rem);
+      line-height: 1.32;
+      color: var(--text-inv);
+    }
+    .quote-hero cite {
+      display: block;
+      margin-top: 28px;
+      font-family: var(--font-body);
+      font-style: normal;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #d8a99e;
+    }
+    .quote-hero cite span { color: var(--text-inv-soft); font-weight: 400; }
+    .quote-small {
+      max-width: 640px; margin: 58px auto 0;
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid var(--line-dk);
+    }
+    .quote-small p {
+      font-family: var(--font-head);
+      font-style: italic;
+      font-size: 1.22rem;
+      line-height: 1.5;
+      color: var(--text-inv-soft);
+    }
+    .quote-small cite {
+      display: block; margin-top: 16px;
+      font-family: var(--font-body); font-style: normal;
+      font-size: 0.88rem; font-weight: 600; color: #d8a99e;
+    }
+    .quote-small cite span { color: var(--text-inv-soft); font-weight: 400; }
+
+    /* ---------- Über uns ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-figure {
+      aspect-ratio: 4 / 5;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .about-figure .media { width: 100%; height: 100%; }
+    .about-copy p { font-size: 1.1rem; margin-bottom: 18px; }
+    .about-points { list-style: none; display: grid; gap: 13px; margin-top: 26px; }
+    .about-points li { display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; color: var(--text); }
+    .about-points svg { width: 22px; height: 22px; color: var(--terra); flex: none; margin-top: 1px; }
+
+    /* ---------- Termin ---------- */
+    .book { background: var(--rose-soft); }
+    .book-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 52px;
+      align-items: start;
+    }
+    .book-info h2 { font-size: clamp(2.2rem, 4.8vw, 3.3rem); margin: 18px 0 16px; }
+    .book-info p { font-size: 1.1rem; margin-bottom: 26px; }
+    .book-figure {
+      aspect-ratio: 4 / 3;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 26px;
+      box-shadow: var(--shadow);
+    }
+    .book-figure .media { width: 100%; height: 100%; }
+    .book-list { list-style: none; display: grid; gap: 15px; }
+    .book-list li { display: flex; align-items: flex-start; gap: 13px; }
+    .book-list .ic {
+      width: 40px; height: 40px; flex: none;
+      display: grid; place-items: center;
+      border-radius: 999px;
+      background: var(--rose);
+      color: var(--terra-dk);
+    }
+    .book-list .ic svg { width: 19px; height: 19px; }
+    .book-list b { font-family: var(--font-head); color: var(--green); display: block; font-weight: 600; font-size: 1.02rem; }
+    .book-list span { color: var(--text-soft); font-size: 0.94rem; }
+
+    form.card-form {
+      background: #fff;
+      border-radius: 16px;
+      padding: 34px 32px 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+    }
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--green);
+      margin-bottom: 7px;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--cream);
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
+      padding: 13px 15px;
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .field select { appearance: none; -webkit-appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b3766a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 15px center; padding-right: 40px;
+    }
+    .field textarea { resize: vertical; min-height: 110px; }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--terra);
+      box-shadow: 0 0 0 3px rgba(179,118,106,0.16);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    form.card-form .btn-primary { width: 100%; margin-top: 6px; }
+    .form-note {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      margin-top: 14px;
+      text-align: center;
+    }
+    .form-msg {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: rgba(179,118,106,0.12);
+      border: 1px solid var(--terra);
+      color: var(--terra-dk);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .form-msg.show { display: block; animation: pop 0.4s var(--ease); }
+    @keyframes pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .auto-hint {
+      margin-top: 18px;
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--rose-soft);
+      border-left: 3px solid var(--terra);
+      border-radius: 0 10px 10px 0;
+      padding: 15px 18px;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .auto-hint svg { width: 20px; height: 20px; color: var(--terra); flex: none; margin-top: 2px; }
+
+    /* ---------- FAQ ---------- */
+    .faq-list { max-width: 780px; margin: 0 auto; display: grid; gap: 14px; }
+    .faq-item {
+      background: #fff;
+      border: 1px solid rgba(230,221,208,0.6);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 22px 24px;
+      font-family: var(--font-head);
+      font-weight: 600; font-size: 1.16rem;
+      color: var(--green);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary:focus-visible { outline: 2px solid var(--terra); outline-offset: -2px; }
+    .faq-item[open] summary { color: var(--terra-dk); }
+    .faq-icon {
+      flex: none; width: 22px; height: 22px; color: var(--terra);
+      transition: transform 0.3s var(--ease);
+    }
+    .faq-item[open] .faq-icon { transform: rotate(45deg); }
+    .faq-answer { padding: 0 24px 24px; }
+    .faq-answer p { font-size: 1rem; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer.site {
+      background: var(--green-dk);
+      color: var(--text-inv-soft);
+      padding: 70px 0 116px; /* Platz für fixierten Banner */
+    }
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--line-dk);
+    }
+    .foot-brand .brand { color: var(--text-inv); font-size: 1.5rem; }
+    .foot-brand p { font-size: 0.94rem; margin-top: 14px; max-width: 34ch; }
+    .foot-disclaimer {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: var(--text-inv-soft);
+      background: rgba(179,118,106,0.14);
+      border-left: 3px solid var(--terra);
+      padding: 13px 17px;
+      border-radius: 0 8px 8px 0;
+    }
+    .foot-col h4 {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-inv);
+      margin-bottom: 16px;
+    }
+    .foot-col ul { list-style: none; display: grid; gap: 10px; }
+    .foot-col a, .foot-col li { font-size: 0.94rem; color: var(--text-inv-soft); }
+    .foot-col a:hover { color: #d8a99e; }
+    .demo-tag {
+      font-size: 0.68rem;
+      color: #d8a99e;
+      border: 1px solid var(--line-dk);
+      border-radius: 3px;
+      padding: 1px 6px;
+      margin-left: 6px;
+      letter-spacing: 0.08em;
+    }
+    .foot-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 26px;
+      font-size: 0.85rem;
+    }
+
+    /* ============================================================
+       Konzept-Banner (fixiert)
+       ============================================================ */
+    .concept-banner {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 200;
+      background: var(--green);
+      border-top: 1px solid rgba(179,118,106,0.4);
+      color: var(--text-inv);
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      padding: 9px 20px;
+      padding-bottom: max(9px, env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      text-align: center;
+    }
+    .concept-banner .badge {
+      color: #d8a99e;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .concept-banner .badge svg { width: 15px; height: 15px; }
+    .concept-banner a { color: #e0b3a8; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+    .concept-banner a:hover { color: #eecabf; }
+
+    /* ============================================================
+       Mobiler Termin-Button (sticky, < 768px)
+       ============================================================ */
+    .mobile-cta {
+      display: none;
+      position: fixed; left: 0; right: 0;
+      bottom: var(--banner-h, 40px);
+      z-index: 190;
+      align-items: center; justify-content: center; gap: 10px;
+      background: var(--terra); color: #fff;
+      font-family: var(--font-body); font-weight: 700; font-size: 1.02rem;
+      padding: 15px 20px;
+      box-shadow: 0 -6px 22px -10px rgba(0,0,0,0.4);
+      transition: background 0.2s var(--ease);
+    }
+    .mobile-cta svg { width: 19px; height: 19px; flex: none; }
+    .mobile-cta:active { background: var(--terra-dk); }
+
+    /* ============================================================
+       Scroll-Reveal
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.8s var(--ease-soft), transform 0.8s var(--ease-soft);
+    }
+    .reveal:not(.in) { will-change: opacity, transform; }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.08s; }
+    .reveal.d2 { transition-delay: 0.16s; }
+    .reveal.d3 { transition-delay: 0.24s; }
+    .reveal.d4 { transition-delay: 0.32s; }
+
+    /* ============================================================
+       Responsive
+       ============================================================ */
+    @media (max-width: 940px) {
+      /* Hero: Bild unter den Text, kein Overlap */
+      .hero { padding: 140px 0 68px; }
+      .hero-split { grid-template-columns: 1fr; gap: 40px; }
+      .hero-copy { max-width: none; }
+      .hero-figure { transform: none; max-width: 440px; }
+      .hero-figure .media { aspect-ratio: 4 / 3; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 42px; }
+      .about-figure { max-width: 460px; aspect-ratio: 4/3; margin: 0 auto; }
+      .book-grid { grid-template-columns: 1fr; gap: 40px; }
+
+      /* Leistungen: Bild oben, Text darunter */
+      .service { grid-template-columns: 1fr; gap: 26px; padding: 48px 0; }
+      .service:nth-child(even) .svc-media { order: 0; }
+      .svc-media .media { aspect-ratio: 16 / 10; }
+      .svc-text { max-width: none; }
+
+      /* Preise: engerer Spaltenabstand */
+      .price-menu { column-gap: 50px; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-links, .nav-cta .btn { display: none; }
+      .burger { display: flex; }
+      .nav-links.mobile-open {
+        display: flex;
+        position: absolute;
+        top: 74px; left: 0; right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        background: var(--cream);
+        border-bottom: 1px solid var(--line);
+        padding: 12px 26px 20px;
+        box-shadow: var(--shadow);
+      }
+      .nav-links.mobile-open a { width: 100%; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 1.06rem; }
+      .nav-links.mobile-open a:last-child { border-bottom: none; }
+      section { padding: 76px 0; }
+      .hero { padding: 130px 0 80px; }
+      .form-row { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr; gap: 30px; }
+      .price-card { padding: 12px 22px; }
+      .concept-banner { font-size: 0.73rem; padding: 8px 14px; padding-bottom: max(8px, env(safe-area-inset-bottom)); flex-wrap: wrap; gap: 3px 8px; }
+    }
+
+    @media (max-width: 620px) {
+      /* Preise: eine Spalte */
+      .price-menu { grid-template-columns: 1fr; column-gap: 0; }
+      .price-row { flex-wrap: wrap; gap: 4px 12px; padding: 15px 2px; }
+      .price-dots { display: none; }
+      .price-value { margin-left: auto; }
+    }
+
+    /* Mobiler CTA + Footer-Abstand */
+    @media (max-width: 767px) {
+      .mobile-cta { display: flex; }
+      footer.site { padding-bottom: 150px; }
+    }
+
+    /* Hover nur auf Geräten mit echtem Zeiger */
+    @media (hover: hover) {
+      .service:hover .svc-media .media > img { transform: scale(1.03); transition-duration: 0.6s; }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -12px rgba(179,118,106,0.55); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .btn, .faq-icon, .mobile-cta { transition: none !important; }
+      /* Bild-Reveal aus */
+      .img-reveal > img { transform: none !important; transition: none !important; }
+      .img-reveal::before { display: none !important; }
+      /* Ken-Burns aus */
+      .hero-figure .media > img { animation: none !important; transform: none !important; }
+      /* Kursiv-Clip aus */
+      .hero h1 em { overflow: visible !important; }
+      .hero h1 em > span { transform: none !important; transition: none !important; }
+      /* Preiskarte sofort sichtbar */
+      .price-dots { transform: scaleX(1) !important; transition: none !important; }
+      .price-value { opacity: 1 !important; transition: none !important; }
+      /* Hover-Bewegung aus */
+      .service:hover .svc-media .media > img { transform: none !important; }
+      .btn-primary:hover { transform: none !important; box-shadow: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site" id="top">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Salon Marlene — Startseite">
+        Salon Marlene<span class="dot">.</span>
+      </a>
+
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#leistungen">Leistungen</a></li>
+          <li><a href="#preise">Preise</a></li>
+          <li><a href="#ueber-uns">Über uns</a></li>
+          <li><a href="#termin">Termin</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn btn-primary" href="#termin">Termin anfragen</a>
+        <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-split">
+      <div class="hero-copy">
+        <span class="eyebrow reveal">Haare · Farbe · Auszeit</span>
+        <h1 id="hero-title" class="reveal d1">Zeit für <em><span>Sie.</span></em></h1>
+        <p class="sub reveal d2">Schnitt, Farbe und eine Stunde Durchatmen — mitten in [Region]. Bei uns bekommen Sie beides: gutes Handwerk und ein bisschen Ruhe.</p>
+        <div class="hero-actions reveal d3">
+          <a class="btn btn-primary" href="#termin">Termin anfragen</a>
+          <a class="btn btn-ghost" href="#leistungen">Leistungen ansehen</a>
+        </div>
+        <div class="trust reveal d4">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            Meisterbetrieb
+          </span>
+          <span class="sep"></span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            Ohne Wartezeit dank Terminvergabe
+          </span>
+          <span class="sep"></span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Faire Preise
+          </span>
+        </div>
+      </div>
+
+      <figure class="hero-figure">
+        <div class="media reveal d2">
+          <div class="ph-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1 20 20"/><path d="M8.1 15.9 20 4"/></svg></div>
+          <img src="img/salon.jpg" alt="Blick in den Salon Marlene" width="900" height="1200" fetchpriority="high" onerror="this.classList.add('img-failed')" />
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= LEISTUNGEN ================= -->
+  <section id="leistungen" aria-labelledby="leistungen-title">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Unsere Leistungen</span>
+        <h2 id="leistungen-title">Für Ihren Kopf ist gesorgt.</h2>
+        <p>Vom schnellen Nachschnitt bis zur neuen Farbe — wir nehmen uns Zeit und beraten Sie ehrlich, was zu Ihnen passt.</p>
+      </div>
+
+      <div class="services">
+        <article class="service">
+          <figure class="svc-media">
+            <div class="media img-reveal">
+              <div class="ph-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1 20 20"/><path d="M8.1 15.9 20 4"/></svg></div>
+              <img src="img/haarschnitt.jpg" alt="Frischer Damen- und Herrenschnitt im Salon" width="800" height="600" loading="lazy" onerror="this.classList.add('img-failed')" />
+            </div>
+          </figure>
+          <div class="svc-text reveal">
+            <span class="svc-index">01</span>
+            <h3>Schnitt Damen &amp; Herren</h3>
+            <p>Ein Schnitt, der zu Ihrem Alltag passt und morgens von allein sitzt. Mit Waschen, Beratung und Föhnen.</p>
+          </div>
+        </article>
+
+        <article class="service">
+          <figure class="svc-media">
+            <div class="media img-reveal">
+              <div class="ph-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div>
+              <img src="img/coloration.jpg" alt="Coloration und Balayage — warme Haarfarbe" width="800" height="600" loading="lazy" onerror="this.classList.add('img-failed')" />
+            </div>
+          </figure>
+          <div class="svc-text reveal">
+            <span class="svc-index">02</span>
+            <h3>Coloration &amp; Balayage</h3>
+            <p>Von der frischen Ansatzfarbe bis zu sanften Strähnen. Natürlich abgestimmt auf Ihren Typ — nie zu viel.</p>
+          </div>
+        </article>
+
+        <article class="service">
+          <figure class="svc-media">
+            <div class="media img-reveal">
+              <div class="ph-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg></div>
+              <img src="img/styling.jpg" alt="Festliches Anlass-Styling und Hochsteckfrisur" width="800" height="600" loading="lazy" onerror="this.classList.add('img-failed')" />
+            </div>
+          </figure>
+          <div class="svc-text reveal">
+            <span class="svc-index">03</span>
+            <h3>Styling für Anlässe</h3>
+            <p>Hochzeit, Feier oder Fotoshooting: Wir stylen Sie, damit Sie sich rundum wohlfühlen — und es den ganzen Tag hält.</p>
+          </div>
+        </article>
+
+        <article class="service">
+          <figure class="svc-media">
+            <div class="media img-reveal">
+              <div class="ph-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg></div>
+              <img src="img/pflege.jpg" alt="Pflege-Treatment für strapaziertes Haar" width="800" height="600" loading="lazy" onerror="this.classList.add('img-failed')" />
+            </div>
+          </figure>
+          <div class="svc-text reveal">
+            <span class="svc-index">04</span>
+            <h3>Pflege-Treatments</h3>
+            <p>Intensive Kur für strapaziertes Haar. Damit Farbe länger hält und die Spitzen wieder gesund aussehen.</p>
+          </div>
+        </article>
+
+        <article class="service">
+          <figure class="svc-media">
+            <div class="media img-reveal">
+              <div class="ph-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+              <img src="img/typberatung.jpg" alt="Typberatung im Salon Marlene" width="800" height="600" loading="lazy" onerror="this.classList.add('img-failed')" />
+            </div>
+          </figure>
+          <div class="svc-text reveal">
+            <span class="svc-index">05</span>
+            <h3>Typberatung</h3>
+            <p>Unsicher, was passt? Wir schauen gemeinsam auf Haar, Gesicht und Alltag — in Ruhe und kostenlos.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PREISE ================= -->
+  <section id="preise" class="prices" aria-labelledby="preise-title">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow">Preise</span>
+        <h2 id="preise-title">Klar und ohne Überraschung.</h2>
+        <p>Beispielpreise für einen ersten Eindruck. Was es am Ende kostet, hängt von Haarlänge und Aufwand ab — das sagen wir Ihnen vorher.</p>
+      </div>
+
+      <div class="price-menu">
+        <div class="price-row">
+          <span class="price-name">Waschen, Schnitt &amp; Föhnen — Damen<small>inkl. Beratung</small></span>
+          <span class="price-dots"></span>
+          <span class="price-value">ab 49 €</span>
+        </div>
+        <div class="price-row">
+          <span class="price-name">Schnitt — Herren<small>inkl. Waschen</small></span>
+          <span class="price-dots"></span>
+          <span class="price-value">ab 32 €</span>
+        </div>
+        <div class="price-row">
+          <span class="price-name">Kinderschnitt<small>bis 12 Jahre</small></span>
+          <span class="price-dots"></span>
+          <span class="price-value">ab 22 €</span>
+        </div>
+        <div class="price-row">
+          <span class="price-name">Coloration — Ansatz</span>
+          <span class="price-dots"></span>
+          <span class="price-value">ab 58 €</span>
+        </div>
+        <div class="price-row">
+          <span class="price-name">Foliensträhnen</span>
+          <span class="price-dots"></span>
+          <span class="price-value">ab 89 €</span>
+        </div>
+        <div class="price-row">
+          <span class="price-name">Balayage<small>je nach Länge &amp; Aufwand</small></span>
+          <span class="price-dots"></span>
+          <span class="price-value">ab 129 €</span>
+        </div>
+        <div class="price-row">
+          <span class="price-name">Anlass-Styling / Hochsteckfrisur</span>
+          <span class="price-dots"></span>
+          <span class="price-value">ab 65 €</span>
+        </div>
+        <div class="price-row">
+          <span class="price-name">Pflege-Treatment<small>als Ergänzung</small></span>
+          <span class="price-dots"></span>
+          <span class="price-value">ab 25 €</span>
+        </div>
+        <div class="price-row">
+          <span class="price-name">Typberatung</span>
+          <span class="price-dots"></span>
+          <span class="price-value">kostenlos</span>
+        </div>
+      </div>
+      <p class="price-note reveal">Beispielpreise — Konzeptprojekt.</p>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section id="stimmen" class="dark" aria-labelledby="stimmen-title">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow">Kundenstimmen</span>
+        <h2 id="stimmen-title">Was unsere Gäste sagen.</h2>
+      </div>
+
+      <figure class="quote-hero reveal d1">
+        <div class="big-mark" aria-hidden="true">&ldquo;</div>
+        <blockquote>Zum ersten Mal seit Jahren gehe ich mit einem Schnitt raus, der morgens einfach sitzt. Man nimmt sich hier wirklich Zeit für einen.</blockquote>
+        <cite>Anna K. <span>· seit zwei Jahren Stammkundin</span></cite>
+      </figure>
+
+      <figure class="quote-small reveal d2">
+        <p>Ich war unsicher wegen Balayage und wurde ehrlich beraten — jetzt liebe ich das Ergebnis. Kein Verkaufsgespräch, sondern echtes Zuhören.</p>
+        <cite>Miriam T. <span>· neu im Salon</span></cite>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= ÜBER UNS ================= -->
+  <section id="ueber-uns" aria-labelledby="ueber-title">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-figure">
+          <div class="media img-reveal">
+            <div class="ph-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="9" r="2.4"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M14.5 20a4.5 4.5 0 0 1 6 0"/></svg></div>
+            <img src="img/ueber-uns.jpg" alt="Das Team von Salon Marlene im Salon" width="700" height="875" loading="lazy" onerror="this.classList.add('img-failed')" />
+          </div>
+        </div>
+
+        <div class="about-copy">
+          <span class="eyebrow reveal">Über uns</span>
+          <h2 class="reveal d1" style="font-size:clamp(2.2rem,4.8vw,3.3rem);margin:18px 0 20px;">Ein Salon, in dem Sie ankommen.</h2>
+          <p class="reveal d1">Salon Marlene ist ein kleiner Salon mit einer einfachen Idee: Sie sollen sich hier wohlfühlen. Kein Zeitdruck, kein Fachchinesisch — nur gutes Handwerk und ein bisschen Auszeit vom Alltag.</p>
+          <p class="reveal d2">Wir hören zu, bevor wir zur Schere greifen, und sagen Ihnen ehrlich, was zu Ihnen passt. Ob frische Farbe oder nur ein Nachschnitt: Sie gehen entspannt und mit einem guten Gefühl.</p>
+
+          <ul class="about-points reveal d2">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Ruhe statt Hektik — ein Termin, eine Person, volle Aufmerksamkeit.
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Ehrliche Beratung — auch mal der Rat, weniger zu machen.
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Handwerk, das hält — Schnitt und Farbe, die auch zu Hause funktionieren.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TERMIN ================= -->
+  <section id="termin" class="book" aria-labelledby="termin-title">
+    <div class="wrap">
+      <div class="book-grid">
+        <div class="book-info">
+          <span class="eyebrow reveal">Termin</span>
+          <h2 id="termin-title" class="reveal d1">Reservieren Sie sich Ihre Auszeit.</h2>
+          <p class="reveal d1">Sagen Sie uns kurz, was Sie sich wünschen und wann es Ihnen passt — wir melden uns und bestätigen Ihren Termin.</p>
+
+          <div class="book-figure">
+            <div class="media img-reveal">
+              <div class="ph-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div>
+              <img src="img/salon.jpg" alt="Ruhiger Arbeitsplatz im Salon Marlene" width="800" height="600" loading="lazy" onerror="this.classList.add('img-failed')" />
+            </div>
+          </div>
+
+          <ul class="book-list reveal d2">
+            <li>
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.68 2.75a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.33-1.33a2 2 0 0 1 2.11-.45c.89.32 1.81.55 2.75.68A2 2 0 0 1 22 16.92z"/></svg></span>
+              <span><b>0000 000000</b>Platzhalternummer</span>
+            </li>
+            <li>
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+              <span><b>Di–Fr 09:00–18:30 · Sa 09:00–14:00</b>Mo &amp; So geschlossen</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="card-form reveal d2" id="bookForm" novalidate>
+          <div class="field">
+            <label for="name">Ihr Name</label>
+            <input type="text" id="name" name="name" placeholder="Vor- und Nachname" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="kontakt">Telefon oder E-Mail</label>
+            <input type="text" id="kontakt" name="kontakt" placeholder="Wie erreichen wir Sie?" required />
+          </div>
+          <div class="field">
+            <label for="leistung">Wunschleistung</label>
+            <select id="leistung" name="leistung" required>
+              <option value="" selected disabled>Bitte wählen …</option>
+              <option>Schnitt — Damen</option>
+              <option>Schnitt — Herren</option>
+              <option>Coloration / Ansatz</option>
+              <option>Balayage / Strähnen</option>
+              <option>Anlass-Styling</option>
+              <option>Pflege-Treatment</option>
+              <option>Typberatung</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="datum">Wunschtag</label>
+              <input type="date" id="datum" name="datum" />
+            </div>
+            <div class="field">
+              <label for="zeit">Wunschzeit</label>
+              <input type="time" id="zeit" name="zeit" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="nachricht">Nachricht (optional)</label>
+            <textarea id="nachricht" name="nachricht" placeholder="Gibt es etwas, das wir wissen sollten?"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Terminanfrage senden</button>
+          <p class="form-note">Mit dem Absenden stimmen Sie einer Bearbeitung Ihrer Angaben zu. (Demo — keine Datenübertragung.)</p>
+          <div class="form-msg" id="formMsg" role="status" aria-live="polite"></div>
+
+          <div class="auto-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
+            <span><b>In der echten Umsetzung:</b> Anfragen landen automatisch im Kalender, Bestätigung und Erinnerung gehen von selbst raus.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow">Gut zu wissen</span>
+        <h2 id="faq-title">Häufige Fragen.</h2>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item reveal d1">
+          <summary>Brauche ich einen Termin?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Am besten ja. So haben wir Zeit nur für Sie und Sie warten nicht. Spontan klappt manchmal auch — rufen Sie einfach kurz an, wir schauen, was sich einrichten lässt.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal d2">
+          <summary>Wie lange dauert eine Coloration?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Je nach Technik zwischen einer und drei Stunden. Eine Ansatzfarbe geht schneller, Balayage braucht etwas mehr Ruhe. Was bei Ihnen realistisch ist, sagen wir Ihnen vorab.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal d3">
+          <summary>Was, wenn ich unsicher bin, was passt?
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Dann fangen wir mit einem Gespräch an. Bringen Sie gern ein paar Bilder mit oder kommen Sie einfach so vorbei — wir finden gemeinsam heraus, was zu Ihnen passt. Die Beratung ist kostenlos und unverbindlich.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <span class="brand">Salon Marlene<span class="dot" style="color:var(--terra)">.</span></span>
+          <p>Haare, Farbe und ein bisschen Auszeit — für [Region] und Umgebung.</p>
+          <div class="foot-disclaimer">
+            Dies ist ein fiktives Konzeptprojekt zur Demonstration. Erstellt von Operiva. Alle Angaben sind frei erfunden.
+          </div>
+        </div>
+
+        <div class="foot-col">
+          <h4>Salon</h4>
+          <ul>
+            <li>Blütenweg 4</li>
+            <li>00000 Musterstadt <em style="opacity:.6;font-style:normal;">(fiktiv)</em></li>
+            <li>Tel. 0000 000000</li>
+          </ul>
+        </div>
+
+        <div class="foot-col">
+          <h4>Öffnungszeiten</h4>
+          <ul>
+            <li>Di–Fr &nbsp; 09:00–18:30</li>
+            <li>Sa &nbsp; 09:00–14:00</li>
+            <li>Mo &amp; So &nbsp; geschlossen</li>
+            <li style="margin-top:8px;">
+              <a href="#" onclick="return false;" style="cursor:not-allowed;">Impressum <span class="demo-tag">Demo</span></a>
+            </li>
+            <li>
+              <a href="#" onclick="return false;" style="cursor:not-allowed;">Datenschutz <span class="demo-tag">Demo</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="foot-bottom">
+        <span>Blütenweg 4, 00000 Musterstadt <em style="opacity:.6;font-style:normal;">(fiktiv)</em> · Tel. 0000 000000</span>
+        <span>© <span id="year"></span> Salon Marlene (fiktiv) — Konzept von Operiva</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MOBILER TERMIN-BUTTON (< 768px) ================= -->
+  <a class="mobile-cta" href="#termin" aria-label="Termin anfragen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    Termin anfragen
+  </a>
+
+  <!-- ================= KONZEPT-BANNER (fixiert) ================= -->
+  <div class="concept-banner" role="note">
+    <span class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      Konzeptprojekt
+    </span>
+    <span>von Operiva — <a href="https://operiva.com" target="_blank" rel="noopener">operiva.com</a></span>
+  </div>
+
+  <!-- ================= SCRIPT ================= -->
+  <script>
+    (function () {
+      "use strict";
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Konzept-Banner-Höhe messen → mobiler CTA stapelt sauber darüber
+      var banner = document.querySelector(".concept-banner");
+      var setBannerH = function () {
+        document.documentElement.style.setProperty("--banner-h", banner.offsetHeight + "px");
+      };
+      setBannerH();
+      window.addEventListener("resize", setBannerH, { passive: true });
+
+      // Header-Schatten beim Scrollen
+      var header = document.querySelector("header.site");
+      var onScroll = function () {
+        if (window.scrollY > 12) header.classList.add("scrolled");
+        else header.classList.remove("scrolled");
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // Mobile-Menü
+      var burger = document.getElementById("burger");
+      var navLinks = document.getElementById("navLinks");
+      burger.addEventListener("click", function () {
+        var open = navLinks.classList.toggle("mobile-open");
+        burger.classList.toggle("open", open);
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+        burger.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
+      });
+      navLinks.addEventListener("click", function (e) {
+        if (e.target.tagName === "A") {
+          navLinks.classList.remove("mobile-open");
+          burger.classList.remove("open");
+          burger.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      // Scroll-Reveal (Text, Bilder, Preiskarte) — einmalig pro Element
+      var reveals = document.querySelectorAll(".reveal, .img-reveal, .price-menu");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce || !("IntersectionObserver" in window)) {
+        reveals.forEach(function (el) { el.classList.add("in"); });
+      } else {
+        var mob = window.matchMedia("(max-width: 767px)").matches;
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: mob ? 0.05 : 0.12, rootMargin: mob ? "0px 0px 8% 0px" : "0px 0px -8% 0px" });
+        reveals.forEach(function (el) { io.observe(el); });
+      }
+
+      // Termin-Formular = Attrappe
+      var form = document.getElementById("bookForm");
+      var msg = document.getElementById("formMsg");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        msg.textContent = "Dies ist ein Konzeptprojekt — die Terminanfrage ist nicht aktiv.";
+        msg.classList.add("show");
+        msg.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+      });
+    })();
+  </script>
+</body>
+</html>

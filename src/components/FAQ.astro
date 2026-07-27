@@ -1,10 +1,20 @@
 ---
+import { path, type Lang, type PageId } from '../i18n/utils';
+
+interface FaqLink {
+  before: string;
+  label: string;
+  after: string;
+  page: PageId;
+  anchor?: string;
+}
 interface Props {
   eyebrow: string;
   title: string;
-  items: { q: string; a: string }[];
+  items: { q: string; a: string; link?: FaqLink }[];
+  lang: Lang;
 }
-const { eyebrow, title, items } = Astro.props;
+const { eyebrow, title, items, lang } = Astro.props;
 ---
 
 <section class="section faq">
@@ -20,6 +30,16 @@ const { eyebrow, title, items } = Astro.props;
           </summary>
           <div class="faq-a">
             <p>{item.a}</p>
+            {item.link && (
+              <p class="faq-a-note">
+                {item.link.before}
+                <a class="faq-a-link" href={`${path(item.link.page, lang)}${item.link.anchor ?? ''}`}>
+                  {item.link.label}
+                  <span aria-hidden="true" class="arrow">→</span>
+                </a>
+                {item.link.after}
+              </p>
+            )}
           </div>
         </details>
       ))}
@@ -87,6 +107,21 @@ const { eyebrow, title, items } = Astro.props;
     max-width: 68ch;
   }
   .faq-a p { color: var(--color-text-muted); }
+  .faq-a-note { margin-top: 0.75rem; }
+  .faq-a-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    font-family: var(--font-head);
+    font-weight: 600;
+    color: var(--color-gold);
+    transition: color 0.2s var(--ease);
+  }
+  .faq-a-link .arrow { transition: transform 0.25s var(--ease); }
+  .faq-a-link:hover {
+    color: var(--color-gold-soft);
+  }
+  .faq-a-link:hover .arrow { transform: translateX(3px); }
 
   /* Sanftes Aufklappen (Details unterstützen keine height-Transition,
      daher dezentes Fade/Slide beim Öffnen) */

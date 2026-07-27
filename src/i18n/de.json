@@ -44,6 +44,7 @@
       "eyebrow": "Leistungen",
       "websitesTitle": "Websites",
       "websitesText": "Moderne, schnelle Websites, die auf jedem Gerät überzeugen. Individuell gestaltet, suchmaschinenoptimiert, startklar.",
+      "websitesPrice": "Websites ab 490 €",
       "automationTitle": "Automationen",
       "automationText": "Wiederkehrende Aufgaben laufen automatisch: Anfragen, Termine, E-Mails, Datenübergaben. Sie sparen Zeit, wir richten es ein."
     },
@@ -76,7 +77,14 @@
       "items": [
         {
           "q": "Was kostet eine Website oder Automation?",
-          "a": "Das hängt vom Umfang ab — eine schlanke Landingpage ist etwas anderes als eine mehrseitige Website mit angebundenen Abläufen. Statt Paketen von der Stange kalkulieren wir fair und transparent, zugeschnitten auf das, was Sie wirklich brauchen. Die erste Einschätzung ist kostenlos und unverbindlich."
+          "a": "Das hängt vom Umfang ab — eine schlanke Landingpage ist etwas anderes als eine mehrseitige Website mit angebundenen Abläufen. Statt Paketen von der Stange kalkulieren wir fair und transparent, zugeschnitten auf das, was Sie wirklich brauchen. Die erste Einschätzung ist kostenlos und unverbindlich.",
+          "link": {
+            "before": "Eine Orientierung finden Sie bei unseren Paketen auf der ",
+            "label": "Leistungen-Seite",
+            "after": ".",
+            "page": "services",
+            "anchor": "#preise"
+          }
         },
         {
           "q": "Wie lange dauert es bis zur fertigen Seite?",
@@ -142,6 +150,53 @@
       "text": "Nicht sicher, was Sie brauchen? Wir beraten Sie ehrlich — auch wenn es am Ende weniger ist als gedacht.",
       "button": "Kostenlos anfragen"
     }
+  },
+  "pricing": {
+    "eyebrow": "Preise",
+    "title": "Transparent kalkuliert",
+    "intro": "Jedes Projekt ist anders — diese Pakete geben Ihnen eine ehrliche Orientierung. Ihr verbindliches Angebot erhalten Sie nach dem kostenlosen Erstgespräch.",
+    "badge": "Beliebt",
+    "cta": "Projekt anfragen",
+    "maintenance": "Auf Wunsch: Wartung & Betreuung ab 29 €/Monat — Updates, Sicherheit, kleine Änderungen.",
+    "footnote": "Alle Preise in EUR. Der Endpreis richtet sich nach dem Projektumfang — Sie erhalten vorab ein verbindliches Angebot.",
+    "plans": [
+      {
+        "name": "Landingpage",
+        "price": "ab 490 €",
+        "features": [
+          "Einseitige Website, individuell gestaltet",
+          "Optimiert für alle Geräte",
+          "Kontaktformular",
+          "SEO-Grundlagen",
+          "Impressum & Datenschutz",
+          "Go-Live inklusive"
+        ]
+      },
+      {
+        "name": "Business-Website",
+        "price": "ab 990 €",
+        "featured": true,
+        "features": [
+          "Mehrseitige Website (z.B. Start, Leistungen, Über uns, Kontakt)",
+          "Alle Texte geschrieben & SEO-optimiert",
+          "Individuelles Design",
+          "Kontaktformular & rechtliche Seiten",
+          "Sitemap & Google Search Console",
+          "Go-Live-Begleitung"
+        ]
+      },
+      {
+        "name": "Website + Automation",
+        "price": "auf Anfrage",
+        "features": [
+          "Business-Website plus Automatisierung",
+          "Anfragen laufen automatisch ins Postfach oder CRM",
+          "Terminbestätigungen & Follow-ups ohne Handarbeit",
+          "Individuelle Analyse Ihrer Abläufe",
+          "Alles aus einer Hand"
+        ]
+      }
+    ]
   },
   "process": {
     "title": "So arbeiten wir – In 6 Schritten zur Website | Operiva",
@@ -223,12 +278,56 @@
     }
   },
   "references": {
-    "title": "Referenzen | Operiva",
-    "description": "Ausgewählte Projekte von Operiva.",
+    "title": "Referenzen – Unsere Arbeiten | Operiva",
+    "description": "Vier Konzeptprojekte von Operiva – vom ruhigen Galerie-Auftritt bis zur Animations-Vollausstattung. Fiktive Betriebe, echte Gestaltung.",
     "eyebrow": "Referenzen",
-    "h1": "Ausgewählte Projekte",
-    "intro": "Diese Seite ist vorbereitet und wird mit den ersten veröffentlichten Projekten gefüllt.",
-    "placeholder": "Bald verfügbar."
+    "h1": "Unsere Arbeiten",
+    "intro": "Vier Konzeptprojekte, die zeigen, wie unterschiedlich Websites klingen können — vom ruhigen Galerie-Auftritt bis zur Animations-Vollausstattung. Ehrlich gekennzeichnet: Alles hier ist Konzept, jede Gestaltung ist echt.",
+    "concepts": {
+      "eyebrow": "Konzeptprojekte",
+      "title": "Vier Branchen, vier Handschriften.",
+      "intro": "Fiktive Betriebe, echte Gestaltung: Diese Konzeptprojekte zeigen, wie wir Ton, Layout und Bewegung an die Branche anpassen.",
+      "badge": "Konzeptprojekt",
+      "demoLabel": "Live-Demo ansehen",
+      "items": [
+        {
+          "name": "Holzwerk Brandt",
+          "industry": "Schreinerei",
+          "text": "Kraftvoll und bodenständig: Vertrauen, Festpreis-Logik, klare Leistungen.",
+          "href": "/demos/handwerk/",
+          "img": "/referenzen/handwerk.jpg",
+          "alt": "Screenshot der Konzept-Demo Holzwerk Brandt — Schreinerei"
+        },
+        {
+          "name": "Salon Marlene",
+          "industry": "Friseursalon",
+          "text": "Editorial und weich: Magazin-Layout, elegante Preiskarte, Terminfokus.",
+          "href": "/demos/friseur/",
+          "img": "/referenzen/friseur.jpg",
+          "alt": "Screenshot der Konzept-Demo Salon Marlene — Friseursalon"
+        },
+        {
+          "name": "Mara Vellin",
+          "industry": "Künstlerin",
+          "text": "Radikal reduziert: Galerie-Charakter, große Typografie, das Werk im Zentrum.",
+          "href": "/demos/kunst/",
+          "img": "/referenzen/kunst.jpg",
+          "alt": "Screenshot der Konzept-Demo Mara Vellin — Künstlerin"
+        },
+        {
+          "name": "PULS. Studio",
+          "industry": "Fitnessstudio",
+          "text": "Animations-Showcase: Preloader, kinetische Typo, 3D-Effekte — das volle technische Register.",
+          "href": "/demos/fitness/",
+          "img": "/referenzen/fitness.jpg",
+          "alt": "Screenshot der Konzept-Demo PULS. Studio — Fitnessstudio"
+        }
+      ]
+    },
+    "cta": {
+      "text": "Ihr Projekt könnte das erste echte auf dieser Seite sein.",
+      "button": "Projekt anfragen"
+    }
   },
   "imprint": {
     "title": "Impressum | Operiva",

@@ -8,10 +8,11 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const pathname = Astro.url.pathname;
 
-// Navigationspunkte (Referenzen bewusst NICHT gelistet — siehe unten).
+// Navigationspunkte.
 const navItems = [
   { id: 'services', label: t.nav.services },
   { id: 'process', label: t.nav.process },
+  { id: 'references', label: t.nav.references },
   { id: 'about', label: t.nav.about },
   { id: 'contact', label: t.nav.contact },
 ] as const;
