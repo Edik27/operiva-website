@@ -10,9 +10,8 @@ const f = t.contact.form;
 const success = t.contact.success;
 const privacyHref = path('privacy', lang);
 
-// ⚠️ PLATZHALTER: Vor Go-Live die echte Formspree-Form-ID eintragen (siehe README).
-// Format: https://formspree.io/f/xxxxxxxx
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
+// Formspree-Endpoint (Form-ID des Operiva-Kontaktformulars).
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xppawwen';
 ---
 
 <div class="contact-form-wrap">
@@ -371,8 +370,6 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
       if (formError) formError.hidden = true;
       if (!validate()) return;
 
-      const endpointOk = form.action && !form.action.includes('YOUR_FORMSPREE_ID');
-
       if (submitBtn) submitBtn.disabled = true;
       if (submitLabel) submitLabel.textContent = m.sending;
 
@@ -392,12 +389,6 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
           successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       };
-
-      // Solange keine echte Formspree-ID hinterlegt ist: nicht senden, Fehler zeigen.
-      if (!endpointOk) {
-        showError();
-        return;
-      }
 
       try {
         const res = await fetch(form.action, {
