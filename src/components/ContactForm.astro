@@ -92,7 +92,14 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xppawwen';
     </button>
   </form>
 
-  <div class="form-success" data-success hidden role="status">
+  <div
+    class="form-success"
+    data-success
+    hidden
+    role="status"
+    aria-live="polite"
+    tabindex="-1"
+  >
     <span class="success-mark" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M5 12.5 10 17.5 19 6.5" />
@@ -105,6 +112,12 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xppawwen';
 
 <style>
   .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+  /* display:flex überstimmt das UA-[hidden] — sonst bleibt das Formular
+     beim Zustandswechsel sichtbar und die Danke-Karte erscheint darunter. */
+  .contact-form[hidden] { display: none; }
+  .contact-form { transition: opacity 0.2s var(--ease); }
+  /* Ausfaden, bevor das Formular aus dem Layout genommen wird */
+  .contact-form.is-leaving { opacity: 0; pointer-events: none; }
 
   /* Honeypot: aus dem Fluss, für Screenreader/Nutzer unsichtbar */
   .hp-field {
@@ -234,25 +247,50 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xppawwen';
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
-    gap: 0.4rem;
-    padding: clamp(1.75rem, 4vw, 2.5rem);
-    border: 1px solid var(--color-border-strong);
+    gap: 0.35rem;
+    /* kompakter als das Formular, unten weniger Luft als oben */
+    padding: clamp(1.5rem, 3vw, 2rem);
+    padding-bottom: clamp(1.25rem, 2.4vw, 1.6rem);
+    /* Border wie die übrigen Karten der Seite (.aside-card) */
+    border: 1px solid var(--color-border);
     border-radius: var(--radius);
     background: linear-gradient(180deg, var(--color-bg-elevated), var(--color-bg-card));
+    /* Schrift explizit setzen: Karte hängt nicht an der Vererbung von außen */
+    font-family: var(--font-body);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
   }
+  .form-success.is-visible { opacity: 1; transform: none; }
+  /* programmatischer Fokus soll keinen Rahmen zeigen, Tastatur-Fokus schon */
+  .form-success:focus:not(:focus-visible) { outline: none; }
   .success-mark {
     display: grid;
     place-items: center;
-    width: 52px;
-    height: 52px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     background: var(--color-gold-dim);
     color: var(--color-gold);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
   }
-  .success-mark svg { width: 26px; height: 26px; }
-  .success-title { font-size: var(--fs-h2); }
-  .success-text { max-width: 46ch; }
+  .success-mark svg { width: 23px; height: 23px; }
+  .success-title {
+    /* nicht auf die globale h2-Regel verlassen — nie Serifen-/Default-Fallback */
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: var(--fs-h2);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+  .success-text { max-width: 46ch; margin-bottom: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-form,
+    .form-success { transition: none; }
+    .form-success { opacity: 1; transform: none; }
+  }
 
   @media (max-width: 480px) {
     .form-submit { align-self: stretch; width: 100%; }
@@ -287,6 +325,8 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xppawwen';
   };
 
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   forms.forEach((form) => {
     const lang = form.dataset.lang === 'en' ? 'en' : 'de';
@@ -373,21 +413,45 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xppawwen';
       if (submitBtn) submitBtn.disabled = true;
       if (submitLabel) submitLabel.textContent = m.sending;
 
+      // Fehlerfall: Formular bleibt stehen, Button wird wieder klickbar.
       const showError = () => {
         if (formError) {
           formError.textContent = m.generic;
           formError.hidden = false;
         }
+        form.classList.remove('is-leaving');
         if (submitBtn) submitBtn.disabled = false;
         if (submitLabel) submitLabel.textContent = defaultLabel;
       };
 
+      // Erfolg: Formular raus aus dem Layout, Danke-Karte an seine Stelle.
       const showSuccess = () => {
-        if (successBox) {
+        if (!successBox) return;
+        // Button-Zustand zurücksetzen, damit kein „Wird gesendet …" hängen bleibt
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitLabel) submitLabel.textContent = defaultLabel;
+
+        const swap = () => {
+          form.classList.remove('is-leaving');
           form.hidden = true;
           successBox.hidden = false;
-          successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Reflow: Startzustand (opacity 0 / translateY) muss gerendert sein,
+          // damit der Übergang zu .is-visible überhaupt animiert
+          void successBox.offsetHeight;
+          successBox.classList.add('is-visible');
+          successBox.focus();
+          successBox.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'center',
+          });
+        };
+
+        if (reduceMotion) {
+          swap();
+          return;
         }
+        form.classList.add('is-leaving');
+        window.setTimeout(swap, 200);
       };
 
       try {
