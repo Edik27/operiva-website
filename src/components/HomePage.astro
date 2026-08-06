@@ -300,6 +300,32 @@ const h = t.home;
   @media (max-width: 800px) {
     .why-grid { grid-template-columns: 1fr; gap: 1.5rem; }
   }
+  /* Mobil: Phasen-Pills deterministisch 3 pro Reihe (2 Reihen à 3) */
+  @media (max-width: 767px) {
+    .step-chips {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+      /* verhindert übermäßig breite Pills auf großen Handys/kleinen Tablets */
+      max-width: 30rem;
+    }
+    .step-chip {
+      width: 100%;
+      min-width: 0;
+      justify-content: center;
+      gap: 0.3rem;
+      padding: 0.5rem 0.35rem;
+      font-size: clamp(0.7rem, 3vw, 0.8rem);
+      white-space: nowrap;
+      hyphens: none;
+    }
+    .step-chip-num {
+      flex: none;
+      width: 20px;
+      height: 20px;
+      font-size: 0.7rem;
+    }
+  }
   @media (max-width: 640px) {
     .teaser-grid { grid-template-columns: 1fr; }
   }
